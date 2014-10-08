@@ -1,7 +1,7 @@
 GSODTools
 =========
 
-```{r global_options, include = FALSE}
+```{r global_options, echo = FALSE}
 opts_chunk$set(fig.width = 12, fig.height = 8, fig.path = 'Figs/',
                include = TRUE, warning = FALSE, message = FALSE)
 ```
