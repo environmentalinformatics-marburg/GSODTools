@@ -87,6 +87,8 @@ gsodPlot <- function(fls_orig = NULL,
       scale_x_date(limits = c(start_date, end_date), 
                    breaks = seq(start_date, end_date, "2 years"), 
                    labels = date_format("%Y"), minor_breaks = date_breaks("1 year")) + 
+      xlab("Time (d)") +  
+      ylab(expression("Temperature ("~degree~C~")")) + 
       theme_bw() + 
       theme(text = element_text(...), 
             legend.key = element_rect(fill = "transparent"), 
@@ -115,6 +117,8 @@ gsodPlot <- function(fls_orig = NULL,
       scale_colour_manual("", values = c("grey65", "black"), 
                           labels = c("Original data", "Imputed data"), 
                           breaks = c("Original", "Imputed")) +
+      xlab("Time (d)") +  
+      ylab(expression("Temperature ("~degree~C~")")) + 
       theme_bw() + 
       theme(text = element_text(...), 
             legend.key = element_rect(fill = "transparent"), 
@@ -163,6 +167,8 @@ gsodPlot <- function(fls_orig = NULL,
                                      "Maximum")) +
       labs(colour = "Linear trends of daily", 
            linetype = "Linear trends of daily") + 
+      xlab("Time (d)") +  
+      ylab(expression("Temperature ("~degree~C~")")) + 
       theme_bw() + 
       theme(text = element_text(...), 
             legend.key = element_rect(fill = "transparent"), 
