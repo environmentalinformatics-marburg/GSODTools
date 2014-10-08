@@ -45,14 +45,12 @@ and allows to reformat elevation (decimeters to meters) as well as latitude and 
 (thousandth of a degree to whole degree). Furthermore, it offers the opportunity
 to remove invalid coordinates, i.e. values of latitude and longitude exceeding 
 valid thresholds of +/-90 and +/-180 degrees, respectively. Optionally, the 
-adjusted dataset can then be converted to an object of class `sp`.
+adjusted dataset can be converted to an object of class `sp` prior to return.
 
 Consequently, the first lines of code working with **GSODTools** should probably 
 look like the following.
 
 ```{r gsodReformat}
-
-
 # Reformat data and convert to spatial object
 gsod_shp <- gsodReformat(data = gsodstations,
                          elevation = TRUE, 
