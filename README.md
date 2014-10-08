@@ -1,6 +1,11 @@
 GSODTools
 =========
 
+```{r global_options, include = FALSE}
+opts_chunk$set(fig.width = 12, fig.height = 8, fig.path = 'Figs/',
+               include = TRUE, warning = FALSE, message = FALSE)
+```
+
 ### What it is all about
 
 Every person dealing with long-term climatological data (e.g. of daily air
@@ -13,21 +18,25 @@ realize most of my coding work using R, I quickly noticed that there are only a
 few packages that provide convenient tools for processing GSOD data. Therefore, 
 I started to write this package that includes both downloading data sets of 
 selected climate stations for a given time span as well as 
-some processing steps (detection of statistic outliers, gap-filling based upon
-linear interpolation, linear models and singular spectrum analysis (SSA)) for 
-quality assurance.
+some processing steps for quality assurance and gap filling.
 
 
 ### Introducing the processing chain
 
-I am currently struggling with loading sample data automatically into the R
-workspace. Any kind of advice on that would be highly appreciated. The ASCII file 
-containing the information about all the single GSOD stations around the world 
-is absolutely necessary in order to find a desired location for data download, 
-and right now, I see now other way than importing it manually by calling `data()`.
-
-
 **Getting started**
+
+The starting point for each GSOD-related search query is the selection of a 
+particular station (or even multiple stations). Although a [GIS Data Locator][1] exists that allows interactive 
+station selection and data acquisition, I thought it was a good thing to 
+implement a couple of search function to speed things up a little bit. 
+
+The `GSODTools` package comes with a built-in dataset from [NOAA's FTP server][2]
+that is automatically attached via lazy-loading when loading the package. Let's 
+have a quick look at it. 
+
+```{r gsodstations, echo = FALSE}
+head(gsodstations)
+```
 
 After loading the package and the corresponding data, I thought it might be quite
 useful to optionally sort out some inconveniences in the GSOD station list. The
@@ -56,3 +65,7 @@ stations.sp <- gsodReformat(data = gsodstations,
 ```
 
 **Downloading data**
+
+
+[1]: http://www.climate.gov/daily-observational-data-global-summary-day-gsod-%E2%80%93-gis-data-locator
+[2]: ftp://ftp.ncdc.noaa.gov/pub/data/gsod/ish-history.csv
