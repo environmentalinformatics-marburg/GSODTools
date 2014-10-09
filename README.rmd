@@ -66,3 +66,8 @@ plot(gsod_shp)
 
 [1]: http://www.climate.gov/daily-observational-data-global-summary-day-gsod-%E2%80%93-gis-data-locator
 [2]: ftp://ftp.ncdc.noaa.gov/pub/data/gsod/ish-history.csv
+
+```{r file_rename, include = FALSE}
+   file.rename(from = "README.rmd.md", 
+               to = "README.md")
+```
