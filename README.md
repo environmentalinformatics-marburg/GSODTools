@@ -12,12 +12,7 @@ README.rmd, both `include = TRUE` and `include = FALSE`. Any help on that would
 be highly appreciated. Anyway, just ignore the following except 
 you are interested in setting some global options.
 
-```{r global_options, include = FALSE}
-library(knitr)
-options(width = 120)
-opts_chunk$set(fig.width = 12, fig.height = 8, fig.path = 'Figs/',
-               include = TRUE, warning = FALSE, message = FALSE)
-```
+
 
 ### What it is all about
 
@@ -42,9 +37,15 @@ The **GSODTools** package comes with a built-in dataset from [NOAA's FTP server]
 holding information about all available GSOD stations that is automatically 
 attached via lazy-loading when loading the package. Let's have a quick look at it. 
 
-```{r gsodstations, echo = FALSE}
-library(GSODTools)
-head(gsodstations)
+
+```
+##   USAF  WBAN STATION.NAME CTRY FIPS STATE CALL   LAT   LON ELEV..1M.    BEGIN      END
+## 1 6852 99999         SENT   SW   SZ            46817 10350     14200       NA       NA
+## 2 7005 99999   CWOS 07005                         NA    NA        NA 20120127 20120127
+## 3 7010 99999   CWOS 07010                         NA    NA        NA       NA       NA
+## 4 7011 99999   CWOS 07011                         NA    NA        NA 20111025 20121129
+## 5 7012 99999   CWOS 07012                         NA    NA        NA       NA       NA
+## 6 7015 99999   CWOS 07015                         NA    NA        NA       NA       NA
 ```
 
 Unfortunatelly, the data formatting and consistency of this official table is 
@@ -59,7 +60,8 @@ adjusted dataset can be converted to an object of class `sp` prior to return.
 Consequently, the first lines of code working with **GSODTools** should probably 
 look like this.
 
-```{r gsodReformat}
+
+```r
 # Reformat data and convert to spatial object
 gsod_shp <- gsodReformat(data = gsodstations,
                          elevation = TRUE, 
@@ -69,6 +71,8 @@ gsod_shp <- gsodReformat(data = gsodstations,
 par(mar = c(0, 0, 0, 0))
 plot(gsod_shp)
 ```
+
+![plot of chunk gsodReformat](Figs/gsodReformat.png) 
 
 **Selecting a station**
 
@@ -86,7 +90,8 @@ rather than two separate numerics. For instance, let's search for GSOD stations
 in a circle of 500 km around Kibo summit, Mt. Kilimanjaro, Tanzania. The referring
 coordinates are `c(37.359031, -3.065053)`.
 
-```{r stationFromCoords}
+
+```r
 shp_kibo <- stationFromCoords(x = 37.359031, y = -3.065053, width = 500)
 # or: stationFromCoords(x = c(37.359031, -3.065053), width = 500)
 # or: stationFromCoords(x = SpatialPoints(data.frame(x = 37.359031, 
@@ -99,6 +104,8 @@ mapGriddedData(mapRegion = "africa", plotData = FALSE, borderCol = "black",
 points(shp_kibo, col = "red", pch = 20, cex = 2)
 ```
 
+![plot of chunk stationFromCoords](Figs/stationFromCoords.png) 
+
 `stationFromExtent`, just like `stationFromCoords`, allows station selection 
 based on spatial criteria. However, the user is prompted to manually draw an 
 extent on a map rather than directly supplying specific coordinates. The advantage 
@@ -110,7 +117,8 @@ distance from the summit. Alternatively, a rectangular bounding box can be
 supplied instead of calling `drawExtent` (which is actually quite difficult to
 include in a README file). 
 
-```{r stationFromExtent}
+
+```r
 bbox_kibo_south <- extent(c(36.6, 37.72, -3.5, -3.065053))
 shp_kili_south <- stationFromExtent(bb = bbox_kibo_south)
 
@@ -119,13 +127,16 @@ mapGriddedData(mapRegion = "africa", plotData = FALSE, borderCol = "black",
 points(shp_kili_south, col = "red", pch = 20, cex = 2)
 ```
 
+![plot of chunk stationFromExtent](Figs/stationFromExtent.png) 
+
 The third and, at the moment, final possibility to select a GSOD station is to 
 simply choose a name from the built-in station list. This is, however, a quite
 tricky approach since you have to know the precise spelling of a station's name. 
 Again referring to the above example where we selected Arusha, Moshi, and 
 Kilimanjaro International Airport (KIA), this would more or less look like this. 
 
-```{r station_manual_selection}
+
+```r
 library(dplyr)
 
 station_names <- c("ARUSHA", "KILIMANJARO AIRPORT", "MOSHI")
@@ -137,7 +148,13 @@ shp_kili_south <-
   gsodDf2Sp()
 
 shp_kili_south@data
+```
 
+```
+##     USAF  WBAN        STATION.NAME CTRY FIPS STATE CALL ELEV..1M.    BEGIN      END
+## 1 637890 99999              ARUSHA   TN   TZ       HTAR      1387 19600111 20130705
+## 2 637900 99999               MOSHI   TN   TZ       HTMS       831 19490909 20130612
+## 3 637910 99999 KILIMANJARO AIRPORT   TN   TZ       HTKJ       896 19730101 20130705
 ```
 
 **Downloading data**
