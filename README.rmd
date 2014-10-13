@@ -1,23 +1,8 @@
 GSODTools
 =========
 
-### Global options
-
-To be honest, I have no idea how to hide the following lines of code that take 
-care of setting some global options. The file README.rmd is generated using the
-`knitr` package, and it works out fine calling 'Knit HTML' from within RStudio, 
-i.e. code chunks defined as `include = FALSE` are not displayed. However, when I 
-upload the file to GitHub, the package's front page shows all code chunks in 
-README.rmd, both `include = TRUE` and `include = FALSE`. Any help on that would 
-be highly appreciated. Anyway, just ignore the following except 
-you are interested in setting some global options.
-
-```{r global_options, include = FALSE}
-library(knitr)
-options(width = 120)
-opts_chunk$set(fig.width = 12, fig.height = 8, fig.path = 'Figs/',
-               include = TRUE, warning = FALSE, message = FALSE)
-```
+For the latest stable release, please refer to  
+[![DOI](https://zenodo.org/badge/5994/environmentalinformatics-marburg/GSODTools.png)](http://dx.doi.org/10.5281/zenodo.12217).
 
 ### What it is all about
 
