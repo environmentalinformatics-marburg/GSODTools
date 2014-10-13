@@ -1,20 +1,8 @@
 GSODTools
 =========
 
-[![DOI](https://zenodo.org/badge/5994/environmentalinformatics-marburg/GSODTools.png)](http://dx.doi.org/10.5281/zenodo.12217)
-
-### Global options
-
-To be honest, I have no idea how to hide the following lines of code that take 
-care of setting some global options. The file README.rmd is generated using the
-`knitr` package, and it works out fine calling 'Knit HTML' from within RStudio, 
-i.e. code chunks defined as `include = FALSE` are not displayed. However, when I 
-upload the file to GitHub, the package's front page shows all code chunks in 
-README.rmd, both `include = TRUE` and `include = FALSE`. Any help on that would 
-be highly appreciated. Anyway, just ignore the following except 
-you are interested in setting some global options.
-
-
+For the latest stable release, please refer to  
+[![DOI](https://zenodo.org/badge/5994/environmentalinformatics-marburg/GSODTools.png)](http://dx.doi.org/10.5281/zenodo.12217).
 
 ### What it is all about
 
@@ -41,13 +29,20 @@ attached via lazy-loading when loading the package. Let's have a quick look at i
 
 
 ```
-##   USAF  WBAN STATION.NAME CTRY FIPS STATE CALL   LAT   LON ELEV..1M.    BEGIN      END
-## 1 6852 99999         SENT   SW   SZ            46817 10350     14200       NA       NA
-## 2 7005 99999   CWOS 07005                         NA    NA        NA 20120127 20120127
-## 3 7010 99999   CWOS 07010                         NA    NA        NA       NA       NA
-## 4 7011 99999   CWOS 07011                         NA    NA        NA 20111025 20121129
-## 5 7012 99999   CWOS 07012                         NA    NA        NA       NA       NA
-## 6 7015 99999   CWOS 07015                         NA    NA        NA       NA       NA
+##   USAF  WBAN STATION.NAME CTRY FIPS STATE CALL   LAT   LON ELEV..1M.
+## 1 6852 99999         SENT   SW   SZ            46817 10350     14200
+## 2 7005 99999   CWOS 07005                         NA    NA        NA
+## 3 7010 99999   CWOS 07010                         NA    NA        NA
+## 4 7011 99999   CWOS 07011                         NA    NA        NA
+## 5 7012 99999   CWOS 07012                         NA    NA        NA
+## 6 7015 99999   CWOS 07015                         NA    NA        NA
+##      BEGIN      END
+## 1       NA       NA
+## 2 20120127 20120127
+## 3       NA       NA
+## 4 20111025 20121129
+## 5       NA       NA
+## 6       NA       NA
 ```
 
 Unfortunatelly, the data formatting and consistency of this official table is 
@@ -74,7 +69,7 @@ par(mar = c(0, 0, 0, 0))
 plot(gsod_shp)
 ```
 
-![plot of chunk gsodReformat](Figs/gsodReformat.png) 
+![plot of chunk gsodReformat](figure/gsodReformat.png) 
 
 **Selecting a station**
 
@@ -106,7 +101,7 @@ mapGriddedData(mapRegion = "africa", plotData = FALSE, borderCol = "black",
 points(shp_kibo, col = "red", pch = 20, cex = 2)
 ```
 
-![plot of chunk stationFromCoords](Figs/stationFromCoords.png) 
+![plot of chunk stationFromCoords](figure/stationFromCoords.png) 
 
 `stationFromExtent`, just like `stationFromCoords`, allows station selection 
 based on spatial criteria. There are actually two options how to handle this 
@@ -128,7 +123,7 @@ mapGriddedData(mapRegion = "africa", plotData = FALSE, borderCol = "black",
 points(shp_kili_south, col = "red", pch = 20, cex = 2)
 ```
 
-![plot of chunk stationFromExtent](Figs/stationFromExtent.png) 
+![plot of chunk stationFromExtent](figure/stationFromExtent.png) 
 
 The third and, at the moment, final possibility to select a GSOD station is to 
 simply choose a name from the built-in station list. This is, however, a quite
@@ -152,10 +147,14 @@ shp_kili_south@data
 ```
 
 ```
-##     USAF  WBAN        STATION.NAME CTRY FIPS STATE CALL ELEV..1M.    BEGIN      END
-## 1 637890 99999              ARUSHA   TN   TZ       HTAR      1387 19600111 20130705
-## 2 637900 99999               MOSHI   TN   TZ       HTMS       831 19490909 20130612
-## 3 637910 99999 KILIMANJARO AIRPORT   TN   TZ       HTKJ       896 19730101 20130705
+##     USAF  WBAN        STATION.NAME CTRY FIPS STATE CALL ELEV..1M.    BEGIN
+## 1 637890 99999              ARUSHA   TN   TZ       HTAR      1387 19600111
+## 2 637900 99999               MOSHI   TN   TZ       HTMS       831 19490909
+## 3 637910 99999 KILIMANJARO AIRPORT   TN   TZ       HTKJ       896 19730101
+##        END
+## 1 20130705
+## 2 20130612
+## 3 20130705
 ```
 
 **Downloading data**
@@ -180,8 +179,10 @@ head(moshi)
 ```
 
 ```
-##     USAF  WBAN STATION.NAME CTRY FIPS STATE CALL   LAT   LON ELEV..1M.    BEGIN      END
-## 1 637900 99999        MOSHI   TN   TZ       HTMS -3350 37333      8310 19490909 20130612
+##     USAF  WBAN STATION.NAME CTRY FIPS STATE CALL   LAT   LON ELEV..1M.
+## 1 637900 99999        MOSHI   TN   TZ       HTMS -3350 37333      8310
+##      BEGIN      END
+## 1 19490909 20130612
 ```
 
 If you are not willing to download the entire dataset from a given 
@@ -225,7 +226,7 @@ ggplot(aes(y = TEMP, x = YEARMODA), data = gsod_moshi) +
   theme_bw()
 ```
 
-![plot of chunk dlGsodStations_visualize](Figs/dlGsodStations_visualize.png) 
+![plot of chunk dlGsodStations_visualize](figure/dlGsodStations_visualize.png) 
 
 **Side note: `toCelsius`**
 
