@@ -100,15 +100,14 @@ points(shp_kibo, col = "red", pch = 20, cex = 2)
 ```
 
 `stationFromExtent`, just like `stationFromCoords`, allows station selection 
-based on spatial criteria. However, the user is prompted to manually draw an 
-extent on a map rather than directly supplying specific coordinates. The advantage 
-is that spatial selection is not performed in a circular shape, i.e. in a uniform
-distance around a given location, but depends on user preferences. With respect
-to the aforementioned example, this means that GSOD stations in the southern
-Mt. Kilimanjaro region could be selected rather than all stations in a given 
-distance from the summit. Alternatively, a rectangular bounding box can be 
-supplied instead of calling `drawExtent` (which is actually quite difficult to
-include in a README file). 
+based on spatial criteria. There are actually two options how to handle this 
+function. If no bounding box is defined, the user is automatically prompted to 
+manually draw an extent on a map rather than directly supplying specific 
+coordinates. The advantage is that spatial selection is not performed in a 
+circular shape, i.e. in a uniform distance around a given location, but depends 
+on user preferences. With respect to the aforementioned example, this means that GSOD stations in the southern Mt. Kilimanjaro region could be selected rather than all stations in a given distance from the summit. 
+Alternatively, an extent object from an arbitrary spatial object, e.g. 'RasterLayer', 
+'SpatialPolygons' etc, may be defined. In this case, `drawExtent` (which is actually quite difficult to include in a README file) is automatically disabled. 
 
 ```{r stationFromExtent}
 bbox_kibo_south <- extent(c(36.6, 37.72, -3.5, -3.065053))
@@ -142,7 +141,53 @@ shp_kili_south@data
 
 **Downloading data**
 
-Ideally, you have now found a 
+Ideally, you have now found an appropriate station you would like to acquire 
+data from. It usually takes some patience to click through the download procedure
+inherent to the GIS Data Locator, and having to perform the same steps again and 
+again can soon get quite frustrating. I implemented a function called 
+`dlGsodStations` that helps to overcome these inconveniences. 
+The function works with USAF codes that are unique to each GSOD station and, in 
+my opinion, catchier than the associated station names. The USAF code can be 
+determined by having a look at the outcome of the various station selection 
+functions. 
+
+```{r usaf_retrieval}
+library(dplyr)
+
+# Subset station list by name, and display related USAF code
+moshi <- filter(gsodstations, STATION.NAME == "MOSHI")
+head(moshi)
+```
+
+If you are not willing to download the entire dataset from a given 
+station (which is the default setting), but rather a limited period of time, you 
+can specify the desired years through `start_year` and `end_year`. It is 
+possible to adjust the destination folder for data download (`dsn`) if you do 
+not want to save the data in the current working directory. Furthermore, you can
+also determine whether to extract the zipped files and remove the *.gz files
+after extraction. In this case, the function returns a `data.frame` rather than
+a vector of *.gz filepaths. Note that, for each year and station, the function 
+automatically checks if data is already present in the specified destination 
+folder. If so, the referring download will automatically be skipped and the next
+subsequent download query will be evaluated. Here is an example on data 
+download including visualization of the daily mean air temperature from Moshi, 
+Tanzania, for the years 1990 to 2000. 
+
+```{r dlGsodStations}
+# Not run: Download data from Moshi, Tanzania, from 1990 to 1995
+gsod_moshi <- dlGsodStations(usaf = moshi$USAF,
+                             start_year = 1990, end_year = 2000,
+                             dsn = paste0(getwd(), "/data/moshi/"),
+                             unzip = TRUE)
+
+# Plot temperature data (but: time series not continuous!)
+library(ggplot2)
+ggplot(aes(y = toCelsius(TEMP, 1), x = seq(TEMP)), data = gsod_moshi) + 
+  geom_line(color = "grey50") + 
+  stat_smooth(method = "lm") + 
+  labs(x = "Index", y = expression("Temperature (" ~ degree ~ C ~ ")")) +
+  theme_bw()
+```
 
 [1]: http://www.climate.gov/daily-observational-data-global-summary-day-gsod-%E2%80%93-gis-data-locator
 [2]: ftp://ftp.ncdc.noaa.gov/pub/data/gsod/ish-history.csv
