@@ -1,6 +1,8 @@
 GSODTools
 =========
 
+[![DOI](https://zenodo.org/badge/5994/environmentalinformatics-marburg/GSODTools.png)](http://dx.doi.org/10.5281/zenodo.12217)
+
 ### Global options
 
 To be honest, I have no idea how to hide the following lines of code that take 
