@@ -205,20 +205,6 @@ gsod_moshi <- dlGsodStations(usaf = moshi$USAF,
                              unzip = TRUE)
 ```
 
-```
-## Processing GSOD station 637900 (MOSHI) ... 
-## File /mnt/windows/Permanent/repositories/GSODTools/data/moshi//637900-99999-1990.op.gz already exists. Proceeding to next file... 
-## File /mnt/windows/Permanent/repositories/GSODTools/data/moshi//637900-99999-1991.op.gz already exists. Proceeding to next file... 
-## File /mnt/windows/Permanent/repositories/GSODTools/data/moshi//637900-99999-1992.op.gz already exists. Proceeding to next file... 
-## File /mnt/windows/Permanent/repositories/GSODTools/data/moshi//637900-99999-1993.op.gz already exists. Proceeding to next file... 
-## File /mnt/windows/Permanent/repositories/GSODTools/data/moshi//637900-99999-1994.op.gz already exists. Proceeding to next file... 
-## File /mnt/windows/Permanent/repositories/GSODTools/data/moshi//637900-99999-1995.op.gz already exists. Proceeding to next file... 
-## File /mnt/windows/Permanent/repositories/GSODTools/data/moshi//637900-99999-1996.op.gz already exists. Proceeding to next file... 
-## File /mnt/windows/Permanent/repositories/GSODTools/data/moshi//637900-99999-1997.op.gz already exists. Proceeding to next file... 
-## File /mnt/windows/Permanent/repositories/GSODTools/data/moshi//637900-99999-1998.op.gz already exists. Proceeding to next file... 
-## File /mnt/windows/Permanent/repositories/GSODTools/data/moshi//637900-99999-1999.op.gz already exists. Proceeding to next file... 
-## File /mnt/windows/Permanent/repositories/GSODTools/data/moshi//637900-99999-2000.op.gz already exists. Proceeding to next file...
-```
 
 ```r
 # Plot temperature data (but: time series not continuous!)
@@ -230,14 +216,35 @@ gsod_moshi <- gsod_moshi[, -grep("NC", names(gsod_moshi))]
 gsod_moshi$YEARMODA <- as.Date(strptime(gsod_moshi$YEARMODA, format = "%Y%m%d"))
 gsod_moshi$TEMP <- toCelsius(gsod_moshi$TEMP, digits = 1)
 
-ggplot(aes(y = toCelsius(TEMP, 1), x = YEARMODA), data = gsod_moshi) + 
+ggplot(aes(y = TEMP, x = YEARMODA), data = gsod_moshi) + 
   geom_line(color = "grey50") + 
   stat_smooth(method = "lm") + 
   labs(x = "Index", y = expression("Temperature (" ~ degree ~ C ~ ")")) +
   theme_bw()
 ```
 
-![plot of chunk dlGsodStations](Figs/dlGsodStations.png) 
+![plot of chunk dlGsodStations_visualize](Figs/dlGsodStations_visualize.png) 
+
+**Side note: `toCelsius`**
+
+You may have already noticed `toCelsius` in the preceding code chunk. Indeed, 
+this function is as small as useful, as it converts temperature values from 
+degree Fahrenheit (which is native GSOD format) to degree Celsius. 
+
+
+```r
+# RNG
+set.seed(10)
+
+# Degree Fahrenheit
+val_fah <- runif(10, 60, 80)
+# -> Degree Celsius
+toCelsius(val_fah, digits = 1)
+```
+
+```
+##  [1] 21.2 19.0 20.3 23.3 16.5 18.1 18.6 18.6 22.4 20.3
+```
 
 [1]: http://www.climate.gov/daily-observational-data-global-summary-day-gsod-%E2%80%93-gis-data-locator
 [2]: ftp://ftp.ncdc.noaa.gov/pub/data/gsod/ish-history.csv
