@@ -1,8 +1,10 @@
 GSODTools
 =========
 
+
+
 For the latest stable release, please refer to  
-[![DOI](https://zenodo.org/badge/5994/environmentalinformatics-marburg/GSODTools.png)](http://dx.doi.org/10.5281/zenodo.12217).
+[![doi_GSODTools_v1.0.0][1]][2].
 
 ### What it is all about
 
@@ -19,30 +21,23 @@ some processing steps for quality assurance and gap filling.
 **Getting started**
 
 The starting point for each GSOD-related search query is the selection of a 
-particular station (or even multiple stations). Although a [GIS Data Locator][1] exists that allows interactive 
+particular station (or even multiple stations). Although a [GIS Data Locator][3] exists that allows interactive 
 station selection and data acquisition, I thought it was a good thing to 
 implement a couple of search function to speed things up a little bit. 
 
-The **GSODTools** package comes with a built-in dataset from [NOAA's FTP server][2]
+The **GSODTools** package comes with a built-in dataset from [NOAA's FTP server][4]
 holding information about all available GSOD stations that is automatically 
 attached via lazy-loading when loading the package. Let's have a quick look at it. 
 
 
 ```
-##   USAF  WBAN STATION.NAME CTRY FIPS STATE CALL   LAT   LON ELEV..1M.
-## 1 6852 99999         SENT   SW   SZ            46817 10350     14200
-## 2 7005 99999   CWOS 07005                         NA    NA        NA
-## 3 7010 99999   CWOS 07010                         NA    NA        NA
-## 4 7011 99999   CWOS 07011                         NA    NA        NA
-## 5 7012 99999   CWOS 07012                         NA    NA        NA
-## 6 7015 99999   CWOS 07015                         NA    NA        NA
-##      BEGIN      END
-## 1       NA       NA
-## 2 20120127 20120127
-## 3       NA       NA
-## 4 20111025 20121129
-## 5       NA       NA
-## 6       NA       NA
+##   USAF  WBAN STATION.NAME CTRY FIPS STATE CALL   LAT   LON ELEV..1M.    BEGIN      END
+## 1 6852 99999         SENT   SW   SZ            46817 10350     14200       NA       NA
+## 2 7005 99999   CWOS 07005                         NA    NA        NA 20120127 20120127
+## 3 7010 99999   CWOS 07010                         NA    NA        NA       NA       NA
+## 4 7011 99999   CWOS 07011                         NA    NA        NA 20111025 20121129
+## 5 7012 99999   CWOS 07012                         NA    NA        NA       NA       NA
+## 6 7015 99999   CWOS 07015                         NA    NA        NA       NA       NA
 ```
 
 Unfortunatelly, the data formatting and consistency of this official table is 
@@ -147,14 +142,10 @@ shp_kili_south@data
 ```
 
 ```
-##     USAF  WBAN        STATION.NAME CTRY FIPS STATE CALL ELEV..1M.    BEGIN
-## 1 637890 99999              ARUSHA   TN   TZ       HTAR      1387 19600111
-## 2 637900 99999               MOSHI   TN   TZ       HTMS       831 19490909
-## 3 637910 99999 KILIMANJARO AIRPORT   TN   TZ       HTKJ       896 19730101
-##        END
-## 1 20130705
-## 2 20130612
-## 3 20130705
+##     USAF  WBAN        STATION.NAME CTRY FIPS STATE CALL ELEV..1M.    BEGIN      END
+## 1 637890 99999              ARUSHA   TN   TZ       HTAR      1387 19600111 20130705
+## 2 637900 99999               MOSHI   TN   TZ       HTMS       831 19490909 20130612
+## 3 637910 99999 KILIMANJARO AIRPORT   TN   TZ       HTKJ       896 19730101 20130705
 ```
 
 **Downloading data**
@@ -179,10 +170,8 @@ head(moshi)
 ```
 
 ```
-##     USAF  WBAN STATION.NAME CTRY FIPS STATE CALL   LAT   LON ELEV..1M.
-## 1 637900 99999        MOSHI   TN   TZ       HTMS -3350 37333      8310
-##      BEGIN      END
-## 1 19490909 20130612
+##     USAF  WBAN STATION.NAME CTRY FIPS STATE CALL   LAT   LON ELEV..1M.    BEGIN      END
+## 1 637900 99999        MOSHI   TN   TZ       HTMS -3350 37333      8310 19490909 20130612
 ```
 
 If you are not willing to download the entire dataset from a given 
@@ -249,5 +238,7 @@ toCelsius(val_fah, digits = 1)
 ##  [1] 21.2 19.0 20.3 23.3 16.5 18.1 18.6 18.6 22.4 20.3
 ```
 
-[1]: http://www.climate.gov/daily-observational-data-global-summary-day-gsod-%E2%80%93-gis-data-locator
-[2]: ftp://ftp.ncdc.noaa.gov/pub/data/gsod/ish-history.csv
+[1]: https://zenodo.org/badge/5994/environmentalinformatics-marburg/GSODTools.png
+[2]: http://dx.doi.org/10.5281/zenodo.12217
+[3]: http://www.climate.gov/daily-observational-data-global-summary-day-gsod-%E2%80%93-gis-data-locator
+[4]: ftp://ftp.ncdc.noaa.gov/pub/data/gsod/ish-history.csv

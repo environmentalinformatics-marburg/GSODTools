@@ -1,8 +1,15 @@
 GSODTools
 =========
 
+```{r global_options, include = FALSE}
+library(knitr)
+options(width = 120)
+opts_chunk$set(fig.width = 12, fig.height = 8, fig.path = 'figure/',
+               include = TRUE, warning = FALSE, message = FALSE)
+```
+
 For the latest stable release, please refer to  
-[![DOI](https://zenodo.org/badge/5994/environmentalinformatics-marburg/GSODTools.png)](http://dx.doi.org/10.5281/zenodo.12217).
+[![doi_GSODTools_v1.0.0][1]][2].
 
 ### What it is all about
 
@@ -19,11 +26,11 @@ some processing steps for quality assurance and gap filling.
 **Getting started**
 
 The starting point for each GSOD-related search query is the selection of a 
-particular station (or even multiple stations). Although a [GIS Data Locator][1] exists that allows interactive 
+particular station (or even multiple stations). Although a [GIS Data Locator][3] exists that allows interactive 
 station selection and data acquisition, I thought it was a good thing to 
 implement a couple of search function to speed things up a little bit. 
 
-The **GSODTools** package comes with a built-in dataset from [NOAA's FTP server][2]
+The **GSODTools** package comes with a built-in dataset from [NOAA's FTP server][4]
 holding information about all available GSOD stations that is automatically 
 attached via lazy-loading when loading the package. Let's have a quick look at it. 
 
@@ -199,5 +206,7 @@ val_fah <- runif(10, 60, 80)
 toCelsius(val_fah, digits = 1)
 ```
 
-[1]: http://www.climate.gov/daily-observational-data-global-summary-day-gsod-%E2%80%93-gis-data-locator
-[2]: ftp://ftp.ncdc.noaa.gov/pub/data/gsod/ish-history.csv
+[1]: https://zenodo.org/badge/5994/environmentalinformatics-marburg/GSODTools.png
+[2]: http://dx.doi.org/10.5281/zenodo.12217
+[3]: http://www.climate.gov/daily-observational-data-global-summary-day-gsod-%E2%80%93-gis-data-locator
+[4]: ftp://ftp.ncdc.noaa.gov/pub/data/gsod/ish-history.csv
