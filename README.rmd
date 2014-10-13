@@ -168,7 +168,7 @@ also determine whether to extract the zipped files and remove the *.gz files
 after extraction. In this case, the function returns a `data.frame` rather than
 a vector of *.gz filepaths. Note that, for each year and station, the function 
 automatically checks if data is already present in the specified destination 
-folder. If so, the referring download will automatically be skipped and the next
+folder. If so, the referring download will be skipped and the 
 subsequent download query will be evaluated. Here is an example on data 
 download including visualization of the daily mean air temperature from Moshi, 
 Tanzania, for the years 1990 to 2000. 
@@ -182,7 +182,14 @@ gsod_moshi <- dlGsodStations(usaf = moshi$USAF,
 
 # Plot temperature data (but: time series not continuous!)
 library(ggplot2)
-ggplot(aes(y = toCelsius(TEMP, 1), x = seq(TEMP)), data = gsod_moshi) + 
+
+# Remove obsolete columns
+gsod_moshi <- gsod_moshi[, -grep("NC", names(gsod_moshi))]
+# Reformat date and temperature column
+gsod_moshi$YEARMODA <- as.Date(strptime(gsod_moshi$YEARMODA, format = "%Y%m%d"))
+gsod_moshi$TEMP <- toCelsius(gsod_moshi$TEMP, digits = 1)
+
+ggplot(aes(y = toCelsius(TEMP, 1), x = YEARMODA), data = gsod_moshi) + 
   geom_line(color = "grey50") + 
   stat_smooth(method = "lm") + 
   labs(x = "Index", y = expression("Temperature (" ~ degree ~ C ~ ")")) +
