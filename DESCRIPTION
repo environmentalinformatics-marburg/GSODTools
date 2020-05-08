@@ -14,13 +14,13 @@ Depends:
     sp,
     gmt,
     EcoHydRology,
+    plyr,
     dplyr,
     zoo,
     foreach,
     Rssa,
     scales,
     reshape2,
-    plyr,
     RColorBrewer,
     ggplot2
 LazyData: true
