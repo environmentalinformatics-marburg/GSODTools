@@ -57,11 +57,7 @@ gsodReformat <- function(data,
     data$ELEV.M. <- data$ELEV.M. / 10
   
   # Reformat coordinates (optional)
-  if (coords) {
-    for (i in c("LON", "LAT")) {
-      data[, i] <- data[, i] / 1000
-    }
-  } else {
+  if (!coords) {
     rm_invalid_coords <- FALSE
   }
   
