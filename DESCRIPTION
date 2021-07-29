@@ -22,5 +22,8 @@ Depends:
     scales,
     reshape2,
     RColorBrewer,
-    ggplot2
+    ggplot2,
+    R (>= 2.10)
 LazyData: true
+RoxygenNote: 7.1.1
+Encoding: UTF-8
