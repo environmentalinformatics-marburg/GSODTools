@@ -3,7 +3,7 @@
 #' @description
 #' This function is intended to reformat selected columns, i.e. elevation and
 #' coordinates, from the initial list of available GSOD stations (see 
-#' ftp://ftp.ncdc.noaa.gov/pub/data/gsod/ish-history.csv). Optionally, the
+#' \url{ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv}). Optionally, the
 #' corresponding \code{data.frame} can then be converted to an object of class
 #' \code{SpatialPointsDataFrame} for further processing. 
 #' 
