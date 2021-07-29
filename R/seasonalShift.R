@@ -108,42 +108,6 @@ seasonalShift <- function(fls,
   
   
   ## ggplot
-
-#   if (is.list(start) & is.list(end)) {
-#     
-#     label.st.1 <- paste(substr(start[[1]], 1, 4), collapse = "-")
-#     label.st.2 <- paste(substr(start[[2]], 1, 4), collapse = "-")
-#     
-#     label.nd.1 <- paste(substr(end[[1]], 1, 4), collapse = "-")
-#     label.nd.2 <- paste(substr(end[[2]], 1, 4), collapse = "-")
-#     
-#     # Color palette
-#     if (is.null(cols)) {
-#       greys <- brewer.pal(9, "Greys")
-#       blues <- brewer.pal(9, "Blues")
-#       
-#       cols <- c(greys[3], blues[3], blues[9], greys[9])
-#     }
-#     
-#     names(cols) <- c(label.st.1, label.st.2, label.nd.2, label.nd.1)
-#     
-#     ggplot(aes(x = month, y = value, group = variable, colour = variable, 
-#                linetype = variable), data = tmp.all) + 
-#       geom_line(lwd = 2) + 
-#       facet_wrap(~ station, ncol = 1, scales = "free_y") + 
-#       scale_colour_manual("", 
-#                           values = cols, 
-#                           breaks = c(label.st.1, label.st.2, label.nd.2, label.nd.1)) + 
-#       scale_linetype_manual("", values = c(2, 2, 1, 1), 
-#                             breaks = c(label.st.1, label.st.2, label.nd.2, label.nd.1)) + 
-#       labs(list(x = "\nMonth", y = "Temperature [°C]\n")) + 
-#       theme_bw() + 
-#       theme(text = element_text(size = 15), 
-#             panel.grid.major = element_blank(), 
-#             panel.grid.minor = element_blank(),
-#             legend.key = element_rect(fill = "transparent"))
-#   } else {
-
     label.st <- paste(substr(start, 1, 4), collapse = "-")
     label.nd <- paste(substr(end, 1, 4), collapse = "-")
     
