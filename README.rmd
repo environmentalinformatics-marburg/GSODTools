@@ -1,5 +1,7 @@
-GSODTools
-=========
+---
+title: "GSODTools"
+output: md_document
+---
 
 ```{r global_options, include = FALSE}
 library(knitr)
@@ -209,4 +211,4 @@ toCelsius(val_fah, digits = 1)
 [1]: https://zenodo.org/badge/5994/environmentalinformatics-marburg/GSODTools.png
 [2]: http://dx.doi.org/10.5281/zenodo.12217
 [3]: http://www.climate.gov/daily-observational-data-global-summary-day-gsod-%E2%80%93-gis-data-locator
-[4]: ftp://ftp.ncdc.noaa.gov/pub/data/gsod/ish-history.csv
+[4]: ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv
