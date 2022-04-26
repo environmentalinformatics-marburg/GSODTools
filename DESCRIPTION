@@ -1,7 +1,7 @@
 Package: GSODTools
 Type: Package
 Title: R functions to select, download, and process GSOD data.
-Version: 1.0.1
+Version: 1.0.1.9000
 Date: 2014-10-08
 Author: Florian Detsch
 Maintainer: Florian Detsch <florian.detsch@staff.uni-marburg.de>
