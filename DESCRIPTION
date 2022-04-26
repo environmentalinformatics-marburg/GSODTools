@@ -1,6 +1,6 @@
 Package: GSODTools
 Title: R functions to select, download, and process GSOD data.
-Version: 1.0.1.9000
+Version: 1.0.1.9001
 Author: Florian Detsch
 Maintainer: Florian Detsch <florian.detsch@staff.uni-marburg.de>
 Description: More about what it does (maybe more than one line)
