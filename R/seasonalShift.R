@@ -117,7 +117,7 @@ seasonalShift <- function(fls,
       facet_wrap(~ station, ncol = 1, scales = "free_y") + 
       scale_colour_manual("", values = c("cornflowerblue", "red2"), 
                           labels = c(label.st, label.nd)) + 
-      labs(list(x = "\nMonth", y = "Temperature [°C]\n")) + 
+      labs(list(x = "\nMonth", y = "Temperature [\u00B0C]\n")) + 
       theme_bw() + 
       theme(text = element_text(...), 
             legend.key = element_rect(fill = "transparent"), 
