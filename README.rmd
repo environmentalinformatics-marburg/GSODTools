@@ -28,11 +28,12 @@ some processing steps for quality assurance and gap filling.
 **Getting started**
 
 The starting point for each GSOD-related search query is the selection of a 
-particular station (or even multiple stations). Although a [GIS Data Locator][3] exists that allows interactive 
-station selection and data acquisition, I thought it was a good thing to 
-implement a couple of search function to speed things up a little bit. 
+particular station (or even multiple stations). Although there are tools that 
+allow interactive station selection and data acquisition, I thought it was a 
+good thing to implement a couple of search functions to speed things up a little
+bit. 
 
-The **GSODTools** package comes with a built-in dataset from [NOAA's FTP server][4]
+The **GSODTools** package comes with a built-in dataset from [NOAA's FTP server][3]
 holding information about all available GSOD stations that is automatically 
 attached via lazy-loading when loading the package. Let's have a quick look at it. 
 
@@ -61,7 +62,7 @@ gsod_shp <- gsodReformat(data = gsodstations,
                          df2sp = TRUE)
 
 par(mar = c(0, 0, 0, 0))
-plot(gsod_shp)
+sp::plot(gsod_shp)
 ```
 
 **Selecting a station**
@@ -81,6 +82,8 @@ in a circle of 500 km around Kibo summit, Mt. Kilimanjaro, Tanzania. The referri
 coordinates are `c(37.359031, -3.065053)`.
 
 ```{r stationFromCoords}
+library(dplyr)
+
 shp_kibo <- stationFromCoords(x = 37.359031, y = -3.065053, width = 500)
 # or: stationFromCoords(x = c(37.359031, -3.065053), width = 500)
 # or: stationFromCoords(x = SpatialPoints(data.frame(x = 37.359031, 
@@ -88,8 +91,12 @@ shp_kibo <- stationFromCoords(x = 37.359031, y = -3.065053, width = 500)
 #                                         proj4string = CRS("+init=epsg:4326")), 
 #                       width = 500)
 
-mapGriddedData(mapRegion = "africa", plotData = FALSE, borderCol = "black",
-               addLegend = FALSE)
+rworldmap::mapGriddedData(
+  mapRegion = "africa"
+  , plotData = FALSE
+  , borderCol = "black"
+  , addLegend = FALSE
+)
 points(shp_kibo, col = "red", pch = 20, cex = 2)
 ```
 
@@ -104,11 +111,17 @@ Alternatively, an extent object from an arbitrary spatial object, e.g. 'RasterLa
 'SpatialPolygons' etc, may be defined. In this case, `drawExtent` (which is actually quite difficult to include in a README file) is automatically disabled. 
 
 ```{r stationFromExtent}
+library(raster)
+
 bbox_kibo_south <- extent(c(36.6, 37.72, -3.5, -3.065053))
 shp_kili_south <- stationFromExtent(bb = bbox_kibo_south)
 
-mapGriddedData(mapRegion = "africa", plotData = FALSE, borderCol = "black",
-               addLegend = FALSE)
+rworldmap::mapGriddedData(
+  mapRegion = "africa"
+  , plotData = FALSE
+  , borderCol = "black"
+  , addLegend = FALSE
+)
 points(shp_kili_south, col = "red", pch = 20, cex = 2)
 ```
 
@@ -119,14 +132,12 @@ Again referring to the above example where we selected Arusha, Moshi, and
 Kilimanjaro International Airport (KIA), this would more or less look like this. 
 
 ```{r station_manual_selection}
-library(dplyr)
-
 station_names <- c("ARUSHA", "KILIMANJARO AIRPORT", "MOSHI")
 
 shp_kili_south <- 
-  gsodstations %>% 
-  gsodReformat() %>% 
-  filter(STATION.NAME %in% station_names) %>% 
+  gsodstations |> 
+  gsodReformat() |> 
+  filter(STATION.NAME %in% station_names) |> 
   gsodDf2Sp()
 
 shp_kili_south@data
@@ -146,10 +157,11 @@ determined by having a look at the outcome of the various station selection
 functions. 
 
 ```{r usaf_retrieval}
-library(dplyr)
-
 # Subset station list by name, and display related USAF code
-moshi <- filter(gsodstations, STATION.NAME == "MOSHI")
+moshi <- subset(
+  gsodstations
+  , STATION.NAME == "MOSHI"
+)
 head(moshi)
 ```
 
@@ -210,5 +222,4 @@ toCelsius(val_fah, digits = 1)
 
 [1]: https://zenodo.org/badge/5994/environmentalinformatics-marburg/GSODTools.png
 [2]: http://dx.doi.org/10.5281/zenodo.12217
-[3]: http://www.climate.gov/daily-observational-data-global-summary-day-gsod-%E2%80%93-gis-data-locator
-[4]: ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv
+[3]: ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv
