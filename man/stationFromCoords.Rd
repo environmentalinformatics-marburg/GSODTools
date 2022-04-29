@@ -52,7 +52,7 @@ gsod_shp <- stationFromCoords(x = kibo,
 
 }
 \seealso{
-\code{\link{geodist}}
+\code{\link[gmt]{geodist}}
 }
 \author{
 Florian Detsch
