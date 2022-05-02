@@ -1,5 +1,7 @@
 #' Julendat wrapper function for imputation of missing values
 #' 
+#' @importFrom gmt geodist
+#' 
 # #' @export gfImputeMissingValue
 gfImputeMissingValue <- function(data.dep, 
                                  data.indep,
@@ -12,9 +14,6 @@ gfImputeMissingValue <- function(data.dep,
                                  prm.indep = NA,
                                  family = gaussian,
                                  ...) {
-  
-  # Required packages
-  library(gmt)
   
   # Revision of defined time window with respect to the current gap before ...
   time.window.pre <- pos.na[1] - time.window
@@ -84,10 +83,12 @@ gfImputeMissingValue <- function(data.dep,
   
   if (!is.null(data.coords)) {
     data.indep.avl[,3] <- unlist(lapply(seq(data.indep.avl[, 1]), function(k) {
-      geodist(Nfrom = data.coords[which(data.coords[, 1] == data.dep@PlotId$Unique),"Lat"], 
-              Efrom = data.coords[which(data.coords[, 1] == data.dep@PlotId$Unique),"Lon"], 
-              Nto = data.coords[which(data.coords[, 1] == data.indep.avl[k, 1]), "Lat"], 
-              Eto = data.coords[which(data.coords[, 1] == data.indep.avl[k, 1]), "Lon"])
+      gmt::geodist(
+        Nfrom = data.coords[which(data.coords[, 1] == data.dep@PlotId$Unique),"Lat"]
+        , Efrom = data.coords[which(data.coords[, 1] == data.dep@PlotId$Unique),"Lon"]
+        , Nto = data.coords[which(data.coords[, 1] == data.indep.avl[k, 1]), "Lat"]
+        , Eto = data.coords[which(data.coords[, 1] == data.indep.avl[k, 1]), "Lon"]
+      )
     }))
     
     # Order independent stations by distance from the dependent plot
