@@ -51,9 +51,9 @@
 #'                     reversed_forecast = FALSE, 
 #'                     digits = 2)
 #' 
-#' plot(slot(ki_gar_ssa, "Parameter")[["TEMP"]], type = "l", col = "red")
-#' lines(slot(ki_gar_linint, "Parameter")[["TEMP"]], col = "green")
-#' lines(slot(ki_gar, "Parameter")[["TEMP"]])             
+#' plot(methods::slot(ki_gar_ssa, "Parameter")[["TEMP"]], type = "l", col = "red")
+#' lines(methods::slot(ki_gar_linint, "Parameter")[["TEMP"]], col = "green")
+#' lines(methods::slot(ki_gar, "Parameter")[["TEMP"]])             
 #' 
 #' @export gfSsa
 #' @aliases gfSsa
@@ -74,18 +74,18 @@ gfSsa <- function(data,
 
     # Reverse time series prior to forecasting (optional)
     tmp.rev <- if (reversed_forecast) {
-      rev(as.numeric(slot(data, "Parameter")[[h]]))
+      rev(as.numeric(methods::slot(data, "Parameter")[[h]]))
     } else {
-      as.numeric(slot(data, "Parameter")[[h]])
+      as.numeric(methods::slot(data, "Parameter")[[h]])
     }
     
     # Convert numeric vector to 'zoo' time series
-    tmp.rev.ts <- zoo(tmp.rev, order.by = as.Date(slot(data, "Datetime")))
+    tmp.rev.ts <- zoo(tmp.rev, order.by = as.Date(methods::slot(data, "Datetime")))
     # Insert potentially reversed time series into referring parameter slot
-    slot(data.rev, "Parameter")[[h]] <- as.numeric(tmp.rev.ts)
+    methods::slot(data.rev, "Parameter")[[h]] <- as.numeric(tmp.rev.ts)
     
     # Identify lengths of measurement gaps
-    data.rev.na <- which(is.na(slot(data.rev, "Parameter")[[h]]))
+    data.rev.na <- which(is.na(methods::slot(data.rev, "Parameter")[[h]]))
     ki.rev.na <- do.call(function(...) {
       tmp <- rbind(...)
       names(tmp) <- c("start", "end", "span")
@@ -104,7 +104,7 @@ gfSsa <- function(data,
       
       # Deconstruct continuous measurement series
       tmp.ssa <- 
-        ssa(slot(data.rev, "Parameter")[[h]][ki.rev.nona[1, 1]:ki.rev.nona[1, 2]], 
+        ssa(methods::slot(data.rev, "Parameter")[[h]][ki.rev.nona[1, 1]:ki.rev.nona[1, 2]], 
             L = if (ki.rev.nona[1, 3] > 365) {
               365
             } else if (ki.rev.nona[1, 3] <= 365 & ki.rev.nona[1, 3] > 182) {
@@ -115,11 +115,11 @@ gfSsa <- function(data,
             })
 
       # Forecast the next gap
-      slot(data.rev, "Parameter")[[h]][ki.rev.na[1,1] : ki.rev.na[1,2]] <-
+      methods::slot(data.rev, "Parameter")[[h]][ki.rev.na[1,1] : ki.rev.na[1,2]] <-
         forecast(tmp.ssa, groups = list(seq(nsigma(tmp.ssa))), len = ki.rev.na[1,3])$mean
       
       # Update lengths of measurement gaps
-      data.rev.na <- which(is.na(slot(data.rev, "Parameter")[[h]]))
+      data.rev.na <- which(is.na(methods::slot(data.rev, "Parameter")[[h]]))
       if (length(data.rev.na) > 0) {
         ki.rev.na <- do.call(function(...) {
           tmp <- rbind(...)
@@ -136,9 +136,9 @@ gfSsa <- function(data,
     
     # Replace gappy by filled time series
     if (reversed_forecast) {
-      tmp <- rev(as.numeric(slot(data.rev, "Parameter")[[h]]))
+      tmp <- rev(as.numeric(methods::slot(data.rev, "Parameter")[[h]]))
     } else {
-      tmp <- as.numeric(slot(data.rev, "Parameter")[[h]])
+      tmp <- as.numeric(methods::slot(data.rev, "Parameter")[[h]])
     }
     
     return(round(tmp, ...))
@@ -147,8 +147,8 @@ gfSsa <- function(data,
   # Insert gap-filled time series into referring slots
   for (j in prm) {
     id_prm <- grep(j, prm)
-    id_ki <- grep(j, names(slot(data, "Parameter")))
-    slot(data, "Parameter")[[id_ki]] <- filled.data[[id_prm]]
+    id_ki <- grep(j, names(methods::slot(data, "Parameter")))
+    methods::slot(data, "Parameter")[[id_ki]] <- filled.data[[id_prm]]
   }
   
   # Return gap-filled data sets

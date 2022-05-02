@@ -21,7 +21,7 @@
 #' Florian Detsch
 #' 
 #' @seealso 
-#' \code{\link{geodist}}
+#' \code{\link[gmt]{geodist}}
 #' 
 #' @examples
 #' # Identify GSOD stations that lie within a distance of 100 km around Kibo summit
@@ -64,8 +64,13 @@ stationFromCoords <- function(x,
   # Calculate distance from point of interest to supplied stations
   stations <- gsodReformat(gsodstations, df2sp = FALSE)
   x.to.stations <- sapply(seq(nrow(stations)), function(i) {
-    as.numeric(geodist(Nfrom = y, Efrom = x, 
-                       Nto = stations[i, "LAT"], Eto = stations[i, "LON"]))
+    as.numeric(
+      gmt::geodist(
+        Nfrom = y
+        , Efrom = x
+        , Nto = stations[i, "LAT"], Eto = stations[i, "LON"]
+      )
+    )
   })
   # Add calculated distances to stations
   stations$DIST <- round(x.to.stations, ...)

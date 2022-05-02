@@ -55,9 +55,9 @@ ki_gar_ssa <- gfSsa(data = ki_gar_linint,
                     reversed_forecast = FALSE, 
                     digits = 2)
 
-plot(slot(ki_gar_ssa, "Parameter")[["TEMP"]], type = "l", col = "red")
-lines(slot(ki_gar_linint, "Parameter")[["TEMP"]], col = "green")
-lines(slot(ki_gar, "Parameter")[["TEMP"]])             
+plot(methods::slot(ki_gar_ssa, "Parameter")[["TEMP"]], type = "l", col = "red")
+lines(methods::slot(ki_gar_linint, "Parameter")[["TEMP"]], col = "green")
+lines(methods::slot(ki_gar, "Parameter")[["TEMP"]])             
 
 }
 \seealso{

@@ -38,7 +38,7 @@
 #' 
 #' # Identify length per data gap
 #' gaps <- gfGapLength(data.dep = ki_moshi, 
-#'                     pos.na = which(is.na(slot(ki_moshi, "Parameter")$TEMP)), 
+#'                     pos.na = which(is.na(methods::slot(ki_moshi, "Parameter")$TEMP)), 
 #'                     gap.limit = 365,
 #'                     units = "days", 
 #'                     end.datetime = Sys.Date())
@@ -46,7 +46,9 @@
 #' # Identify lengths of continuous measurements
 #' nogaps <- gfNogapLength(gaps = gaps, 
 #'                         data.dep = ki_moshi)                     
-#'             
+#' 
+#' @importFrom methods slot
+#' 
 #' @export gfNogapLength
 #' @aliases gfNogapLength
 gfNogapLength <- function(gaps, 
@@ -75,9 +77,9 @@ gfNogapLength <- function(gaps,
       tmp.start <- gaps[[i-1]][[2]] + 1
       tmp.end <- gaps[[i]][[1]] - 1
       tmp.span <- length(seq(tmp.start, tmp.end))
-    } else if (i == length(gaps) & gaps[[i]][[2]] != length(slot(data.dep, "Parameter")[["TEMP"]])) {
+    } else if (i == length(gaps) & gaps[[i]][[2]] != length(methods::slot(data.dep, "Parameter")[["TEMP"]])) {
       tmp.start <- gaps[[i]][[2]] + 1
-      tmp.end <- length(slot(data.dep, "Parameter")[["TEMP"]])
+      tmp.end <- length(methods::slot(data.dep, "Parameter")[["TEMP"]])
       tmp.span <- length(seq(tmp.start, tmp.end))
     }
     

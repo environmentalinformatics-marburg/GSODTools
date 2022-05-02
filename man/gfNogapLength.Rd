@@ -41,7 +41,7 @@ ki_moshi <- gsod2ki(data = gsod_moshi,
 
 # Identify length per data gap
 gaps <- gfGapLength(data.dep = ki_moshi, 
-                    pos.na = which(is.na(slot(ki_moshi, "Parameter")$TEMP)), 
+                    pos.na = which(is.na(methods::slot(ki_moshi, "Parameter")$TEMP)), 
                     gap.limit = 365,
                     units = "days", 
                     end.datetime = Sys.Date())
@@ -49,7 +49,7 @@ gaps <- gfGapLength(data.dep = ki_moshi,
 # Identify lengths of continuous measurements
 nogaps <- gfNogapLength(gaps = gaps, 
                         data.dep = ki_moshi)                     
-            
+
 }
 \seealso{
 \code{\link{gfGapLength}}

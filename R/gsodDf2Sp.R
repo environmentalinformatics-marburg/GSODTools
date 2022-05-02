@@ -25,6 +25,9 @@
 #'                          
 #' plot(gsod_shp)                        
 #' 
+#' @importFrom methods as
+#' @importFrom sf st_as_sf
+#' 
 #' @export gsodDf2Sp
 #' @aliases gsodDf2Sp
 gsodDf2Sp <- function(data, 
@@ -33,8 +36,16 @@ gsodDf2Sp <- function(data,
   # Subset data by valid coordinates and convert to SpatialPointsDataFrame
   data.lonlat <- subset(data, !is.na(LON) & !is.na(LAT))
   
-  coordinates(data.lonlat) <- ~ LON + LAT
-  proj4string(data.lonlat) <- CRS("+init=epsg:4326")
+  data.lonlat = sf::st_as_sf(
+    data.lonlat
+    , coords = c("LON", "LAT")
+    , crs = 4326
+  )
   
-  return(data.lonlat)
+  return(
+    methods::as(
+      data.lonlat
+      , Class = "Spatial"
+    )
+  )
 }

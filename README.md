@@ -21,11 +21,9 @@ processing steps for quality assurance and gap filling.
 **Getting started**
 
 The starting point for each GSOD-related search query is the selection
-of a particular station (or even multiple stations). Although a [GIS
-Data
-Locator](http://www.climate.gov/daily-observational-data-global-summary-day-gsod-%E2%80%93-gis-data-locator)
-exists that allows interactive station selection and data acquisition, I
-thought it was a good thing to implement a couple of search function to
+of a particular station (or even multiple stations). Although there are
+tools that allow interactive station selection and data acquisition, I
+thought it was a good thing to implement a couple of search functions to
 speed things up a little bit.
 
 The **GSODTools** package comes with a built-in dataset from [NOAA’s FTP
@@ -63,7 +61,7 @@ probably look like this.
                              df2sp = TRUE)
 
     par(mar = c(0, 0, 0, 0))
-    plot(gsod_shp)
+    sp::plot(gsod_shp)
 
 ![](figure/gsodReformat-1.png)
 
@@ -85,6 +83,8 @@ numerics. For instance, let’s search for GSOD stations in a circle of
 500 km around Kibo summit, Mt. Kilimanjaro, Tanzania. The referring
 coordinates are `c(37.359031, -3.065053)`.
 
+    library(dplyr)
+
     shp_kibo <- stationFromCoords(x = 37.359031, y = -3.065053, width = 500)
     # or: stationFromCoords(x = c(37.359031, -3.065053), width = 500)
     # or: stationFromCoords(x = SpatialPoints(data.frame(x = 37.359031, 
@@ -92,8 +92,12 @@ coordinates are `c(37.359031, -3.065053)`.
     #                                         proj4string = CRS("+init=epsg:4326")), 
     #                       width = 500)
 
-    mapGriddedData(mapRegion = "africa", plotData = FALSE, borderCol = "black",
-                   addLegend = FALSE)
+    rworldmap::mapGriddedData(
+      mapRegion = "africa"
+      , plotData = FALSE
+      , borderCol = "black"
+      , addLegend = FALSE
+    )
     points(shp_kibo, col = "red", pch = 20, cex = 2)
 
 ![](figure/stationFromCoords-1.png)
@@ -113,11 +117,17 @@ object from an arbitrary spatial object, e.g. ‘RasterLayer’,
 is actually quite difficult to include in a README file) is
 automatically disabled.
 
+    library(raster)
+
     bbox_kibo_south <- extent(c(36.6, 37.72, -3.5, -3.065053))
     shp_kili_south <- stationFromExtent(bb = bbox_kibo_south)
 
-    mapGriddedData(mapRegion = "africa", plotData = FALSE, borderCol = "black",
-                   addLegend = FALSE)
+    rworldmap::mapGriddedData(
+      mapRegion = "africa"
+      , plotData = FALSE
+      , borderCol = "black"
+      , addLegend = FALSE
+    )
     points(shp_kili_south, col = "red", pch = 20, cex = 2)
 
 ![](figure/stationFromExtent-1.png)
@@ -129,21 +139,19 @@ spelling of a station’s name. Again referring to the above example where
 we selected Arusha, Moshi, and Kilimanjaro International Airport (KIA),
 this would more or less look like this.
 
-    library(dplyr)
-
     station_names <- c("ARUSHA", "KILIMANJARO AIRPORT", "MOSHI")
 
     shp_kili_south <- 
-      gsodstations %>% 
-      gsodReformat() %>% 
-      filter(STATION.NAME %in% station_names) %>% 
+      gsodstations |> 
+      gsodReformat() |> 
+      filter(STATION.NAME %in% station_names) |> 
       gsodDf2Sp()
 
     shp_kili_south@data
 
     ##     USAF  WBAN STATION.NAME CTRY STATE ICAO ELEV.M.    BEGIN      END
-    ## 1 637890 99999       ARUSHA   TZ       HTAR  138.68 19600111 20210726
-    ## 2 637900 99999        MOSHI   TZ       HTMS   83.10 19490909 20210721
+    ## 1 637890 99999       ARUSHA   TZ       HTAR  138.68 19600111 20211119
+    ## 2 637900 99999        MOSHI   TZ       HTMS   83.10 19490909 20211003
 
 **Downloading data**
 
@@ -157,14 +165,15 @@ to each GSOD station and, in my opinion, catchier than the associated
 station names. The USAF code can be determined by having a look at the
 outcome of the various station selection functions.
 
-    library(dplyr)
-
     # Subset station list by name, and display related USAF code
-    moshi <- filter(gsodstations, STATION.NAME == "MOSHI")
+    moshi <- subset(
+      gsodstations
+      , STATION.NAME == "MOSHI"
+    )
     head(moshi)
 
-    ##     USAF  WBAN STATION.NAME CTRY STATE ICAO   LAT    LON ELEV.M.    BEGIN      END
-    ## 1 637900 99999        MOSHI   TZ       HTMS -3.35 37.333     831 19490909 20210721
+    ##         USAF  WBAN STATION.NAME CTRY STATE ICAO   LAT    LON ELEV.M.    BEGIN      END
+    ## 13475 637900 99999        MOSHI   TZ       HTMS -3.35 37.333     831 19490909 20211003
 
 If you are not willing to download the entire dataset from a given
 station (which is the default setting), but rather a limited period of
