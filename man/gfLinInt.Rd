@@ -48,8 +48,8 @@ ki_moshi_lf <- gfLinInt(data = ki_moshi,
                         prm = c("TEMP", "MIN", "MAX"),
                         limit = 3, width = 7)
 
-plot(slot(ki_moshi_lf, "Parameter")$TEMP, type = "l", col = "red")
-lines(slot(ki_moshi, "Parameter")$TEMP) 
+plot(methods::slot(ki_moshi_lf, "Parameter")$TEMP, type = "l", col = "red")
+lines(methods::slot(ki_moshi, "Parameter")$TEMP) 
 
 }
 \seealso{

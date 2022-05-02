@@ -1,5 +1,7 @@
 #' Convert data set to ki.data object
 #' 
+#' @importFrom methods new
+#' 
 # #' @export as.ki.data
 
 setClass("ki.data",
@@ -23,6 +25,8 @@ setClass("ki.data",
          )
 )
 
+#' @importFrom reshape2 melt
+
 as.ki.data <- function(input_filepath, 
                        start.column = 9,  
                        ...) {
@@ -30,8 +34,7 @@ as.ki.data <- function(input_filepath,
   
 
   stopifnot(require(ggplot2, quietly = TRUE))
-  stopifnot(require(reshape, quietly = TRUE))
- 
+
   # Check if data set to convert to ki.data already exists, 
   # otherwise import via read.table 
   if (class(input_filepath) == "character") {
@@ -116,13 +119,13 @@ as.ki.data <- function(input_filepath,
   validn <- sum(ok)
   nna <- NROW(df) - validn
 #  print(nna)
-  df2 <- melt(df2)
+  df2 <- reshape2::melt(df2)
 
   graph <- ggplot(df2, aes(x = value, y = ..scaled..))
   graph <- graph + geom_density(fill = "darkblue", alpha = 0.5) +
     facet_wrap(~ variable, scales = "free")
   
-  kiData <- new("ki.data",  
+  kiData <- methods::new("ki.data",  
                 Datetime = as.POSIXct(df$Datetime, tz = "UTC"),
                 Date = list(Unique = paste(unique(year), unique(month), 
                                            sep = ""),

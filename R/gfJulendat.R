@@ -61,7 +61,7 @@
 #'   gsodDf2Sp()
 #' 
 #' df_gsod <- 
-#'   foreach(usaf = slot(shp_gsod, "data")$USAF, plot_id = station_names_abb) %do% {
+#'   foreach(usaf = methods::slot(shp_gsod, "data")$USAF, plot_id = station_names_abb) %do% {
 #'     
 #'     # Download and extraction
 #'     tmp_df_gsod <- dlGsodStations(usaf = usaf, 
@@ -88,7 +88,7 @@
 #'     
 #'     # Remove outliers
 #'     for (j in c("TEMP", "MIN", "MAX")) {
-#'       slot(tmp_ki_gsod, "Parameter")[[j]] <- outlier2na(slot(tmp_ki_gsod, "Parameter")[[j]], 
+#'       methods::slot(tmp_ki_gsod, "Parameter")[[j]] <- outlier2na(methods::slot(tmp_ki_gsod, "Parameter")[[j]], 
 #'                                                lower_quantile = .2, upper_quantile = .8)
 #'     }
 #'     
@@ -124,7 +124,7 @@
 #'                        units = "days")
 #' 
 #' plot(jul_gsod$TEMP, col = "red", type = "l")
-#' lines(slot(df_gsod[[2]], "Parameter")$TEMP, col = "grey75")
+#' lines(methods::slot(df_gsod[[2]], "Parameter")$TEMP, col = "grey75")
 #'             
 #' @export gfJulendat
 #' @aliases gfJulendat

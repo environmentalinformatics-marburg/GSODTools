@@ -25,6 +25,7 @@
 #'                          
 #' plot(gsod_shp)                        
 #' 
+#' @importFrom methods as
 #' @importFrom sf st_as_sf
 #' 
 #' @export gsodDf2Sp
@@ -42,7 +43,7 @@ gsodDf2Sp <- function(data,
   )
   
   return(
-    as(
+    methods::as(
       data.lonlat
       , Class = "Spatial"
     )
