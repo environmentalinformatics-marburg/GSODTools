@@ -47,15 +47,6 @@ seasonalShift <- function(fls,
 #                           cols = NULL, 
                           ...) {
   
-  if (!"Rsenal" %in% rownames(installed.packages())) {
-      stop("Package 'Rsenal' is required. Please install it from GitHub \n 
-           library(devtools) \n
-           install_github('environmentalinformatics-marburg/Rsenal')
-           library(Rsenal)")
-  } else {
-    stopifnot(require(Rsenal))
-  }
-  
   # Import data
   tmp.all <- foreach(i = fls, j = stations, .combine = "rbind") %do% {
     
