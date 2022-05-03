@@ -4,3 +4,4 @@
 ^README\.rmd$
 ^dev_history\.R$
 ^figure$
+^data-raw$
