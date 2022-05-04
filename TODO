@@ -1,1 +1,14 @@
+#2
+* remove `data()` calls
+* document `gsodstations` built-in data
+* r version dependency (`|>`, `\(i)`)
+* initialize {tinytest}
+
+General
 * expose `vectorHarmonics()` (in another package)
+* enable {markdown} for documentation
+  - add `Roxygen: list(markdown = TRUE)` to DESCRIPTION
+  - further details: https://roxygen2.r-lib.org/articles/markdown.html
+* add ci/cd
+* gsod --> isd
+* {dplyr}, {data.table} or base
