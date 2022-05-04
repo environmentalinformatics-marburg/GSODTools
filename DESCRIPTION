@@ -25,7 +25,9 @@ Imports:
     ggplot2,
     sf,
     TSA,
-    methods
+    methods,
+    utils,
+    stats
 LazyData: true
 RoxygenNote: 7.1.2
 Encoding: UTF-8

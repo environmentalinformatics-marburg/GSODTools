@@ -43,6 +43,9 @@
 #' # Plot temperature data (but: time series not continuous!)                                                         
 #' plot(gsod_moshi$TEMP, type = "l")
 #' 
+#' @importFrom stats setNames
+#' @importFrom utils read.fwf
+#' 
 #' @export gzGsodStations
 #' @aliases gzGsodStations
 gzGsodStations <- function(usaf, 
@@ -69,24 +72,60 @@ gzGsodStations <- function(usaf,
   # Loop through all available files with valid records, i.e. with at least one
   # valid measurement
   index <- sapply(fls, function(i) length(readLines(i)) > 0)
-  df.all <- do.call("rbind", lapply(fls[index], function(i) {
-    # Import fixed width formatted data
-    df <- read.fwf(i, widths = gsodColWidth(), header = FALSE, skip = 1, 
-                   fill = TRUE, na.strings = c("999.9", "9999.9", "99.99"),
-                   stringsAsFactors = FALSE)
-    
-    # Remove redundant columns
-    df <- df[, -c(seq(2, 34, 2), 37, 40, 43, 44)]
-    
-    # Set column names
-    names(df) <- c("STN---", "WBAN", "YEARMODA", "TEMP", "NC", "DEWP", "NC", 
-                   "SLP", "NC", "STP", "NC", "VISIB", "NC", "WDSP", "NC", 
-                   "MXSPD", "GUST", "MAX", "MAXFLAG", "MIN", "MINFLAG", "PRCP", 
-                   "PRCPFLAG", "SNDP", "FRSHTT")
-    
-    # Return annual data per station
-    return(df)
-  }))
+  df.all = do.call(
+    rbind
+    , lapply(
+      fls[index]
+      , \(i) {
+        
+        # Import fixed width formatted data
+        df = utils::read.fwf(
+          i
+          , widths = gsodColWidth()
+          , skip = 1L
+          , fill = TRUE
+          , na.strings = c("999.9", "9999.9", "99.99", " ")
+          , colClasses = gsodColClasses()
+        )
+        
+        # Import column names
+        nms = utils::read.fwf(
+          "~/Downloads/637900-99999-1990.op"
+          , widths = gsodColWidth()
+          , n = 1L
+        )
+        
+        idx = !is.na(nms)
+        nms[idx] = gsub("\\s*", "", nms[idx])
+        
+        # Name flag columns as such
+        for (i in c("MAX", "MIN", "PRCP")) {
+          nms[
+            which(nms == i) + 1L
+          ] = paste0(i, "FLAG")
+        }
+        
+        # Remove nameless columns
+        df = df[
+          , idx
+        ] |> 
+          # Set column names
+          stats::setNames(
+            nms[idx]
+          ) |> 
+          # Convert 'YEARMODA' to `Date`
+          transform(
+            YEARMODA = as.Date(
+              YEARMODA
+              , format = "%Y%m%d"
+            )
+          )
+        
+        # Return annual data per station
+        return(df)
+      }
+    )
+  )
   
   # Save (optional) and return merged annual data per station
   if (save_output)
