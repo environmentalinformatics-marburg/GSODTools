@@ -5,6 +5,7 @@ gsodstations = data.table::fread(
     , rep("numeric", 3L) # lat, lon, elev(m)
     , rep("character", 2L) # begin, end
   )
+  , encoding = "Latin-1"
 )
 
 ## convert begin, end to `Date`
