@@ -4,7 +4,7 @@
 #' This function converts the list of available GSOD stations from \code{data.frame}
 #' to \code{SpatialPointsDataFrame}. 
 #' 
-#' @param data \code{data.frame}. Usually \code{data("gsodstations")}.
+#' @param data \code{data.frame}. Usually built-in \code{gsodstations}.
 #' @param ... Additional arguments. Currently not in use.
 #' 
 #' @return
@@ -14,9 +14,6 @@
 #' Florian Detsch
 #' 
 #' @examples
-#' # Load data
-#' data(gsodstations)
-#' 
 #' # Reformat station list
 #' gsod_df <- gsodReformat(gsodstations, df2sp = FALSE)
 #' 

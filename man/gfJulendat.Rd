@@ -81,8 +81,6 @@ the measurements taken by the station under investigation based on surrounding s
 library(dplyr)
 library(foreach)
 
-data(gsodstations)
-
 # Download data sets for selected GSOD stations
 station_names <- c("GARISSA", "KILIMANJARO AIRPORT", "MOMBASA", "MOROGORO", 
                    "JOMO KENYATTA INTL", "VOI")

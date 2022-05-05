@@ -5,7 +5,7 @@
 #' station code and a supplied temporal range.
 #' 
 #' @param usaf Numeric. A unique USAF station code. It can either be manually 
-#' determined from \code{data(gsodstations)}, or retreived from spatial 
+#' determined from built-in \code{gsodstations}, or retrieved from spatial 
 #' subsetting (see \code{\link{stationFromCoords}}, 
 #' \code{\link{stationFromExtent}}).
 #' @param dsn Character, default is the current working directory. Destination 
@@ -29,7 +29,6 @@
 #' @examples
 #' library(dplyr)
 #' 
-#' data(gsodstations)
 #' moshi <- filter(gsodstations, STATION.NAME == "MOSHI")
 #' 
 #' # Download data from Moshi, Tanzania, from 1990 to 1995
