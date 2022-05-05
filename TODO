@@ -1,6 +1,5 @@
 #2
 * remove `data()` calls
-* document `gsodstations` built-in data
 * r version dependency (`|>`, `\(i)`)
 * initialize {tinytest}
 
@@ -11,4 +10,4 @@ General
   - further details: https://roxygen2.r-lib.org/articles/markdown.html
 * add ci/cd
 * gsod --> isd
-* {dplyr}, {data.table} or base
+* {dplyr}, {data.table} (built-in data object) or base

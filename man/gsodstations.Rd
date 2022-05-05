@@ -5,15 +5,28 @@
 \alias{gsodstations}
 \title{Global Summary of the Day Station List}
 \format{
-A \code{data.table} with 29610 rows and 11 columns.
+A \code{data.table} with 29610 rows and 11 columns:
+\itemize{
+  \item{"USAF": }{[\code{character}] Air Force station ID. May contain a letter in the first position.}
+  \item{"WBAN": }{[\code{character}] NCDC WBAN number.}
+  \item{"STATION NAME": }{[\code{character}] Station name.}
+  \item{"CTRY": }{[\code{character}] FIPS country ID, see also \url{https://www.ncei.noaa.gov/data/global-summary-of-the-day/doc/country-list.txt}.}
+  \item{"STATE": }{[\code{character}] State for US stations.}
+  \item{"ICAO": }{[\code{character}] ICAO ID.}
+  \item{"LAT,LON": }{[\code{numeric}] Latitude, longitude in thousandths of decimal degrees.}
+  \item{"ELEV(M)": }{[\code{numeric}] Elevation in meters.}
+  \item{"BEGIN,END": }{[\code{character}] Beginning, end of Period Of Record (YYYYMMDD). There may be reporting gaps within the P.O.R..}
 }
-\source{
-\url{ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv}
 }
 \usage{
 gsodstations
 }
 \description{
 A data set containing the full Global Summary of the Day (GSOD) station list.
+}
+\seealso{
+Integrated Surface Database Station History, May 2022. Available 
+  online: \url{https://www.ncei.noaa.gov/pub/data/noaa/isd-history.txt} (last
+  accessed 2022-05-05)
 }
 \keyword{datasets}
