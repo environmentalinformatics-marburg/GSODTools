@@ -6,7 +6,7 @@ Maintainer: Florian Detsch <fdetsch@web.de>
 Description: R functions to select, download, and process GSOD data.
 License: MIT + file LICENSE
 Depends:
-    R (>= 2.10)
+    R (>= 4.1)
 Imports:
     rgdal,
     raster,

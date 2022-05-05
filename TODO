@@ -1,6 +1,5 @@
 #2
 * handle 'data_nairobi_kilimanjaro'
-* r version dependency (`|>`, `\(i)`)
 * initialize {tinytest}
 
 General
