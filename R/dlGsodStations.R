@@ -27,6 +27,7 @@
 #' Florian Detsch
 #' 
 #' @examples
+#' \dontrun{
 #' moshi = subset(
 #'   gsodstations
 #'   , `STATION NAME` == "MOSHI"
@@ -47,6 +48,7 @@
 #'   , data = gsod_moshi
 #'   , type = "l"
 #' )
+#' }
 #' 
 #' @export
 dlGsodStations <- function(usaf,

@@ -45,6 +45,7 @@ A vector of *.gz filenames, or an object of class \code{data.frame} if
 Download (and extract) data from a GSOD station based on its unique USAF code.
 }
 \examples{
+\dontrun{
 moshi = subset(
   gsodstations
   , `STATION NAME` == "MOSHI"
@@ -65,6 +66,7 @@ plot(
   , data = gsod_moshi
   , type = "l"
 )
+}
 
 }
 \author{
