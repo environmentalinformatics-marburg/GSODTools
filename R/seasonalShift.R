@@ -26,19 +26,31 @@
 #' Florian Detsch
 #' 
 #' @examples
-#' # Load outlier-adjusted (*gsod*) and gap-filled (*ssa*) data sets from Nairobi 
-#' # and Kilimanjaro Airport, 1980-2000
-#' data("data_nairobi_kilimanjaro")
+#' library(foreach)
+#' library(ggplot2)
 #' 
-#' # Visualize seasonal shifts in monthly averaged air temperature
-#' seasonalShift(fls = list(df_gsod_nairobi, df_gsod_kilimanjaro),  
-#'               start = c("1980-01-01", "1983-12-31"), 
-#'               end = c("1998-01-01", "2000-12-31"), 
-#'               stations = c("Jomo Kenyatta Intl.", "Kilimanjaro Intl. Airport"), 
-#'               prm = "MAX")
-#'          
-#' @export seasonalShift
-#' @aliases seasonalShift
+#' # visualize seasonal shifts in monthly averaged air temperature
+#' cleansed_data = subset(
+#'   eastafrica
+#'   , Status == "cleansed"
+#' )
+#' 
+#' cleansed_list = split(
+#'   cleansed_data
+#'   , f = cleansed_data$PlotId
+#' )
+#' 
+#' seasonalShift(
+#'   cleansed_list
+#'   , start = c("1980-01-01", "1983-12-31")
+#'   , end = c("1998-01-01", "2000-12-31")
+#'   , stations = c("Kilimanjaro Intl. Airport", "Jomo Kenyatta Intl. Airport")
+#'   , prm = "MAX"
+#' )
+#' 
+#' @importFrom zoo as.yearmon
+#' 
+#' @export
 seasonalShift <- function(fls, 
                           start = c("1973-01-01", "1977-12-31"),
                           end = c("2008-01-01", "2012-12-31"), 
@@ -58,7 +70,7 @@ seasonalShift <- function(fls,
         tmp <- i
       }
       tmp$year <- as.Date(substr(tmp$Datetime, 1, 10))
-      tmp$yearmon <- as.yearmon(tmp$year)
+      tmp$yearmon <- zoo::as.yearmon(tmp$year)
       
       tmp.st <- subset(tmp, year >= as.Date(k[1]) & year <= as.Date(k[2]))
       tmp.st.agg <- aggregate(tmp.st[, c("TEMP", "MAX", "MIN")], 

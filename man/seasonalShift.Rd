@@ -42,17 +42,28 @@ a monthly level. The seasonal shifts are derived from a harmonic trend model
 fitted to the desired start and end range of a measurement series.
 }
 \examples{
-# Load outlier-adjusted (*gsod*) and gap-filled (*ssa*) data sets from Nairobi 
-# and Kilimanjaro Airport, 1980-2000
-data("data_nairobi_kilimanjaro")
+library(foreach)
+library(ggplot2)
 
-# Visualize seasonal shifts in monthly averaged air temperature
-seasonalShift(fls = list(df_gsod_nairobi, df_gsod_kilimanjaro),  
-              start = c("1980-01-01", "1983-12-31"), 
-              end = c("1998-01-01", "2000-12-31"), 
-              stations = c("Jomo Kenyatta Intl.", "Kilimanjaro Intl. Airport"), 
-              prm = "MAX")
-         
+# visualize seasonal shifts in monthly averaged air temperature
+cleansed_data = subset(
+  eastafrica
+  , Status == "cleansed"
+)
+
+cleansed_list = split(
+  cleansed_data
+  , f = cleansed_data$PlotId
+)
+
+seasonalShift(
+  cleansed_list
+  , start = c("1980-01-01", "1983-12-31")
+  , end = c("1998-01-01", "2000-12-31")
+  , stations = c("Kilimanjaro Intl. Airport", "Jomo Kenyatta Intl. Airport")
+  , prm = "MAX"
+)
+
 }
 \author{
 Florian Detsch

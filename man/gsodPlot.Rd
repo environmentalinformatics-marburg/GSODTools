@@ -34,16 +34,40 @@ imputed, as well as linear trends of mean, minimum and maximum daily air
 temperature.
 }
 \examples{
-# Load outlier-adjusted (*gsod*) and gap-filled (*ssa*) data sets from Nairobi 
-# and Kilimanjaro Airport, 1980-2000
-data("data_nairobi_kilimanjaro")
+library(foreach)
+library(ggplot2)
 
 # Visualize trends in daily mean, minimum, and maximum air temperature
-gsodPlot(fls_orig = list(df_gsod_nairobi, df_gsod_kilimanjaro),  
-         fls = list(df_ssa_nairobi, df_ssa_kilimanjaro), 
-         stations = c("Jomo Kenyatta Intl.", "Kilimanjaro Intl. Airport"), 
-         type = "trends")
-         
+lst = split(
+  eastafrica
+  , f = paste(
+    eastafrica$PlotId
+    , eastafrica$Status
+    , sep = ","
+  )
+)
+
+cleansed_data = lst[
+  grep(
+    "cleansed"
+    , names(lst)
+  )
+]
+
+filled_data = lst[
+  grep(
+    "filled"
+    , names(lst)
+  )
+]
+
+gsodPlot(
+  cleansed_data
+  , filled_data
+  , stations = c("Jomo Kenyatta Intl. Airport", "Kilimanjaro Intl. Airport")
+  , type = "trends"
+)
+ 
 }
 \author{
 Florian Detsch

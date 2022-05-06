@@ -26,18 +26,43 @@
 #' Florian Detsch
 #' 
 #' @examples
-#' # Load outlier-adjusted (*gsod*) and gap-filled (*ssa*) data sets from Nairobi 
-#' # and Kilimanjaro Airport, 1980-2000
-#' data("data_nairobi_kilimanjaro")
+#' library(foreach)
+#' library(ggplot2)
 #' 
 #' # Visualize trends in daily mean, minimum, and maximum air temperature
-#' gsodPlot(fls_orig = list(df_gsod_nairobi, df_gsod_kilimanjaro),  
-#'          fls = list(df_ssa_nairobi, df_ssa_kilimanjaro), 
-#'          stations = c("Jomo Kenyatta Intl.", "Kilimanjaro Intl. Airport"), 
-#'          type = "trends")
-#'          
-#' @export gsodPlot
-#' @aliases gsodPlot
+#' lst = split(
+#'   eastafrica
+#'   , f = paste(
+#'     eastafrica$PlotId
+#'     , eastafrica$Status
+#'     , sep = ","
+#'   )
+#' )
+#' 
+#' cleansed_data = lst[
+#'   grep(
+#'     "cleansed"
+#'     , names(lst)
+#'   )
+#' ]
+#' 
+#' filled_data = lst[
+#'   grep(
+#'     "filled"
+#'     , names(lst)
+#'   )
+#' ]
+#' 
+#' gsodPlot(
+#'   cleansed_data
+#'   , filled_data
+#'   , stations = c("Jomo Kenyatta Intl. Airport", "Kilimanjaro Intl. Airport")
+#'   , type = "trends"
+#' )
+#'  
+#' @importFrom zoo read.zoo
+#' 
+#' @export
 gsodPlot <- function(fls_orig = NULL,
                      fls, 
                      stations, 
@@ -50,9 +75,16 @@ gsodPlot <- function(fls_orig = NULL,
   # Initial GSOD data
   if (!is.null(fls_orig)) {
     ta.orig <- lapply(fls_orig, function(i) {
-      tmp.ts <- read.zoo(i, format = "%Y-%m-%d %H:%M:%S", 
-                         header = TRUE, sep = ",", regular = TRUE)
-      frequency(tmp.ts) <- 365
+      tmp.ts <- zoo::read.zoo(
+        i
+        , sep = ","
+        , header = TRUE
+        , index.column = 3L
+        , format = "%Y-%m-%d %H:%M:%S"
+        , tz = "EAT"
+        , regular = TRUE
+      )
+      # frequency(tmp.ts) <- 365
       return(tmp.ts)
     })
     
@@ -63,8 +95,15 @@ gsodPlot <- function(fls_orig = NULL,
   
   # Gap-filled GSOD data
   ta.gf <- lapply(fls, function(i) {
-    ta.gf.ts <- read.zoo(i, format = "%Y-%m-%d %H:%M:%S", 
-                         header = TRUE, sep = ",", regular = TRUE)
+    ta.gf.ts <- zoo::read.zoo(
+      i
+      , sep = ","
+      , header = TRUE
+      , index.column = 3L
+      , format = "%Y-%m-%d %H:%M:%S"
+      , tz = "EAT"
+      , regular = TRUE
+    )
     return(ta.gf.ts)
   })
   
@@ -84,9 +123,9 @@ gsodPlot <- function(fls_orig = NULL,
     ggplot(aes(x = DATE, y = Original), data = ta.orig.df) + 
       geom_line() + 
       facet_wrap(~ PLOT, ncol = 1) + 
-      scale_x_date(limits = c(start_date, end_date), 
-                   breaks = seq(start_date, end_date, "2 years"), 
-                   labels = date_format("%Y"), minor_breaks = date_breaks("1 year")) + 
+      # scale_x_date(limits = c(start_date, end_date), 
+      #              breaks = seq(start_date, end_date, "2 years"), 
+      #              labels = scales::date_format("%Y"), minor_breaks = scales::date_breaks("1 year")) + 
       xlab("Time (d)") +  
       ylab(expression("Temperature ("~degree~C~")")) + 
       theme_bw() + 
@@ -111,9 +150,9 @@ gsodPlot <- function(fls_orig = NULL,
            data = ta.orig.gf.df.mlt) + 
       geom_line() + 
       facet_wrap(~ PLOT, ncol = 1) + 
-      scale_x_date(limits = c(start_date, end_date), 
-                   breaks = seq(start_date, end_date, "2 years"), 
-                   labels = date_format("%Y"), minor_breaks = date_breaks("1 year")) + 
+      # scale_x_date(limits = c(start_date, end_date), 
+      #              breaks = seq(start_date, end_date, "2 years"), 
+      #              labels = scales::date_format("%Y"), minor_breaks = scales::date_breaks("1 year")) + 
       scale_colour_manual("", values = c("grey65", "black"), 
                           labels = c("Original data", "Imputed data"), 
                           breaks = c("Original", "Imputed")) +
@@ -146,15 +185,18 @@ gsodPlot <- function(fls_orig = NULL,
     
     ggplot(aes(x = DATE, y = value, colour = variable, linetype = variable), 
            data = ta.gf.df) + 
-      geom_line(,subset = .(variable == "MEAN"), colour = "grey65") +
+      geom_line(data = subset(ta.gf.df, variable == "MEAN"), colour = "grey65") +
       geom_line(aes(x = DATE, y = value, colour = variable, linetype = variable),
-                data = ta.orig.df, ,subset = .(variable == "MEAN"), 
+                data = subset(ta.orig.df, variable == "MEAN"), 
                 colour = "grey35") +
       stat_smooth(size = 1.2, method = "lm", se = FALSE) + 
       facet_wrap(~ PLOT, ncol = 1) + 
-      scale_x_date(limits = c(start_date, end_date), 
-                   breaks = seq(start_date, end_date, "2 years"), 
-                   labels = date_format("%Y"), minor_breaks = date_breaks("1 year")) + 
+      # scale_x_date(
+      #   limits = c(start_date, end_date)
+      #   breaks = seq(start_date, end_date, "2 years")
+      #   , labels = scales::date_format("%Y")
+      #   , minor_breaks = scales::date_breaks("1 year")
+      # ) +
       scale_linetype_manual("Linear trends of daily", 
                             values = c("dotted", "solid", "dotted"), 
                             labels = c("Minimum", 
