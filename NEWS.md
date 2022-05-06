@@ -12,6 +12,7 @@
     - update
     - resolves non-ASCII characters
     - adds proper documentation
+  * Renames built-in data `data_nairobi_kilimanjaro` to `eastafrica`
 
 
 # GSODTools 1.0.2 (2022-05-02)
