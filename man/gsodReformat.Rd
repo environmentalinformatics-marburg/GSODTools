@@ -14,7 +14,7 @@ gsodReformat(
 )
 }
 \arguments{
-\item{data}{\code{data.frame}. Usually \code{data("gsodstations")}.}
+\item{data}{\code{data.frame}. Usually built-in \code{gsodstations}.}
 
 \item{elevation}{Logical, default is TRUE. Determines whether elevation is
 converted from decimeters to meters.}
@@ -44,9 +44,6 @@ corresponding \code{data.frame} can then be converted to an object of class
 \code{SpatialPointsDataFrame} for further processing.
 }
 \examples{
-# Load data
-data(gsodstations)
-
 # Reformat elevation and coordinates, and convert to spatial object.
 gsod_shp <- gsodReformat(data = gsodstations, 
                          elevation = TRUE, 

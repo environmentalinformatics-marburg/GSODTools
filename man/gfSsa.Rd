@@ -32,7 +32,6 @@ before applying \code{gfSsa}.
 \examples{
 library(dplyr)
 
-data(gsodstations)
 gar <- filter(gsodstations, STATION.NAME == "GARISSA")
 
 gsod_gar <- dlGsodStations(usaf = gar$USAF,

@@ -4,7 +4,7 @@
 #' Download (and extract) data from a GSOD station based on its unique USAF code.
 #' 
 #' @param usaf Numeric. A unique USAF station code. It can either be manually 
-#' determined from \code{data(gsodstations)}, or retreived from spatial 
+#' determined from built-in \code{gsodstations}, or retrieved from spatial 
 #' subsetting (see \code{\link{stationFromCoords}}, 
 #' \code{\link{stationFromExtent}}).
 #' @param start_year Numeric. The desired year to start data acquisition. If not 
@@ -27,22 +27,30 @@
 #' Florian Detsch
 #' 
 #' @examples
-#' library(dplyr)
+#' \dontrun{
+#' moshi = subset(
+#'   gsodstations
+#'   , `STATION NAME` == "MOSHI"
+#' )
 #' 
-#' data(gsodstations)
-#' moshi <- filter(gsodstations, STATION.NAME == "MOSHI")
+#' # download data from moshi, tanzania, from 1990 to 1995
+#' gsod_moshi = dlGsodStations(
+#'   usaf = moshi$USAF
+#'   , start_year = 1990
+#'   , end_year = 1995
+#'   , dsn = tempdir()
+#'   , unzip = TRUE
+#' )
 #' 
-#' # Download data from Moshi, Tanzania, from 1990 to 1995
-#' gsod_moshi <- dlGsodStations(usaf = moshi$USAF, 
-#'                              start_year = 1990, end_year = 1995, 
-#'                              dsn = paste0(getwd(), "/data/moshi/"), 
-#'                              unzip = TRUE)
+#' # plot temperature data
+#' plot(
+#'   TEMP ~ YEARMODA
+#'   , data = gsod_moshi
+#'   , type = "l"
+#' )
+#' }
 #' 
-#' # Plot temperature data (but: time series not continuous!)                                                         
-#' plot(gsod_moshi$TEMP, type = "l")
-#' 
-#' @export dlGsodStations
-#' @aliases dlGsodStations
+#' @export
 dlGsodStations <- function(usaf,
                            start_year = NA, 
                            end_year = NA,
@@ -54,12 +62,11 @@ dlGsodStations <- function(usaf,
   # Set `rm_gz = FALSE` in case `unzip = FALSE`
   rm_gz <- ifelse(unzip, rm_gz, FALSE)
   
-  # Load GSOD station list
-  data(gsodstations)
-  locations <- gsodstations
-  
   # Extract desired station from list of GSOD stations
-  dl_usaf <- locations %>% filter(USAF == usaf)
+  dl_usaf <- subset(
+    gsodstations
+    , USAF == usaf
+  )
 
   # If not supplied, set start_year and end_year to whole temporal range of
   # available measurements
@@ -82,7 +89,7 @@ dlGsodStations <- function(usaf,
          "): Start year is higher than end year!", sep = "")
   
   cat("Processing GSOD station ", dl_usaf$USAF, " (", 
-      as.character(dl_usaf$STATION.NAME), ") ... \n", sep = "")
+      dl_usaf$`STATION NAME`, ") ... \n", sep = "")
   
   # Download op.gz of current station per year
   fls_gz <- sapply(start_year:end_year, function(year) {

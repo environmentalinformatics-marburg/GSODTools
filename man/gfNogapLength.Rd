@@ -26,7 +26,6 @@ measurement series.
 \examples{
 library(dplyr)
 
-data(gsodstations)
 moshi <- filter(gsodstations, STATION.NAME == "MOSHI")
 
 gsod_moshi <- dlGsodStations(usaf = moshi$USAF,

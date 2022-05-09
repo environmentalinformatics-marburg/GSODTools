@@ -7,7 +7,7 @@
 gsodDf2Sp(data, ...)
 }
 \arguments{
-\item{data}{\code{data.frame}. Usually \code{data("gsodstations")}.}
+\item{data}{\code{data.frame}. Usually built-in \code{gsodstations}.}
 
 \item{...}{Additional arguments. Currently not in use.}
 }
@@ -19,9 +19,6 @@ This function converts the list of available GSOD stations from \code{data.frame
 to \code{SpatialPointsDataFrame}.
 }
 \examples{
-# Load data
-data(gsodstations)
-
 # Reformat station list
 gsod_df <- gsodReformat(gsodstations, df2sp = FALSE)
 

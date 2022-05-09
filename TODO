@@ -1,1 +1,9 @@
+General
+* initialize {tinytest}
 * expose `vectorHarmonics()` (in another package)
+* enable {markdown} for documentation
+  - add `Roxygen: list(markdown = TRUE)` to DESCRIPTION
+  - further details: https://roxygen2.r-lib.org/articles/markdown.html
+* add ci/cd
+* gsod --> isd
+* {dplyr}, {data.table} (built-in data object) or base

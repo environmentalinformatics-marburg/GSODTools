@@ -16,7 +16,7 @@ dlGsodStations(
 }
 \arguments{
 \item{usaf}{Numeric. A unique USAF station code. It can either be manually 
-determined from \code{data(gsodstations)}, or retreived from spatial 
+determined from built-in \code{gsodstations}, or retrieved from spatial 
 subsetting (see \code{\link{stationFromCoords}}, 
 \code{\link{stationFromExtent}}).}
 
@@ -45,19 +45,28 @@ A vector of *.gz filenames, or an object of class \code{data.frame} if
 Download (and extract) data from a GSOD station based on its unique USAF code.
 }
 \examples{
-library(dplyr)
+\dontrun{
+moshi = subset(
+  gsodstations
+  , `STATION NAME` == "MOSHI"
+)
 
-data(gsodstations)
-moshi <- filter(gsodstations, STATION.NAME == "MOSHI")
+# download data from moshi, tanzania, from 1990 to 1995
+gsod_moshi = dlGsodStations(
+  usaf = moshi$USAF
+  , start_year = 1990
+  , end_year = 1995
+  , dsn = tempdir()
+  , unzip = TRUE
+)
 
-# Download data from Moshi, Tanzania, from 1990 to 1995
-gsod_moshi <- dlGsodStations(usaf = moshi$USAF, 
-                             start_year = 1990, end_year = 1995, 
-                             dsn = paste0(getwd(), "/data/moshi/"), 
-                             unzip = TRUE)
-
-# Plot temperature data (but: time series not continuous!)                                                         
-plot(gsod_moshi$TEMP, type = "l")
+# plot temperature data
+plot(
+  TEMP ~ YEARMODA
+  , data = gsod_moshi
+  , type = "l"
+)
+}
 
 }
 \author{
