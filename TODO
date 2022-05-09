@@ -1,7 +1,5 @@
-#2
-* initialize {tinytest}
-
 General
+* initialize {tinytest}
 * expose `vectorHarmonics()` (in another package)
 * enable {markdown} for documentation
   - add `Roxygen: list(markdown = TRUE)` to DESCRIPTION
