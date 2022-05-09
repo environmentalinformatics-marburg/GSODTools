@@ -89,7 +89,7 @@ gzGsodStations <- function(usaf,
         
         # Import column names
         nms = utils::read.fwf(
-          "~/Downloads/637900-99999-1990.op"
+          i
           , widths = gsodColWidth()
           , n = 1L
         )
