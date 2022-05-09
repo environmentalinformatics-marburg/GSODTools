@@ -8,6 +8,8 @@
 
 #### 🍬 miscellaneous
 
+  * Resolves `if() conditions comparing class() to string`
+
 
 # GSODTools 1.0.3 (2022-05-09)
 
@@ -15,7 +17,7 @@
 
   * `gsodstations` built-in data:
     - update
-    - resolves non-ASCII characters
+    - resolves non-ASCII characters (#2)
     - adds proper documentation
   * Renames built-in data `data_nairobi_kilimanjaro` to `eastafrica`
 

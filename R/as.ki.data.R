@@ -37,10 +37,10 @@ as.ki.data <- function(input_filepath,
 
   # Check if data set to convert to ki.data already exists, 
   # otherwise import via read.table 
-  if (class(input_filepath) == "character") {
+  if (inherits(input_filepath, "character")) {
     df <- read.table(input_filepath, header = T, sep = ",", fill = T,
                      stringsAsFactors = F, na.strings = c("", "NA", "NaN"))
-  } else if (class(input_filepath) == "data.frame") {
+  } else if (inherits(input_filepath, "data.frame")) {
     df <- input_filepath
   } else {
     stop("Supplied argument 'input_filepath' is neither a valid filepath

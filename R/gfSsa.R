@@ -62,8 +62,9 @@ gfSsa <- function(data,
                   ...) {
   
   # If `class(data) == "character"` (i.e. filepath) -> convert to `ki.data` object
-  if (class(data) == "character")
+  if (inherits(data, "character")) {
     data <- as.ki.data(data)
+  }
   
   # Duplicate input data
   data.rev <- data

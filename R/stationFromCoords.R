@@ -56,7 +56,7 @@ stationFromCoords <- function(x,
   if (is.numeric(x) & length(x) > 1) {
     y <- x[2]
     x <- x[1]
-  } else if (class(x) == "SpatialPoints") {
+  } else if (inherits(x, "SpatialPoints")) {
     y <- coordinates(x)[, 2]
     x <- coordinates(x)[, 1]
   }
