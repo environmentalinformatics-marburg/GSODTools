@@ -24,11 +24,11 @@
 #' @examples
 #' library(dplyr)
 #' 
-#' moshi <- filter(gsodstations, STATION.NAME == "MOSHI")
+#' moshi <- filter(gsodstations, `STATION NAME` == "MOSHI")
 #' 
 #' gsod_moshi <- dlGsodStations(usaf = moshi$USAF,
 #'                              start_year = 1990, end_year = 1995,
-#'                              dsn = paste0(getwd(), "/data/moshi/"),
+#'                              dsn = tempdir(),
 #'                              unzip = TRUE)
 #' 
 #' # Conversion to KiLi SP1 `ki.data` object
@@ -43,8 +43,7 @@
 #'             units = "days", 
 #'             end.datetime = Sys.Date())
 #'             
-#' @export gfGapLength
-#' @aliases gfGapLength
+#' @export
 gfGapLength <- function(data.dep, 
                         pos.na,
                         gap.limit,
