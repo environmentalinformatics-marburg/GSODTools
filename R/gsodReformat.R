@@ -51,7 +51,7 @@ gsodReformat <- function(data,
 
   # Reformat elevation (optional)
   if (elevation)
-    data$ELEV.M. <- data$ELEV.M. / 10
+    data$`ELEV(M)` <- data$`ELEV(M)` / 10
   
   # Reformat coordinates (optional)
   if (!coords) {

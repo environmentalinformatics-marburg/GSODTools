@@ -42,7 +42,7 @@ library(GSODTools)
 head(gsodstations)
 ```
 
-Unfortunatelly, the data formatting and consistency of this official table is 
+Unfortunately, the data formatting and consistency of this official table is 
 rather poor. Hence, I thought it might be quite helpful to sort out some 
 inconveniences above all else. The referring function is called *gsodReformat()* 
 and allows to reformat elevation (decimeters to meters) as well as latitude and longitude
@@ -137,7 +137,7 @@ station_names <- c("ARUSHA", "KILIMANJARO AIRPORT", "MOSHI")
 shp_kili_south <- 
   gsodstations |> 
   gsodReformat() |> 
-  filter(STATION.NAME %in% station_names) |> 
+  filter(`STATION NAME` %in% station_names) |> 
   gsodDf2Sp()
 
 shp_kili_south@data
@@ -160,7 +160,7 @@ functions.
 # Subset station list by name, and display related USAF code
 moshi <- subset(
   gsodstations
-  , STATION.NAME == "MOSHI"
+  , `STATION NAME` == "MOSHI"
 )
 head(moshi)
 ```
@@ -182,8 +182,8 @@ Tanzania, for the years 1990 to 2000.
 ```{r dlGsodStations, results = "hide"}
 # Not run: Download data from Moshi, Tanzania, from 1990 to 1995
 gsod_moshi <- dlGsodStations(usaf = moshi$USAF,
-                             start_year = 1990, end_year = 2000,
-                             dsn = paste0(getwd(), "/data/moshi/"),
+                             start_year = 1990, end_year = 1997,
+                             dsn = tempdir(),
                              unzip = TRUE)
 ```
 
@@ -191,10 +191,7 @@ gsod_moshi <- dlGsodStations(usaf = moshi$USAF,
 # Plot temperature data (but: time series not continuous!)
 library(ggplot2)
 
-# Remove obsolete columns
-gsod_moshi <- gsod_moshi[, -grep("NC", names(gsod_moshi))]
-# Reformat date and temperature column
-gsod_moshi$YEARMODA <- as.Date(strptime(gsod_moshi$YEARMODA, format = "%Y%m%d"))
+# Convert temperature column
 gsod_moshi$TEMP <- toCelsius(gsod_moshi$TEMP, digits = 1)
 
 ggplot(aes(y = TEMP, x = YEARMODA), data = gsod_moshi) + 
