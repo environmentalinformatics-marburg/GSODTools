@@ -47,14 +47,14 @@ station code and a supplied temporal range.
 \examples{
 library(dplyr)
 
-moshi <- filter(gsodstations, STATION.NAME == "MOSHI")
+moshi <- filter(gsodstations, `STATION NAME` == "MOSHI")
 
 # Download data from Moshi, Tanzania, from 1990 to 1995
 gsod_moshi <- gzGsodStations(usaf = moshi$USAF, 
                              start_year = 1990, end_year = 1995, 
-                             dsn = paste0(getwd(), "/data/moshi/"), 
+                             dsn = tempdir(),
                              save_output = TRUE, 
-                             file = paste0(getwd(), "/data/moshi/moshi_1990_1995.csv"), 
+                             file = file.path(tempdir(), "moshi_1990_1995.csv"), 
                              row.names = FALSE)
 
 # Plot temperature data (but: time series not continuous!)                                                         
