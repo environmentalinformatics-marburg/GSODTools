@@ -3,7 +3,7 @@
 #' @description
 #' This function identifies statistical outliers in a \code{ts} object based on
 #' upper and lower quantile criteria. The function body is mainly taken from 
-#' \link{http://stats.stackexchange.com/questions/1142/simple-algorithm-for-online-outlier-detection-of-a-generic-time-series}.
+#' \href{https://stats.stackexchange.com/q/1142}{stats.stackexchange.com}.
 #' 
 #' @param x Numeric. A vector of observed time-series values. 
 #' @param lower_quantile Numeric, default is 0.2. The lower quantile limit. 

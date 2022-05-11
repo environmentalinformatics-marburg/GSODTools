@@ -2,8 +2,8 @@
 #' 
 #' @description
 #' This function converts GSOD data from native format to standard KiLi SP1 format 
-#' (Julendat, see https://code.google.com/p/julendat/) and, optionally, to an 
-#' object of class \code{ki.data}. 
+#' (Julendat, see \url{https://code.google.com/archive/p/julendat/}) and, 
+#' optionally, to an object of class \code{ki.data}.
 #' 
 #' @param data \code{data.frame}. Input data, e.g. from \code{\link{dlGsodStations}}. 
 #' @param date_col Character or numeric, default is "YEARMODA". Indicates the 

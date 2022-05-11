@@ -2,11 +2,13 @@
 #' 
 #' @description
 #' This is a wrapper function encompassing several sub-functions from the 
-#' Julendat gap-filling routine (processing level "0310", see \link{https://code.google.com/p/julendat/}). 
-#' Briefly, a discontinuous measurement series from a distinct GSOD station is
-#' being filled by the use of simultaneous measurements from adjacent GSOD stations. 
-#' Taking the gappy data as response variable, a linear model is fitted to explain 
-#' the measurements taken by the station under investigation based on surrounding stations.
+#' Julendat gap-filling routine (processing level "0310", see 
+#' \href{https://code.google.com/archive/p/julendat/}{Julendat}). Briefly, a 
+#' discontinuous measurement series from a distinct GSOD station is being filled
+#' by the use of simultaneous measurements from adjacent GSOD stations. Taking 
+#' the gappy data as response variable, a linear model is fitted to explain the 
+#' measurements taken by the station under investigation based on surrounding 
+#' stations.
 #' 
 #' @param files.dep Character. Path leading to the response GSOD station. 
 #' Note: the file needs to be formatted according to standard KiLi SP1 format, 
@@ -86,8 +88,11 @@
 #'     
 #'     # Remove outliers
 #'     for (j in c("TEMP", "MIN", "MAX")) {
-#'       methods::slot(tmp_ki_gsod, "Parameter")[[j]] <- outlier2na(methods::slot(tmp_ki_gsod, "Parameter")[[j]], 
-#'                                                lower_quantile = .2, upper_quantile = .8)
+#'       methods::slot(tmp_ki_gsod, "Parameter")[[j]] = outlier2na(
+#'         methods::slot(tmp_ki_gsod, "Parameter")[[j]]
+#'         , lower_quantile = 0.2
+#'         , upper_quantile = 0.8
+#'       )
 #'     }
 #'     
 #'     # Fill small gaps by linear interpolation

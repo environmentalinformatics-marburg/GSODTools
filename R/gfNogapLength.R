@@ -1,9 +1,9 @@
 #' Julendat function to identify lengths of continuous measurements
 #' 
 #' @description
-#' This is a function taken from Julendat (see \link{https://code.google.com/p/julendat/})
-#' to identify lengths of continuous measurements in (eco-)climatological 
-#' measurement series.
+#' This is a function taken from 
+#' \href{https://code.google.com/archive/p/julendat/}{Julendat} to identify 
+#' lengths of continuous measurements in (eco-)climatological measurement series.
 #' 
 #' @param gaps A \code{data.frame} or \code{list}. Usually created from 
 #' \code{\link{gfGapLength}}. 

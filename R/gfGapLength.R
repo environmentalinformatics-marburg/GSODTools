@@ -1,9 +1,9 @@
 #' Julendat function to identify gap lengths in measurement series
 #' 
 #' @description
-#' This is a function taken from Julendat (see \link{https://code.google.com/p/julendat/})
-#' to identify gap lengths in (eco-)climatological measurement series of a given
-#' parameter.
+#' This is a function taken from 
+#' \href{https://code.google.com/archive/p/julendat/}{Julendat} to identify 
+#' gap lengths in (eco-)climatological measurement series of a given parameter.
 #' 
 #' @param data.dep Object of class \code{ki.data}. See \code{\link{as.ki.data}}, 
 #' \code{\link{gsod2ki}} for further information. 
