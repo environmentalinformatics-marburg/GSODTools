@@ -27,7 +27,8 @@ Imports:
     TSA,
     methods,
     utils,
-    stats
+    stats,
+    forecast
 LazyData: true
 RoxygenNote: 7.1.2
 Encoding: UTF-8

@@ -87,8 +87,6 @@ gsod2ki <- function(data,
   
   # Subset GSOD data by relevant columns
   data.ts.prm <- data[, c(date_col, prm_col)]
-  data.ts.prm[, date_col] <- as.Date(as.character(data.ts.prm[, date_col]), 
-                                        format = "%Y%m%d")
   
   # Merge continuous Date object with available GSOD measurements
   data.ts <- merge(data.frame(st_nd), data.ts.prm, by = 1, all.x = TRUE)

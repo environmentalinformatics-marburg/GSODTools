@@ -26,13 +26,14 @@
 #' \code{\link{gfLinInt}}, \code{\link{gfJulendat}}
 #' 
 #' @examples
-#' library(dplyr)
+#' \dontrun{
+#' library(GSODTools)
 #' 
-#' gar <- filter(gsodstations, STATION.NAME == "GARISSA")
+#' gar <- subset(gsodstations, `STATION NAME` == "GARISSA")
 #' 
 #' gsod_gar <- dlGsodStations(usaf = gar$USAF,
 #'                            start_year = 1990, end_year = 1995,
-#'                            dsn = paste0(getwd(), "/data/gar/"),
+#'                            dsn = tempdir(),
 #'                            unzip = TRUE)
 #' 
 #' # Conversion to KiLi SP1 `ki.data` object
@@ -53,9 +54,12 @@
 #' plot(methods::slot(ki_gar_ssa, "Parameter")[["TEMP"]], type = "l", col = "red")
 #' lines(methods::slot(ki_gar_linint, "Parameter")[["TEMP"]], col = "green")
 #' lines(methods::slot(ki_gar, "Parameter")[["TEMP"]])             
+#' }
 #' 
-#' @export gfSsa
-#' @aliases gfSsa
+#' @importFrom forecast forecast
+#' @importFrom Rssa nsigma ssa
+#' 
+#' @export
 gfSsa <- function(data, 
                   prm = "TEMP", 
                   reversed_forecast = FALSE, 
@@ -104,7 +108,7 @@ gfSsa <- function(data,
       
       # Deconstruct continuous measurement series
       tmp.ssa <- 
-        ssa(methods::slot(data.rev, "Parameter")[[h]][ki.rev.nona[1, 1]:ki.rev.nona[1, 2]], 
+        Rssa::ssa(methods::slot(data.rev, "Parameter")[[h]][ki.rev.nona[1, 1]:ki.rev.nona[1, 2]], 
             L = if (ki.rev.nona[1, 3] > 365) {
               365
             } else if (ki.rev.nona[1, 3] <= 365 & ki.rev.nona[1, 3] > 182) {
@@ -116,7 +120,7 @@ gfSsa <- function(data,
 
       # Forecast the next gap
       methods::slot(data.rev, "Parameter")[[h]][ki.rev.na[1,1] : ki.rev.na[1,2]] <-
-        forecast(tmp.ssa, groups = list(seq(nsigma(tmp.ssa))), len = ki.rev.na[1,3])$mean
+        forecast::forecast(tmp.ssa, groups = list(seq(Rssa::nsigma(tmp.ssa))), len = ki.rev.na[1,3])$mean
       
       # Update lengths of measurement gaps
       data.rev.na <- which(is.na(methods::slot(data.rev, "Parameter")[[h]]))
