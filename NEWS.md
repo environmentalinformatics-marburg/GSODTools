@@ -1,4 +1,4 @@
-# GSODTools 1.0.3.9001 (2022-05-10)
+# GSODTools 1.0.3.9002 (2022-05-12)
 
 #### ✨ features and improvements
 
