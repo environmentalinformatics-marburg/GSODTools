@@ -7,3 +7,5 @@ General
 * add ci/cd
 * gsod --> isd
 * {dplyr}, {data.table} (built-in data object) or base
+* re-enable (some) `\dontrun` examples
+? Julendat/KiLi dependency?
