@@ -85,7 +85,7 @@ dlGsodStations <- function(usaf,
   
   # Throw error in case of false user input, i.e. `start_year > end_year`
   if (start_year > end_year)
-    stop("Skipping GSOD station ", dl_usaf$USAF, " (", dl_usaf$STATION.NAME, 
+    stop("Skipping GSOD station ", dl_usaf$USAF, " (", dl_usaf$`STATION NAME`, 
          "): Start year is higher than end year!", sep = "")
   
   cat("Processing GSOD station ", dl_usaf$USAF, " (", 
