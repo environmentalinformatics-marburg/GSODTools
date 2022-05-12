@@ -33,7 +33,7 @@ gsod_shp <- stationFromCoords(x = 37.359031,
                               y = -3.065053, 
                               width = 100)
 
-mapGriddedData(mapRegion = "africa", plotData = FALSE, borderCol = "black", 
+rworldmap::mapGriddedData(mapRegion = "africa", plotData = FALSE, borderCol = "black", 
                addLegend = FALSE)
 points(gsod_shp, col = "red", pch = 20, cex = 2)
  
@@ -43,12 +43,11 @@ gsod_shp <- stationFromCoords(x = c(37.359031, -3.065053),
                               
 # Alternatively
 kibo <- data.frame(x = 37.359031, y = -3.065053)
-coordinates(kibo) <- ~ x + y
-projection(kibo) <- CRS("+init=epsg:4326")
+sp::coordinates(kibo) <- ~ x + y
+raster::projection(kibo) <- sp::CRS("+init=epsg:4326")
 
 gsod_shp <- stationFromCoords(x = kibo, 
                               width = 100)
-
 
 }
 \seealso{

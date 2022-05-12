@@ -50,8 +50,8 @@ gsod_shp <- gsodReformat(data = gsodstations,
                          coords = TRUE, 
                          rm_invalid_coords = TRUE, 
                          df2sp = TRUE)
-                         
-plot(gsod_shp)                        
+
+sp::plot(gsod_shp)
 
 }
 \seealso{

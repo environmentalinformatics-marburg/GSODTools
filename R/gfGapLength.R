@@ -22,9 +22,8 @@
 #' Florian Detsch
 #' 
 #' @examples
-#' library(dplyr)
-#' 
-#' moshi <- filter(gsodstations, `STATION NAME` == "MOSHI")
+#' \dontrun{
+#' moshi <- subset(gsodstations, `STATION NAME` == "MOSHI")
 #' 
 #' gsod_moshi <- dlGsodStations(usaf = moshi$USAF,
 #'                              start_year = 1990, end_year = 1995,
@@ -42,7 +41,8 @@
 #'             gap.limit = 365,
 #'             units = "days", 
 #'             end.datetime = Sys.Date())
-#'             
+#' }
+#' 
 #' @export
 gfGapLength <- function(data.dep, 
                         pos.na,

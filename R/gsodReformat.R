@@ -37,11 +37,10 @@
 #'                          coords = TRUE, 
 #'                          rm_invalid_coords = TRUE, 
 #'                          df2sp = TRUE)
-#'                          
-#' plot(gsod_shp)                        
 #' 
-#' @export gsodReformat
-#' @aliases gsodReformat
+#' sp::plot(gsod_shp)
+#' 
+#' @export
 gsodReformat <- function(data, 
                          elevation = TRUE, 
                          coords = TRUE, 

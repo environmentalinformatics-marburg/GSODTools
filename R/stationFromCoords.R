@@ -29,25 +29,26 @@
 #'                               y = -3.065053, 
 #'                               width = 100)
 #'
-#' mapGriddedData(mapRegion = "africa", plotData = FALSE, borderCol = "black", 
+#' rworldmap::mapGriddedData(mapRegion = "africa", plotData = FALSE, borderCol = "black", 
 #'                addLegend = FALSE)
 #' points(gsod_shp, col = "red", pch = 20, cex = 2)
 #'  
 #' # Alternatively
 #' gsod_shp <- stationFromCoords(x = c(37.359031, -3.065053), 
 #'                               width = 100)
-#'                               
+#' 
 #' # Alternatively
 #' kibo <- data.frame(x = 37.359031, y = -3.065053)
-#' coordinates(kibo) <- ~ x + y
-#' projection(kibo) <- CRS("+init=epsg:4326")
+#' sp::coordinates(kibo) <- ~ x + y
+#' raster::projection(kibo) <- sp::CRS("+init=epsg:4326")
 #' 
 #' gsod_shp <- stationFromCoords(x = kibo, 
 #'                               width = 100)
 #' 
+#' @importFrom dplyr arrange
+#' @importFrom sp coordinates
 #' 
-#' @export stationFromCoords
-#' @aliases stationFromCoords
+#' @export
 stationFromCoords <- function(x, 
                               y = NULL, 
                               width = 50, 
@@ -57,8 +58,8 @@ stationFromCoords <- function(x,
     y <- x[2]
     x <- x[1]
   } else if (inherits(x, "SpatialPoints")) {
-    y <- coordinates(x)[, 2]
-    x <- coordinates(x)[, 1]
+    y <- sp::coordinates(x)[, 2]
+    x <- sp::coordinates(x)[, 1]
   }
   
   # Calculate distance from point of interest to supplied stations
@@ -76,7 +77,7 @@ stationFromCoords <- function(x,
   stations$DIST <- round(x.to.stations, ...)
   
   # Identify and return GSOD stations that lie within the given buffer width
-  stations <- stations %>% filter(DIST <= width) %>% arrange(DIST)  %>% gsodDf2Sp()
+  stations <- stations |> subset(DIST <= width) |> dplyr::arrange(DIST) |> gsodDf2Sp()
   
   return(stations)
 }

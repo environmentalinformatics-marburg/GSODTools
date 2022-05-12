@@ -10,6 +10,7 @@
 
   * Resolves `if() conditions comparing class() to string`
   * Removes './data/moshi/' subfolder and code references
+  * Fixes broken examples
 
 
 # GSODTools 1.0.3 (2022-05-09)

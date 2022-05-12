@@ -45,9 +45,16 @@ Extract and merge previously downloaded GSOD data based on a unique USAF
 station code and a supplied temporal range.
 }
 \examples{
-library(dplyr)
+\dontrun{
+moshi <- subset(gsodstations, `STATION NAME` == "MOSHI")
 
-moshi <- filter(gsodstations, `STATION NAME` == "MOSHI")
+#' # download data from moshi, tanzania, from 1990 to 1995
+jnk = dlGsodStations(
+  usaf = moshi$USAF
+  , start_year = 1990
+  , end_year = 1995
+  , dsn = tempdir()
+)
 
 # Download data from Moshi, Tanzania, from 1990 to 1995
 gsod_moshi <- gzGsodStations(usaf = moshi$USAF, 
@@ -57,8 +64,9 @@ gsod_moshi <- gzGsodStations(usaf = moshi$USAF,
                              file = file.path(tempdir(), "moshi_1990_1995.csv"), 
                              row.names = FALSE)
 
-# Plot temperature data (but: time series not continuous!)                                                         
+# Plot temperature data (but: time series not continuous!)
 plot(gsod_moshi$TEMP, type = "l")
+}
 
 }
 \author{

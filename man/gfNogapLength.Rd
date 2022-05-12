@@ -24,8 +24,7 @@ This is a function taken from
 lengths of continuous measurements in (eco-)climatological measurement series.
 }
 \examples{
-library(dplyr)
-
+\dontrun{
 moshi <- subset(gsodstations, `STATION NAME` == "MOSHI")
 
 gsod_moshi <- dlGsodStations(usaf = moshi$USAF,
@@ -44,10 +43,11 @@ gaps <- gfGapLength(data.dep = ki_moshi,
                     gap.limit = 365,
                     units = "days", 
                     end.datetime = Sys.Date())
-                    
+
 # Identify lengths of continuous measurements
 nogaps <- gfNogapLength(gaps = gaps, 
-                        data.dep = ki_moshi)                     
+                        data.dep = ki_moshi)
+}
 
 }
 \seealso{

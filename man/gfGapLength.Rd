@@ -38,9 +38,8 @@ This is a function taken from
 gap lengths in (eco-)climatological measurement series of a given parameter.
 }
 \examples{
-library(dplyr)
-
-moshi <- filter(gsodstations, `STATION NAME` == "MOSHI")
+\dontrun{
+moshi <- subset(gsodstations, `STATION NAME` == "MOSHI")
 
 gsod_moshi <- dlGsodStations(usaf = moshi$USAF,
                              start_year = 1990, end_year = 1995,
@@ -58,7 +57,8 @@ gfGapLength(data.dep = ki_moshi,
             gap.limit = 365,
             units = "days", 
             end.datetime = Sys.Date())
-            
+}
+
 }
 \author{
 Florian Detsch

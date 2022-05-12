@@ -66,9 +66,8 @@ This function converts GSOD data from native format to standard KiLi SP1 format
 optionally, to an object of class \code{ki.data}.
 }
 \examples{
-library(dplyr)
-
-moshi <- filter(gsodstations, `STATION NAME` == "MOSHI")
+\dontrun{
+moshi <- subset(gsodstations, `STATION NAME` == "MOSHI")
 
 gsod_moshi <- dlGsodStations(usaf = moshi$USAF, 
                              start_year = 1990, end_year = 1995, 
@@ -91,6 +90,7 @@ ki_moshi <- gsod2ki(data = gsod_moshi,
                     df2ki = TRUE)
 
 str(ki_moshi)
+}
 
 }
 \seealso{

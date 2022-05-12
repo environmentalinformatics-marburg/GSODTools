@@ -37,9 +37,8 @@
 #' \code{\link{as.ki.data}}
 #' 
 #' @examples
-#' library(dplyr)
-#' 
-#' moshi <- filter(gsodstations, `STATION NAME` == "MOSHI")
+#' \dontrun{
+#' moshi <- subset(gsodstations, `STATION NAME` == "MOSHI")
 #' 
 #' gsod_moshi <- dlGsodStations(usaf = moshi$USAF, 
 #'                              start_year = 1990, end_year = 1995, 
@@ -62,9 +61,9 @@
 #'                     df2ki = TRUE)
 #' 
 #' str(ki_moshi)
+#' }
 #' 
-#' @export gsod2ki
-#' @aliases gsod2ki
+#' @export
 gsod2ki <- function(data,
                     date_col = "YEARMODA",
                     prm_col = "TEMP", 

@@ -21,8 +21,7 @@
 #' \code{\link{gfGapLength}}
 #' 
 #' @examples
-#' library(dplyr)
-#' 
+#' \dontrun{
 #' moshi <- subset(gsodstations, `STATION NAME` == "MOSHI")
 #' 
 #' gsod_moshi <- dlGsodStations(usaf = moshi$USAF,
@@ -41,15 +40,15 @@
 #'                     gap.limit = 365,
 #'                     units = "days", 
 #'                     end.datetime = Sys.Date())
-#'                     
+#' 
 #' # Identify lengths of continuous measurements
 #' nogaps <- gfNogapLength(gaps = gaps, 
-#'                         data.dep = ki_moshi)                     
+#'                         data.dep = ki_moshi)
+#' }
 #' 
 #' @importFrom methods slot
 #' 
-#' @export gfNogapLength
-#' @aliases gfNogapLength
+#' @export
 gfNogapLength <- function(gaps, 
                           data.dep, 
                           ...) {
