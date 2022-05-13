@@ -23,7 +23,7 @@ visualize. If \code{type = "trends"}, this argument will be ignored, and
 columns "TEMP", "MIN" and "MAX" must be available in \code{fls} and 
 \code{fls_orig}.}
 
-\item{...}{Additional arguments passed to \code{\link{element_text}}.}
+\item{...}{Additional arguments passed to \code{\link[ggplot2]{element_text}}.}
 }
 \value{
 An object of class \code{ggplot}.
@@ -35,7 +35,6 @@ temperature.
 }
 \examples{
 library(foreach)
-library(ggplot2)
 
 # Visualize trends in daily mean, minimum, and maximum air temperature
 lst = split(
@@ -64,10 +63,10 @@ filled_data = lst[
 gsodPlot(
   cleansed_data
   , filled_data
-  , stations = c("Jomo Kenyatta Intl. Airport", "Kilimanjaro Intl. Airport")
+  , stations = c("NAIROBI JKIA", "KILIMANJARO INTL")
   , type = "trends"
 )
- 
+
 }
 \author{
 Florian Detsch
