@@ -40,7 +40,7 @@ points(gsod_shp, col = "red", pch = 20, cex = 2)
 # Alternatively
 gsod_shp <- stationFromCoords(x = c(37.359031, -3.065053), 
                               width = 100)
-                              
+
 # Alternatively
 kibo <- data.frame(x = 37.359031, y = -3.065053)
 sp::coordinates(kibo) <- ~ x + y

@@ -64,15 +64,11 @@ stationFromCoords <- function(x,
   
   # Calculate distance from point of interest to supplied stations
   stations <- gsodReformat(gsodstations, df2sp = FALSE)
-  x.to.stations <- sapply(seq(nrow(stations)), function(i) {
-    as.numeric(
-      gmt::geodist(
-        Nfrom = y
-        , Efrom = x
-        , Nto = stations[i, "LAT"], Eto = stations[i, "LON"]
-      )
-    )
-  })
+  x.to.stations <- gmt::geodist(
+    Nfrom = y
+    , Efrom = x
+    , Nto = stations$LAT, Eto = stations$LON
+  )
   # Add calculated distances to stations
   stations$DIST <- round(x.to.stations, ...)
   
