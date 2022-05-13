@@ -4,7 +4,14 @@
 \alias{gsodPlot}
 \title{Plot GSOD data}
 \usage{
-gsodPlot(fls_orig = NULL, fls, stations, prm = "TEMP", type = "trends", ...)
+gsodPlot(
+  fls_orig = NULL,
+  fls,
+  stations,
+  prm = "TEMP",
+  type = c("original", "trends", "both"),
+  ...
+)
 }
 \arguments{
 \item{fls_orig}{See argument \code{fls}.}
@@ -22,6 +29,9 @@ and \code{fls_orig} that will be displayed above each facet.}
 visualize. If \code{type = "trends"}, this argument will be ignored, and 
 columns "TEMP", "MIN" and "MAX" must be available in \code{fls} and 
 \code{fls_orig}.}
+
+\item{type}{Character. Determines the plot type, one of \code{"original"} 
+(default), \code{"trend"}, or \code{"both"}.}
 
 \item{...}{Additional arguments passed to \code{\link[ggplot2]{element_text}}.}
 }

@@ -17,6 +17,8 @@
 #' visualize. If \code{type = "trends"}, this argument will be ignored, and 
 #' columns "TEMP", "MIN" and "MAX" must be available in \code{fls} and 
 #' \code{fls_orig}.
+#' @param type Character. Determines the plot type, one of \code{"original"} 
+#' (default), \code{"trend"}, or \code{"both"}.
 #' @param ... Additional arguments passed to \code{\link[ggplot2]{element_text}}.
 #' 
 #' @return
@@ -67,8 +69,12 @@ gsodPlot <- function(fls_orig = NULL,
                      fls, 
                      stations, 
                      prm = "TEMP",
-                     type = "trends",
+                     type = c("original", "trends", "both"),
                      ...) {
+  
+  type = match.arg(
+    type
+  )
   
   ## Data import
   
@@ -119,7 +125,7 @@ gsodPlot <- function(fls_orig = NULL,
   
   # Plot original and gap-filled GSOD data 
   if (type == "original") {
-        
+    
     ggplot2::ggplot(ggplot2::aes(x = DATE, y = Original), data = ta.orig.df) + 
       ggplot2::geom_line() + 
       ggplot2::facet_wrap(~ PLOT, ncol = 1) + 
@@ -130,9 +136,9 @@ gsodPlot <- function(fls_orig = NULL,
       ggplot2::ylab(expression("Temperature ("~degree~C~")")) + 
       ggplot2::theme_bw() + 
       ggplot2::theme(text = ggplot2::element_text(...), 
-            legend.key = ggplot2::element_rect(fill = "transparent"), 
-            panel.grid.major = ggplot2::element_line(size = 1.2), 
-            panel.grid.minor = ggplot2::element_line(size = 1.1))
+                     legend.key = ggplot2::element_rect(fill = "transparent"), 
+                     panel.grid.major = ggplot2::element_line(size = 1.2), 
+                     panel.grid.minor = ggplot2::element_line(size = 1.1))
     
   } else if (type == "both") {
     # Reformat and append gap-filled station data
@@ -147,23 +153,23 @@ gsodPlot <- function(fls_orig = NULL,
                                          levels = c("Imputed", "Original"))
     
     ggplot2::ggplot(ggplot2::aes(x = DATE, y = value, group = variable, colour = variable), 
-           data = ta.orig.gf.df.mlt) + 
+                    data = ta.orig.gf.df.mlt) + 
       ggplot2::geom_line() + 
       ggplot2::facet_wrap(~ PLOT, ncol = 1) + 
       # scale_x_date(limits = c(start_date, end_date), 
       #              breaks = seq(start_date, end_date, "2 years"), 
       #              labels = scales::date_format("%Y"), minor_breaks = scales::date_breaks("1 year")) + 
       ggplot2::scale_colour_manual("", values = c("grey65", "black"), 
-                          labels = c("Original data", "Imputed data"), 
-                          breaks = c("Original", "Imputed")) +
+                                   labels = c("Original data", "Imputed data"), 
+                                   breaks = c("Original", "Imputed")) +
       ggplot2::xlab("Time (d)") +  
       ggplot2::ylab(expression("Temperature ("~degree~C~")")) + 
       ggplot2::theme_bw() + 
       ggplot2::theme(text = ggplot2::element_text(...), 
-            legend.key = ggplot2::element_rect(fill = "transparent"), 
-            panel.grid.major = ggplot2::element_line(size = 1.2), 
-            panel.grid.minor = ggplot2::element_line(size = 1.1))
-        
+                     legend.key = ggplot2::element_rect(fill = "transparent"), 
+                     panel.grid.major = ggplot2::element_line(size = 1.2), 
+                     panel.grid.minor = ggplot2::element_line(size = 1.1))
+    
     # Plot gap-filled GSOD data only  
   } else if (type == "trends") {  
     
@@ -184,11 +190,11 @@ gsodPlot <- function(fls_orig = NULL,
     ta.gf.df$variable <- factor(ta.gf.df$variable, levels = c("MIN", "MEAN", "MAX"))
     
     ggplot2::ggplot(ggplot2::aes(x = DATE, y = value, colour = variable, linetype = variable), 
-           data = ta.gf.df) + 
+                    data = ta.gf.df) + 
       ggplot2::geom_line(data = subset(ta.gf.df, variable == "MEAN"), colour = "grey65") +
       ggplot2::geom_line(ggplot2::aes(x = DATE, y = value, colour = variable, linetype = variable),
-                data = subset(ta.orig.df, variable == "MEAN"), 
-                colour = "grey35") +
+                         data = subset(ta.orig.df, variable == "MEAN"), 
+                         colour = "grey35") +
       ggplot2::stat_smooth(size = 1.2, method = "lm", se = FALSE) + 
       ggplot2::facet_wrap(~ PLOT, ncol = 1) + 
       # scale_x_date(
@@ -198,23 +204,23 @@ gsodPlot <- function(fls_orig = NULL,
       #   , minor_breaks = scales::date_breaks("1 year")
       # ) +
       ggplot2::scale_linetype_manual("Linear trends of daily", 
-                            values = c("dotted", "solid", "dotted"), 
-                            labels = c("Minimum", 
-                                       "Mean",                                      
-                                       "Maximum")) +
+                                     values = c("dotted", "solid", "dotted"), 
+                                     labels = c("Minimum", 
+                                                "Mean",                                      
+                                                "Maximum")) +
       ggplot2::scale_colour_manual("Linear trends of daily", 
-                          values = c("blue", "black", "red"), 
-                          labels = c("Minimum", 
-                                     "Mean",                                      
-                                     "Maximum")) +
+                                   values = c("blue", "black", "red"), 
+                                   labels = c("Minimum", 
+                                              "Mean",                                      
+                                              "Maximum")) +
       ggplot2::labs(colour = "Linear trends of daily", 
-           linetype = "Linear trends of daily") + 
+                    linetype = "Linear trends of daily") + 
       ggplot2::xlab("Time (d)") +  
       ggplot2::ylab(expression("Temperature ("~degree~C~")")) + 
       ggplot2::theme_bw() + 
       ggplot2::theme(text = ggplot2::element_text(...), 
-            legend.key = ggplot2::element_rect(fill = "transparent"), 
-            panel.grid.major = ggplot2::element_line(size = 1.2), 
-            panel.grid.minor = ggplot2::element_line(size = 1.1))
+                     legend.key = ggplot2::element_rect(fill = "transparent"), 
+                     panel.grid.major = ggplot2::element_line(size = 1.2), 
+                     panel.grid.minor = ggplot2::element_line(size = 1.1))
   }
 }
