@@ -14,6 +14,7 @@
   * Removes './data/moshi/' subfolder and code references
   * Fixes broken examples
   * Resolves hitherto undocumented arguments in documentation
+  * Exports `as.ki.data()`, thus resolving missing links in documentation
 
 
 # GSODTools 1.0.3 (2022-05-09)

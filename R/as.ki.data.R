@@ -1,8 +1,6 @@
 #' Convert data set to ki.data object
 #' 
 #' @importFrom methods new
-#' 
-# #' @export as.ki.data
 
 setClass("ki.data",
          representation(
@@ -26,7 +24,8 @@ setClass("ki.data",
 )
 
 #' @importFrom reshape2 melt
-
+#' 
+#' @export
 as.ki.data <- function(input_filepath, 
                        start.column = 9,  
                        ...) {
