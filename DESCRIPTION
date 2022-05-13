@@ -5,9 +5,9 @@ Author: Florian Detsch
 Maintainer: Florian Detsch <fdetsch@web.de>
 Description: R functions to select, download, and process GSOD data.
 License: MIT + file LICENSE
-Depends:
+Depends: 
     R (>= 4.1)
-Imports:
+Imports: 
     rgdal,
     raster,
     rworldmap,
@@ -32,3 +32,4 @@ Imports:
 LazyData: true
 RoxygenNote: 7.1.2
 Encoding: UTF-8
+Suggests: tinytest

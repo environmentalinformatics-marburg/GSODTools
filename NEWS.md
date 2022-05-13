@@ -2,6 +2,8 @@
 
 #### ✨ features and improvements
 
+  * Initializes {tinytest} unit testing
+
 #### 🐛 bug fixes
 
 #### 💬 documentation etc
