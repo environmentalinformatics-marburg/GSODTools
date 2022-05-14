@@ -139,9 +139,6 @@ gsodPlot <- function(fls_orig = NULL,
     ggplot2::ggplot(ggplot2::aes(x = DATE, y = Original), data = ta.orig.df) + 
       ggplot2::geom_line() + 
       ggplot2::facet_wrap(~ PLOT, ncol = 1) + 
-      # scale_x_date(limits = c(start_date, end_date), 
-      #              breaks = seq(start_date, end_date, "2 years"), 
-      #              labels = scales::date_format("%Y"), minor_breaks = scales::date_breaks("1 year")) + 
       ggplot2::xlab("Time (d)") +  
       ggplot2::ylab(expression("Temperature ("~degree~C~")")) + 
       ggplot2::theme_bw() + 
@@ -178,9 +175,6 @@ gsodPlot <- function(fls_orig = NULL,
                     data = ta.orig.gf.df.mlt) + 
       ggplot2::geom_line() + 
       ggplot2::facet_wrap(~ PLOT, ncol = 1) + 
-      # scale_x_date(limits = c(start_date, end_date), 
-      #              breaks = seq(start_date, end_date, "2 years"), 
-      #              labels = scales::date_format("%Y"), minor_breaks = scales::date_breaks("1 year")) + 
       ggplot2::scale_colour_manual("", values = c("grey65", "black"), 
                                    labels = c("Original data", "Imputed data"), 
                                    breaks = c("Original", "Imputed")) +
@@ -249,12 +243,6 @@ gsodPlot <- function(fls_orig = NULL,
                          colour = "grey35") +
       ggplot2::stat_smooth(size = 1.2, method = "lm", se = FALSE) + 
       ggplot2::facet_wrap(~ PLOT, ncol = 1) + 
-      # scale_x_date(
-      #   limits = c(start_date, end_date)
-      #   breaks = seq(start_date, end_date, "2 years")
-      #   , labels = scales::date_format("%Y")
-      #   , minor_breaks = scales::date_breaks("1 year")
-      # ) +
       ggplot2::scale_linetype_manual("Linear trends of daily", 
                                      values = c("dotted", "solid", "dotted"), 
                                      labels = c("Minimum", 

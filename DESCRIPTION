@@ -18,7 +18,6 @@ Imports:
     dplyr,
     zoo,
     Rssa,
-    scales,
     reshape2,
     RColorBrewer,
     ggplot2,
