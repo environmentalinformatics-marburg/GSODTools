@@ -44,8 +44,6 @@ imputed, as well as linear trends of mean, minimum and maximum daily air
 temperature.
 }
 \examples{
-library(foreach)
-
 # Visualize trends in daily mean, minimum, and maximum air temperature
 lst = split(
   eastafrica

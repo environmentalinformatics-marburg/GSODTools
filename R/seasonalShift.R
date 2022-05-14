@@ -26,9 +26,6 @@
 #' Florian Detsch
 #' 
 #' @examples
-#' library(foreach)
-#' library(ggplot2)
-#' 
 #' # visualize seasonal shifts in monthly averaged air temperature
 #' cleansed_data = subset(
 #'   eastafrica

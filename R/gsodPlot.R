@@ -28,8 +28,6 @@
 #' Florian Detsch
 #' 
 #' @examples
-#' library(foreach)
-#' 
 #' # Visualize trends in daily mean, minimum, and maximum air temperature
 #' lst = split(
 #'   eastafrica

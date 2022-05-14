@@ -31,8 +31,6 @@ before applying \code{gfSsa}.
 }
 \examples{
 \dontrun{
-library(GSODTools)
-
 gar <- subset(gsodstations, `STATION NAME` == "GARISSA")
 
 gsod_gar <- dlGsodStations(usaf = gar$USAF,
