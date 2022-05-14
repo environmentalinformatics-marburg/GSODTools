@@ -116,7 +116,7 @@
 #' )
 #' 
 #' # Fill medium-sized gaps at Kilimanjaro Intl. Airport by linear modeling
-#' fls_gsod <- list.files(tempdir(), pattern = "^63.*1990_1995.csv$", 
+#' fls_gsod <- list.files(tempdir(), pattern = "^\\d{6}.csv$", 
 #'                        recursive = TRUE, full.names = TRUE)
 #' 
 #' jul_gsod <- gfJulendat(files.dep = fls_gsod[3],
