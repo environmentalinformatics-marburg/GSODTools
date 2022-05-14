@@ -45,7 +45,6 @@
 #' lines(methods::slot(ki_moshi, "Parameter")$TEMP) 
 #' }
 #'
-#' @importFrom foreach "%do%" foreach
 #' @importFrom zoo rollapply zoo
 #' 
 #' @export gfLinInt
@@ -67,9 +66,15 @@ gfLinInt <- function(data,
                                   units = "days"))
     # Sufficiently small gaps
     pos.na <- pos.na[which(pos.na[, 3] <= limit), ]
-    pos.na.small <- foreach::foreach(j = seq(nrow(pos.na)), .combine = "c") %do% {
-      seq(pos.na[j, 1], pos.na[j, 2])
-    }
+    pos.na.small <- unlist(
+      Map(
+        \(j, k) { 
+          j:k
+        }
+        , pos.na[, 1]
+        , pos.na[, 2]
+      )
+    )
     
     # Time series
     tmp.ts <- zoo::zoo(data@Parameter[[i]], order.by = as.Date(data@Datetime))

@@ -93,8 +93,20 @@ gsodPlot <- function(fls_orig = NULL,
     })
     
     # Reformat and append data
-    ta.orig.df <- foreach(i = ta.orig, j = stations, .combine = "rbind") %do%
-      data.frame(DATE = time(i), PLOT = j, Original = as.numeric(i[, prm]))
+    ta.orig.df <- do.call(
+      rbind
+      , Map(
+        \(i, j) {
+          data.frame(
+            DATE = time(i)
+            , PLOT = j
+            , Original = as.numeric(i[, prm])
+          )
+        }
+        , i = ta.orig
+        , j = stations
+      )
+    )
   }
   
   # Gap-filled GSOD data
@@ -140,12 +152,24 @@ gsodPlot <- function(fls_orig = NULL,
     
   } else if (type == "both") {
     # Reformat and append gap-filled station data
-    ta.gf.df <- foreach(i = ta.gf, j = stations, .combine = "rbind") %do%
-      data.frame(DATE = time(i), PLOT = j, Imputed = as.numeric(i[, prm]))
+    ta.gf.df <- do.call(
+      rbind
+      , Map(
+        \(i, j) {
+          data.frame(
+            DATE = time(i)
+            , PLOT = j
+            , Imputed = as.numeric(i[, prm])
+          )
+        }
+        , i = ta.gf
+        , j = stations
+      )
+    )
     
-    # Merge and meltoriginal and gap-filled data
+    # Merge and melt original and gap-filled data
     ta.orig.gf.df <- merge(ta.orig.df, ta.gf.df, all = TRUE, by = c(1, 2))
-    ta.orig.gf.df.mlt <- melt(ta.orig.gf.df, id.vars = c(1, 2))
+    ta.orig.gf.df.mlt <- reshape2::melt(ta.orig.gf.df, id.vars = c(1, 2))
     
     ta.orig.gf.df.mlt$variable <- factor(ta.orig.gf.df.mlt$variable, 
                                          levels = c("Imputed", "Original"))
@@ -172,16 +196,46 @@ gsodPlot <- function(fls_orig = NULL,
   } else if (type == "trends") {  
     
     # Reformat, append and melt quality-controlled data
-    ta.orig.df <- melt(foreach(i = ta.orig, j = stations, .combine = "rbind") %do%
-                         data.frame(DATE = time(i), PLOT = j, MEAN = as.numeric(i$TEMP), 
-                                    MAX = as.numeric(i$MAX), MIN = as.numeric(i$MIN)), 
-                       id.vars = c(1, 2))
+    ta.orig.df <- reshape2::melt(
+      do.call(
+        rbind
+        , Map(
+          \(i, j) {
+            data.frame(
+              DATE = time(i)
+              , PLOT = j
+              , MEAN = as.numeric(i$TEMP)
+              , MAX = as.numeric(i$MAX)
+              , MIN = as.numeric(i$MIN)
+            )
+          }
+          , i = ta.orig
+          , j = stations
+        )
+      )
+      , id.vars = c(1, 2)
+    )
     
     # Reformat, append and melt gap-filled data
-    ta.gf.df <- melt(foreach(i = ta.gf, j = stations, .combine = "rbind") %do%
-                       data.frame(DATE = time(i), PLOT = j, MEAN = as.numeric(i$TEMP), 
-                                  MAX = as.numeric(i$MAX), MIN = as.numeric(i$MIN)), 
-                     id.vars = c(1, 2))
+    ta.gf.df <- reshape2::melt(
+      do.call(
+        rbind
+        , Map(
+          \(i, j) {
+            data.frame(
+              DATE = time(i)
+              , PLOT = j
+              , MEAN = as.numeric(i$TEMP)
+              , MAX = as.numeric(i$MAX)
+              , MIN = as.numeric(i$MIN)
+            )
+          }
+          , i = ta.gf
+          , j = stations
+        )
+      )
+      , id.vars = c(1, 2)
+    )
     
     # Reorder factor levels
     ta.orig.df$variable <- factor(ta.orig.df$variable, levels = c("MIN", "MEAN", "MAX"))
