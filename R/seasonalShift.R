@@ -67,7 +67,7 @@ seasonalShift <- function(fls,
           , Map(
             \(k, l) {
               if (is.character(i)) {
-                tmp <- read.csv(i, stringsAsFactors = FALSE)
+                tmp <- utils::read.csv(i, stringsAsFactors = FALSE)
               } else {
                 tmp <- i
               }
@@ -75,12 +75,12 @@ seasonalShift <- function(fls,
               tmp$yearmon <- zoo::as.yearmon(tmp$year)
               
               tmp.st <- subset(tmp, year >= as.Date(k[1]) & year <= as.Date(k[2]))
-              tmp.st.agg <- aggregate(tmp.st[, c("TEMP", "MAX", "MIN")], 
+              tmp.st.agg <- stats::aggregate(tmp.st[, c("TEMP", "MAX", "MIN")], 
                                       by = list(tmp.st$yearmon), 
                                       FUN = function(...) mean(..., na.rm = TRUE))
               
               tmp.nd <- subset(tmp, year >= as.Date(l[1]) & year <= as.Date(l[2]))
-              tmp.nd.agg <- aggregate(tmp.nd[, c("TEMP", "MAX", "MIN")], 
+              tmp.nd.agg <- stats::aggregate(tmp.nd[, c("TEMP", "MAX", "MIN")], 
                                       by = list(tmp.nd$yearmon), 
                                       FUN = function(...) mean(..., na.rm = TRUE))
               

@@ -21,7 +21,7 @@ gfRun <- function(files.dep,
   
   # Import plot coordinates
   if (!is.null(filepath.coords)) {
-    data.coords <- read.csv(filepath.coords, header = T)
+    data.coords <- utils::read.csv(filepath.coords, header = T)
     data.coords <- data.coords[, c("PlotID", "Lon", "Lat")]
   } else {
     data.coords <- NULL

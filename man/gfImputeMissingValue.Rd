@@ -14,7 +14,7 @@ gfImputeMissingValue(
   n.plot = 10,
   prm.dep = "Ta_200",
   prm.indep = NA,
-  family = gaussian,
+  family = stats::gaussian,
   ...
 )
 }

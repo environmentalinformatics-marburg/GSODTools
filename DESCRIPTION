@@ -23,7 +23,8 @@ Imports:
     methods,
     utils,
     stats,
-    forecast
+    forecast,
+    graphics
 LazyData: true
 RoxygenNote: 7.1.2
 Encoding: UTF-8

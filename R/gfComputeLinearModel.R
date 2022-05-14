@@ -4,7 +4,7 @@
 gfComputeLinearModel <- function(data = NULL, 
                                  data.cc = NULL,
                                  data.dep,
-                                 family = gaussian,
+                                 family = stats::gaussian,
                                  pos.na,
                                  plots = NULL,
                                  n.plot = 10,
@@ -40,9 +40,9 @@ gfComputeLinearModel <- function(data = NULL,
   })
   
   # Linear model
-  model <- glm(formula, data = data.cc, family = family)
+  model <- stats::glm(formula, data = data.cc, family = family)
   # Calculate r-squared
-  r.squ <- cor(data.cc[,prm.dep], predict(model))^2 
+  r.squ <- stats::cor(data.cc[,prm.dep], stats::predict(model))^2 
   
   # Formula for imputation of missing value
   lm.formula <- sapply(list(2:length(model$coefficients)), function(i) {

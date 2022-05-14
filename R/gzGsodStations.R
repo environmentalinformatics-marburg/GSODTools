@@ -50,9 +50,6 @@
 #' plot(gsod_moshi$TEMP, type = "l")
 #' }
 #' 
-#' @importFrom stats setNames
-#' @importFrom utils read.fwf
-#' 
 #' @export
 gzGsodStations <- function(usaf, 
                            dsn = ".",
@@ -135,7 +132,7 @@ gzGsodStations <- function(usaf,
   
   # Save (optional) and return merged annual data per station
   if (save_output)
-    write.table(df.all, ...)
+    utils::write.table(df.all, ...)
   
   # Optionally remove *.gz files
   if (rm_gz)

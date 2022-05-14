@@ -4,8 +4,6 @@
 #' An object of class \code{ki.data}, typically created through
 #'   \code{\link{as.ki.data}}.
 #' 
-#' @importFrom methods representation setClass
-#' 
 #' @exportClass ki.data
 #' @name ki.data-class
 NULL

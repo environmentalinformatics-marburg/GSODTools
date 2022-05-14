@@ -38,7 +38,7 @@ gfWrite <- function(files.dep,
                            plevel = plevel)
   
   # Write output table
-  write.table(imputation.data[[2]], 
+  utils::write.table(imputation.data[[2]], 
               filepath.output, 
               sep = ",", row.names = FALSE, col.names = TRUE)
   

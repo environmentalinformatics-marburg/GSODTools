@@ -17,7 +17,7 @@ gfJulendat(
   n.plot,
   prm.dep = "TEMP",
   prm.indep = "NA",
-  family = gaussian,
+  family = stats::gaussian,
   plevel,
   ...
 )
@@ -57,9 +57,6 @@ will be considered.}
 \item{prm.dep}{Character, default is "TEMP". Determines which parameters to fill.}
 
 \item{prm.indep}{Character, default is "NA". Not required for GSOD data processing.}
-
-\item{family}{Object of class \code{family}, default is gaussian. See 
-\code{\link{family}}.}
 
 \item{plevel}{Character. Determines current processing level. Not required 
 for GSOD data processing.}
@@ -163,7 +160,6 @@ jul_gsod <- gfJulendat(files.dep = fls_gsod[3],
                        n.plot = 10,
                        prm.dep = c("TEMP", "MAX", "MIN"), 
                        prm.indep = c(NA, NA, NA), 
-                       family = gaussian, 
                        plevel = "NA", 
                        end.datetime = Sys.Date(), 
                        units = "days")

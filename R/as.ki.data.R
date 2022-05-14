@@ -1,6 +1,5 @@
 #' Convert data set to ki.data object
 #' 
-#' @importFrom methods new
 #' @importFrom reshape2 melt
 #' 
 #' @export
@@ -11,7 +10,7 @@ as.ki.data <- function(input_filepath,
   # Check if data set to convert to ki.data already exists, 
   # otherwise import via read.table 
   if (inherits(input_filepath, "character")) {
-    df <- read.table(input_filepath, header = T, sep = ",", fill = T,
+    df <- utils::read.table(input_filepath, header = T, sep = ",", fill = T,
                      stringsAsFactors = F, na.strings = c("", "NA", "NaN"))
   } else if (inherits(input_filepath, "data.frame")) {
     df <- input_filepath
@@ -87,8 +86,8 @@ as.ki.data <- function(input_filepath,
   station_short <- substr(df$StationId, 4, 7)  
   
   df2 <- data.frame(df[9:length(df)])
-  ok <- complete.cases(df)
-  nok <- which(!complete.cases(df))
+  ok <- stats::complete.cases(df)
+  nok <- which(!stats::complete.cases(df))
   validn <- sum(ok)
   nna <- NROW(df) - validn
   #  print(nna)
@@ -116,16 +115,16 @@ as.ki.data <- function(input_filepath,
                            AggYear = year),
                          Origin = origin,
                          Season = season,
-                         Timezone = unique(na.exclude(df$Timezone)),
-                         Aggregationtime = unique(na.exclude(df$Aggregationtime)),
-                         PlotId = list(Unique = unique(na.exclude(plot)),
+                         Timezone = unique(stats::na.exclude(df$Timezone)),
+                         Aggregationtime = unique(stats::na.exclude(df$Aggregationtime)),
+                         PlotId = list(Unique = unique(stats::na.exclude(plot)),
                                        #Longname = plot_long,
                                        Shortname = plot),
                          EpPlotId = df$EpPlotId,
-                         StationId = list(Unique = unique(na.exclude(station_short)),
+                         StationId = list(Unique = unique(stats::na.exclude(station_short)),
                                           Longname = station_long,
                                           Shortname = station_short),
-                         Processlevel = as.integer(unique(na.exclude(df$Processlevel))),
+                         Processlevel = as.integer(unique(stats::na.exclude(df$Processlevel))),
                          Qualityflag = as.character(df$Qualityflag),
                          Valid = list(N = validn, NAIndex = nok),
                          Parameter = as.list(df[start.column:length(df)]),

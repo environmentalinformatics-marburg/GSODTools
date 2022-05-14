@@ -22,7 +22,6 @@
 #' 
 #' sp::plot(gsod_shp)
 #' 
-#' @importFrom methods as
 #' @importFrom sf st_as_sf
 #' 
 #' @export

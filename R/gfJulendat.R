@@ -33,8 +33,8 @@
 #' will be considered.
 #' @param prm.dep Character, default is "TEMP". Determines which parameters to fill.
 #' @param prm.indep Character, default is "NA". Not required for GSOD data processing.
-#' @param family Object of class \code{family}, default is gaussian. See 
-#' \code{\link{family}}.
+#' @param family Object of class \code{family}, default is 
+#' \code{\link[stats]{gaussian}.
 #' @param plevel Character. Determines current processing level. Not required 
 #' for GSOD data processing.
 #' @param ... Additional arguments. Currently not in use.
@@ -129,7 +129,6 @@
 #'                        n.plot = 10,
 #'                        prm.dep = c("TEMP", "MAX", "MIN"), 
 #'                        prm.indep = c(NA, NA, NA), 
-#'                        family = gaussian, 
 #'                        plevel = "NA", 
 #'                        end.datetime = Sys.Date(), 
 #'                        units = "days")
@@ -151,7 +150,7 @@ gfJulendat <- function(files.dep,
                        n.plot,
                        prm.dep = "TEMP", 
                        prm.indep = "NA", 
-                       family = gaussian,
+                       family = stats::gaussian,
                        plevel,
                        ...) {
   

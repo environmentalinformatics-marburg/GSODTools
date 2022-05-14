@@ -88,7 +88,7 @@ gsodPlot <- function(fls_orig = NULL,
         , tz = "EAT"
         , regular = TRUE
       )
-      # frequency(tmp.ts) <- 365
+      # stats::frequency(tmp.ts) <- 365
       return(tmp.ts)
     })
     
@@ -98,7 +98,7 @@ gsodPlot <- function(fls_orig = NULL,
       , Map(
         \(i, j) {
           data.frame(
-            DATE = time(i)
+            DATE = stats::time(i)
             , PLOT = j
             , Original = as.numeric(i[, prm])
           )
@@ -154,7 +154,7 @@ gsodPlot <- function(fls_orig = NULL,
       , Map(
         \(i, j) {
           data.frame(
-            DATE = time(i)
+            DATE = stats::time(i)
             , PLOT = j
             , Imputed = as.numeric(i[, prm])
           )
@@ -196,7 +196,7 @@ gsodPlot <- function(fls_orig = NULL,
         , Map(
           \(i, j) {
             data.frame(
-              DATE = time(i)
+              DATE = stats::time(i)
               , PLOT = j
               , MEAN = as.numeric(i$TEMP)
               , MAX = as.numeric(i$MAX)
@@ -217,7 +217,7 @@ gsodPlot <- function(fls_orig = NULL,
         , Map(
           \(i, j) {
             data.frame(
-              DATE = time(i)
+              DATE = stats::time(i)
               , PLOT = j
               , MEAN = as.numeric(i$TEMP)
               , MAX = as.numeric(i$MAX)

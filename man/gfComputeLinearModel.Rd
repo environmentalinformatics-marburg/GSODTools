@@ -8,7 +8,7 @@ gfComputeLinearModel(
   data = NULL,
   data.cc = NULL,
   data.dep,
-  family = gaussian,
+  family = stats::gaussian,
   pos.na,
   plots = NULL,
   n.plot = 10,

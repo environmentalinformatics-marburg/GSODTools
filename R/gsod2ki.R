@@ -115,7 +115,7 @@ gsod2ki <- function(data,
   
   # Save reformatted data (optional)
   if (save_output)
-    write.csv(data.ts, ...)
+    utils::write.csv(data.ts, ...)
   
   # Convert to `ki.data` object (optional)
   if (df2ki)

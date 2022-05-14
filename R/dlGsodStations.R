@@ -105,7 +105,7 @@ dlGsodStations <- function(usaf,
     if (file.exists(dlfile)) {
       cat("File", dlfile, "already exists. Proceeding to next file... \n")
     } else {      
-      try(download.file(dlurl, dlfile), silent = FALSE)
+      try(utils::download.file(dlurl, dlfile), silent = FALSE)
     }
     
     return(dlfile)

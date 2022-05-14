@@ -46,8 +46,6 @@
 #'                         data.dep = ki_moshi)
 #' }
 #' 
-#' @importFrom methods slot
-#' 
 #' @export
 gfNogapLength <- function(gaps, 
                           data.dep, 
