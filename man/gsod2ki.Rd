@@ -8,7 +8,6 @@ gsod2ki(
   data,
   date_col = "YEARMODA",
   prm_col = "TEMP",
-  time_step = "day",
   timezone = "NA",
   aggtime = "-999",
   plot_id = "NA",
@@ -29,9 +28,6 @@ date column.}
 
 \item{prm_col}{Character or numeric, default is "TEMP". Indicates the 
 parameter column(s).}
-
-\item{time_step}{Character, default is "day". Indicates the time step between
-two measurements.}
 
 \item{timezone}{Character, default is "NA".}
 

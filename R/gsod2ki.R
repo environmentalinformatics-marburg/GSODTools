@@ -10,8 +10,6 @@
 #' date column.
 #' @param prm_col Character or numeric, default is "TEMP". Indicates the 
 #' parameter column(s).
-#' @param time_step Character, default is "day". Indicates the time step between
-#' two measurements.
 #' @param timezone Character, default is "NA".
 #' @param aggtime Character, default is "-999".
 #' @param plot_id Character, default is "NA". 
@@ -67,7 +65,6 @@
 gsod2ki <- function(data,
                     date_col = "YEARMODA",
                     prm_col = "TEMP", 
-                    time_step = "day",
                     timezone = "NA",
                     aggtime = "-999",
                     plot_id = "NA",
@@ -92,11 +89,7 @@ gsod2ki <- function(data,
   names(data.ts) <- names(data.ts.prm)
   
   # Merge generated data
-  data.ts <- data.frame(Datetime = if (time_step == "day") {
-                          paste(data.ts[, date_col], "12:00:00") 
-                        } else {
-                          index(data.ts)
-                        },
+  data.ts <- data.frame(Datetime = paste(data.ts[, date_col], "12:00:00"),
                         Timezone = rep(timezone, nrow(data.ts)),
                         Aggregationtime = rep(aggtime, nrow(data.ts)),
                         PlotId = rep(plot_id, nrow(data.ts)),
