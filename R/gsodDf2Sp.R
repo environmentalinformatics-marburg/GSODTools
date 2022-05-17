@@ -27,7 +27,9 @@
 #' @export
 gsodDf2Sp <- function(data, 
                       ...) {
-
+  
+  LON = LAT = NULL
+  
   # Subset data by valid coordinates and convert to SpatialPointsDataFrame
   data.lonlat <- subset(data, !is.na(LON) & !is.na(LAT))
   

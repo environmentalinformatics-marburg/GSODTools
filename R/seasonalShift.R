@@ -56,6 +56,8 @@ seasonalShift <- function(fls,
                           #                           cols = NULL, 
                           ...) {
   
+  year = month = value = variable = NULL
+  
   # Import data
   tmp.all <- do.call(
     rbind

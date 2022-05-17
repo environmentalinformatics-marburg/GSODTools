@@ -59,6 +59,8 @@ gzGsodStations <- function(usaf,
                            rm_gz = FALSE,
                            ...) {
   
+  YEARMODA = NULL
+  
   # List available *.gz files
   fls <- list.files(dsn, pattern = paste(usaf, ".gz$", sep = ".*"), 
                     full.names = TRUE)

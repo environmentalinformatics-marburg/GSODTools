@@ -59,6 +59,8 @@ dlGsodStations <- function(usaf,
                            rm_gz = FALSE,
                            ...) {
   
+  USAF = NULL
+  
   # Set `rm_gz = FALSE` in case `unzip = FALSE`
   rm_gz <- ifelse(unzip, rm_gz, FALSE)
   

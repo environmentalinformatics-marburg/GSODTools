@@ -7,6 +7,8 @@ as.ki.data <- function(input_filepath,
                        start.column = 9,  
                        ...) {
   
+  value = ..scaled.. = NULL
+  
   # Check if data set to convert to ki.data already exists, 
   # otherwise import via read.table 
   if (inherits(input_filepath, "character")) {

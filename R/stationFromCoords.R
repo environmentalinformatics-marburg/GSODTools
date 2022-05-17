@@ -54,6 +54,8 @@ stationFromCoords <- function(x,
                               width = 50, 
                               ...) {
   
+  DIST = NULL
+  
   if (is.numeric(x) & length(x) > 1) {
     y <- x[2]
     x <- x[1]

@@ -74,6 +74,8 @@ gsodPlot <- function(fls_orig = NULL,
     type
   )
   
+  DATE = Original = value = variable = NULL
+  
   ## Data import
   
   # Initial GSOD data

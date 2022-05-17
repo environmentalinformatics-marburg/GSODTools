@@ -17,6 +17,7 @@
   * Exports `as.ki.data()`, thus resolving missing links in documentation
   * Resolves non-declared `library()` or `require()` calls in package code
   * Eliminates numerous dependencies
+  * Captures global variables with no visible binding
 
 
 # GSODTools 1.0.3 (2022-05-09)
