@@ -34,7 +34,7 @@
 #' @param prm.dep Character, default is "TEMP". Determines which parameters to fill.
 #' @param prm.indep Character, default is "NA". Not required for GSOD data processing.
 #' @param family Object of class \code{family}, default is 
-#' \code{\link[stats]{gaussian}.
+#' \code{\link[stats]{gaussian}}.
 #' @param plevel Character. Determines current processing level. Not required 
 #' for GSOD data processing.
 #' @param ... Additional arguments. Currently not in use.

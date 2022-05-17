@@ -58,6 +58,9 @@ will be considered.}
 
 \item{prm.indep}{Character, default is "NA". Not required for GSOD data processing.}
 
+\item{family}{Object of class \code{family}, default is 
+\code{\link[stats]{gaussian}}.}
+
 \item{plevel}{Character. Determines current processing level. Not required 
 for GSOD data processing.}
 
