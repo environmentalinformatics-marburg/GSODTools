@@ -1,10 +1,14 @@
 #' Convert data set to ki.data object
 #' 
+#' @param input_filepath Needs documentation.
+#' @param start.column [\code{integer}] Defaults to \code{9L}.
+#' @param ... Currently not used.
+#' 
 #' @importFrom reshape2 melt
 #' 
 #' @export
 as.ki.data <- function(input_filepath, 
-                       start.column = 9,  
+                       start.column = 9L,  
                        ...) {
   
   value = ..scaled.. = NULL

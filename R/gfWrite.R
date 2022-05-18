@@ -1,6 +1,6 @@
 #' Julendat wrapper function for gfRun.R
 #' 
-# #' @export gfWrite
+#' @noRd
 gfWrite <- function(files.dep, 
                     files.indep, 
                     filepath.output, 

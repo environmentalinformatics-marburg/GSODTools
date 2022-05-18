@@ -18,6 +18,7 @@
   * Resolves non-declared `library()` or `require()` calls in package code
   * Eliminates numerous dependencies
   * Captures global variables with no visible binding
+  * Documents hitherto undocumented object or prevents generation of help pages
 
 
 # GSODTools 1.0.3 (2022-05-09)

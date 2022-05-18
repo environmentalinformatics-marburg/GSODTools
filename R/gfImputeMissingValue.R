@@ -2,7 +2,7 @@
 #' 
 #' @importFrom gmt geodist
 #' 
-# #' @export gfImputeMissingValue
+#' @noRd
 gfImputeMissingValue <- function(data.dep, 
                                  data.indep,
                                  na.limit = 0.2,

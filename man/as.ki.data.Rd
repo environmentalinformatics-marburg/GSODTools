@@ -4,7 +4,14 @@
 \alias{as.ki.data}
 \title{Convert data set to ki.data object}
 \usage{
-as.ki.data(input_filepath, start.column = 9, ...)
+as.ki.data(input_filepath, start.column = 9L, ...)
+}
+\arguments{
+\item{input_filepath}{Needs documentation.}
+
+\item{start.column}{[\code{integer}] Defaults to \code{9L}.}
+
+\item{...}{Currently not used.}
 }
 \description{
 Convert data set to ki.data object

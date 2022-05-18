@@ -1,6 +1,6 @@
 #' Identification of plots with valid contemporary measurements
 #' 
-# #' @export gfCompleteMonthlyCases
+#' @noRd
 gfCompleteMonthlyCases <- function(data.dep, 
                                    data.indep,
                                    data.indep.avl,
