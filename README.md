@@ -32,15 +32,15 @@ information about all available GSOD stations that is automatically
 attached via lazy-loading when loading the package. Let’s have a quick
 look at it.
 
-    ##     USAF  WBAN STATION.NAME CTRY STATE ICAO   LAT    LON ELEV.M.    BEGIN      END
-    ## 1 007018 99999   WXPOD 7018                  0.00  0.000  7018.0 20110309 20130730
-    ## 2 007026 99999   WXPOD 7026   AF             0.00  0.000  7026.0 20120713 20170822
-    ## 3 007070 99999   WXPOD 7070   AF             0.00  0.000  7070.0 20140923 20150926
-    ## 4 008260 99999    WXPOD8270                  0.00  0.000     0.0 20050101 20120731
-    ## 5 008268 99999    WXPOD8278   AF            32.95 65.567  1156.7 20100519 20120323
-    ## 6 008307 99999   WXPOD 8318   AF             0.00  0.000  8318.0 20100421 20100421
+    ##     USAF  WBAN STATION NAME CTRY STATE ICAO   LAT    LON ELEV(M)      BEGIN        END
+    ## 1 007018 99999   WXPOD 7018                  0.00  0.000  7018.0 2011-03-09 2013-07-30
+    ## 2 007026 99999   WXPOD 7026   AF             0.00  0.000  7026.0 2012-07-13 2017-08-22
+    ## 3 007070 99999   WXPOD 7070   AF             0.00  0.000  7070.0 2014-09-23 2015-09-26
+    ## 4 008260 99999    WXPOD8270                  0.00  0.000     0.0 2005-01-01 2012-07-31
+    ## 5 008268 99999    WXPOD8278   AF            32.95 65.567  1156.7 2010-05-19 2012-03-23
+    ## 6 008307 99999   WXPOD 8318   AF             0.00  0.000  8318.0 2010-04-21 2010-04-21
 
-Unfortunatelly, the data formatting and consistency of this official
+Unfortunately, the data formatting and consistency of this official
 table is rather poor. Hence, I thought it might be quite helpful to sort
 out some inconveniences above all else. The referring function is called
 *gsodReformat()* and allows to reformat elevation (decimeters to meters)
@@ -144,14 +144,14 @@ this would more or less look like this.
     shp_kili_south <- 
       gsodstations |> 
       gsodReformat() |> 
-      filter(STATION.NAME %in% station_names) |> 
+      filter(`STATION NAME` %in% station_names) |> 
       gsodDf2Sp()
 
     shp_kili_south@data
 
-    ##     USAF  WBAN STATION.NAME CTRY STATE ICAO ELEV.M.    BEGIN      END
-    ## 1 637890 99999       ARUSHA   TZ       HTAR  138.68 19600111 20211119
-    ## 2 637900 99999        MOSHI   TZ       HTMS   83.10 19490909 20211003
+    ##     USAF  WBAN STATION.NAME CTRY STATE ICAO ELEV.M.      BEGIN        END
+    ## 1 637890 99999       ARUSHA   TZ       HTAR  138.68 1960-01-11 2022-05-02
+    ## 2 637900 99999        MOSHI   TZ       HTMS   83.10 1949-09-09 2022-04-28
 
 **Downloading data**
 
@@ -168,12 +168,12 @@ outcome of the various station selection functions.
     # Subset station list by name, and display related USAF code
     moshi <- subset(
       gsodstations
-      , STATION.NAME == "MOSHI"
+      , `STATION NAME` == "MOSHI"
     )
     head(moshi)
 
-    ##         USAF  WBAN STATION.NAME CTRY STATE ICAO   LAT    LON ELEV.M.    BEGIN      END
-    ## 13475 637900 99999        MOSHI   TZ       HTMS -3.35 37.333     831 19490909 20211003
+    ##         USAF  WBAN STATION NAME CTRY STATE ICAO   LAT    LON ELEV(M)      BEGIN        END
+    ## 13486 637900 99999        MOSHI   TZ       HTMS -3.35 37.333     831 1949-09-09 2022-04-28
 
 If you are not willing to download the entire dataset from a given
 station (which is the default setting), but rather a limited period of
@@ -192,17 +192,14 @@ from Moshi, Tanzania, for the years 1990 to 2000.
 
     # Not run: Download data from Moshi, Tanzania, from 1990 to 1995
     gsod_moshi <- dlGsodStations(usaf = moshi$USAF,
-                                 start_year = 1990, end_year = 2000,
-                                 dsn = paste0(getwd(), "/data/moshi/"),
+                                 start_year = 1990, end_year = 1997,
+                                 dsn = tempdir(),
                                  unzip = TRUE)
 
     # Plot temperature data (but: time series not continuous!)
     library(ggplot2)
 
-    # Remove obsolete columns
-    gsod_moshi <- gsod_moshi[, -grep("NC", names(gsod_moshi))]
-    # Reformat date and temperature column
-    gsod_moshi$YEARMODA <- as.Date(strptime(gsod_moshi$YEARMODA, format = "%Y%m%d"))
+    # Convert temperature column
     gsod_moshi$TEMP <- toCelsius(gsod_moshi$TEMP, digits = 1)
 
     ggplot(aes(y = TEMP, x = YEARMODA), data = gsod_moshi) + 

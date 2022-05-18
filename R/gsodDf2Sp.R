@@ -19,17 +19,17 @@
 #' 
 #' # Convert station list to spatial object
 #' gsod_shp <- gsodDf2Sp(data = gsod_df)
-#'                          
-#' plot(gsod_shp)                        
 #' 
-#' @importFrom methods as
+#' sp::plot(gsod_shp)
+#' 
 #' @importFrom sf st_as_sf
 #' 
-#' @export gsodDf2Sp
-#' @aliases gsodDf2Sp
+#' @export
 gsodDf2Sp <- function(data, 
                       ...) {
-
+  
+  LON = LAT = NULL
+  
   # Subset data by valid coordinates and convert to SpatialPointsDataFrame
   data.lonlat <- subset(data, !is.na(LON) & !is.na(LAT))
   

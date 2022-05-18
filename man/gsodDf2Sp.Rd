@@ -24,8 +24,8 @@ gsod_df <- gsodReformat(gsodstations, df2sp = FALSE)
 
 # Convert station list to spatial object
 gsod_shp <- gsodDf2Sp(data = gsod_df)
-                         
-plot(gsod_shp)                        
+
+sp::plot(gsod_shp)
 
 }
 \author{

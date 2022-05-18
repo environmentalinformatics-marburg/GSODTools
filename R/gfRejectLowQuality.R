@@ -1,6 +1,6 @@
 #' Julendat function to assure measurement quality
 #' 
-# #' @export gfRejectLowQuality
+#' @noRd
 gfRejectLowQuality <- function(data, 
                                prm.dep = "Ta_200",
                                quality.levels, 

@@ -17,7 +17,7 @@ gfJulendat(
   n.plot,
   prm.dep = "TEMP",
   prm.indep = "NA",
-  family = gaussian,
+  family = stats::gaussian,
   plevel,
   ...
 )
@@ -58,8 +58,8 @@ will be considered.}
 
 \item{prm.indep}{Character, default is "NA". Not required for GSOD data processing.}
 
-\item{family}{Object of class \code{family}, default is gaussian. See 
-\code{\link{family}}.}
+\item{family}{Object of class \code{family}, default is 
+\code{\link[stats]{gaussian}}.}
 
 \item{plevel}{Character. Determines current processing level. Not required 
 for GSOD data processing.}
@@ -71,44 +71,51 @@ An object of class \code{ki.data}.
 }
 \description{
 This is a wrapper function encompassing several sub-functions from the 
-Julendat gap-filling routine (processing level "0310", see \link{https://code.google.com/p/julendat/}). 
-Briefly, a discontinuous measurement series from a distinct GSOD station is
-being filled by the use of simultaneous measurements from adjacent GSOD stations. 
-Taking the gappy data as response variable, a linear model is fitted to explain 
-the measurements taken by the station under investigation based on surrounding stations.
+Julendat gap-filling routine (processing level "0310", see 
+\href{https://code.google.com/archive/p/julendat/}{Julendat}). Briefly, a 
+discontinuous measurement series from a distinct GSOD station is being filled
+by the use of simultaneous measurements from adjacent GSOD stations. Taking 
+the gappy data as response variable, a linear model is fitted to explain the 
+measurements taken by the station under investigation based on surrounding 
+stations.
 }
 \examples{
-library(dplyr)
-library(foreach)
+\dontrun{
+library(GSODTools)
 
 # Download data sets for selected GSOD stations
-station_names <- c("GARISSA", "KILIMANJARO AIRPORT", "MOMBASA", "MOROGORO", 
-                   "JOMO KENYATTA INTL", "VOI")
-station_names_abb <- c("gar", "kia", "mom", "mor", "jom", "voi")
+usafs = c(
+  "gar" = "637230"   # GARISSA
+  , "jom" = "637400" # NAIROBI JKIA
+  , "kia" = "637910" # KILIMANJARO INTL
+  , "voi" = "637930" # VOI
+  , "mom" = "638200" # MOMBASA MOI INTL
+  , "mor" = "638660" # MOROGORO (MET)
+)
 
 shp_gsod <- 
-  gsodstations \%>\% 
-  gsodReformat() \%>\% 
-  filter(STATION.NAME \%in\% station_names) \%>\% 
+  gsodstations |> 
+  gsodReformat() |> 
+  subset(`USAF` \%in\% usafs) |> 
   gsodDf2Sp()
 
-df_gsod <- 
-  foreach(usaf = methods::slot(shp_gsod, "data")$USAF, plot_id = station_names_abb) \%do\% {
+df_gsod = Map(
+  \(usaf, plot_id) {
     
     # Download and extraction
     tmp_df_gsod <- dlGsodStations(usaf = usaf, 
                                   start_year = 1990, end_year = 1995, 
-                                  dsn = paste0("data/", usaf), 
+                                  dsn = tempdir(), 
                                   unzip = TRUE,
                                   save_output = FALSE)
-                                  
-    # Remove obsolete "NC" columns
-    tmp_df_gsod <- tmp_df_gsod[, -grep("^NC$", names(tmp_df_gsod))]
     
     # Fahrenheit -> Celsius
-    tmp_df_gsod$TEMP <- tmp_df_gsod \%>\% select(TEMP) \%>\% unlist() \%>\% toCelsius(., digits = 1)
-    tmp_df_gsod$MIN <- tmp_df_gsod \%>\% select(MIN) \%>\% unlist() \%>\% toCelsius(., digits = 1)
-    tmp_df_gsod$MAX <- tmp_df_gsod \%>\% select(MAX) \%>\% unlist() \%>\% toCelsius(., digits = 1)
+    tmp_df_gsod = transform(
+      tmp_df_gsod
+      , TEMP = toCelsius(TEMP, digits = 1L)
+      , MIN = toCelsius(MIN, digits = 1L)
+      , MAX = toCelsius(MAX, digits = 1L)
+    )
     
     # GSOD -> `ki.data`
     tmp_ki_gsod <- gsod2ki(tmp_df_gsod, 
@@ -120,8 +127,11 @@ df_gsod <-
     
     # Remove outliers
     for (j in c("TEMP", "MIN", "MAX")) {
-      methods::slot(tmp_ki_gsod, "Parameter")[[j]] <- outlier2na(methods::slot(tmp_ki_gsod, "Parameter")[[j]], 
-                                               lower_quantile = .2, upper_quantile = .8)
+      methods::slot(tmp_ki_gsod, "Parameter")[[j]] = outlier2na(
+        methods::slot(tmp_ki_gsod, "Parameter")[[j]]
+        , lower_quantile = 0.2
+        , upper_quantile = 0.8
+      )
     }
     
     # Fill small gaps by linear interpolation
@@ -130,18 +140,21 @@ df_gsod <-
     
     # Save data created so far
     tmp_df_gsod <- gfOutputData(tmp_ki_gsod, plevel = "NA")
-    write.csv(tmp_df_gsod, paste0("data/", usaf, "/", usaf, "_1990_1995.csv"), 
+    write.csv(tmp_df_gsod, sprintf("\%s/\%s.csv", tempdir(), usaf), 
               row.names = FALSE)
     
     return(tmp_ki_gsod)    
   }
+  , methods::slot(shp_gsod, "data")$USAF
+  , names(usafs)
+)
 
 # Fill medium-sized gaps at Kilimanjaro Intl. Airport by linear modeling
-fls_gsod <- list.files("data/", pattern = "^63.*1990_1995.csv$", 
+fls_gsod <- list.files(tempdir(), pattern = "^\\\\d{6}.csv$", 
                        recursive = TRUE, full.names = TRUE)
 
-jul_gsod <- gfJulendat(files.dep = fls_gsod[2],
-                       files.indep = fls_gsod[-2],
+jul_gsod <- gfJulendat(files.dep = fls_gsod[3],
+                       files.indep = fls_gsod[-3],
                        filepath.coords = NULL,
                        quality.levels = NULL,
                        gap.limit = 1825, 
@@ -150,14 +163,14 @@ jul_gsod <- gfJulendat(files.dep = fls_gsod[2],
                        n.plot = 10,
                        prm.dep = c("TEMP", "MAX", "MIN"), 
                        prm.indep = c(NA, NA, NA), 
-                       family = gaussian, 
                        plevel = "NA", 
                        end.datetime = Sys.Date(), 
                        units = "days")
 
 plot(jul_gsod$TEMP, col = "red", type = "l")
-lines(methods::slot(df_gsod[[2]], "Parameter")$TEMP, col = "grey75")
-            
+lines(methods::slot(df_gsod[[3]], "Parameter")$TEMP, col = "grey75")
+}
+
 }
 \author{
 Florian Detsch

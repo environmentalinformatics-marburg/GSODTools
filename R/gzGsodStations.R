@@ -27,26 +27,30 @@
 #' Florian Detsch
 #' 
 #' @examples
-#' library(dplyr)
+#' \dontrun{
+#' moshi <- subset(gsodstations, `STATION NAME` == "MOSHI")
 #' 
-#' moshi <- filter(gsodstations, STATION.NAME == "MOSHI")
+#' #' # download data from moshi, tanzania, from 1990 to 1995
+#' jnk = dlGsodStations(
+#'   usaf = moshi$USAF
+#'   , start_year = 1990
+#'   , end_year = 1995
+#'   , dsn = tempdir()
+#' )
 #' 
 #' # Download data from Moshi, Tanzania, from 1990 to 1995
 #' gsod_moshi <- gzGsodStations(usaf = moshi$USAF, 
 #'                              start_year = 1990, end_year = 1995, 
-#'                              dsn = paste0(getwd(), "/data/moshi/"), 
+#'                              dsn = tempdir(),
 #'                              save_output = TRUE, 
-#'                              file = paste0(getwd(), "/data/moshi/moshi_1990_1995.csv"), 
+#'                              file = file.path(tempdir(), "moshi_1990_1995.csv"), 
 #'                              row.names = FALSE)
 #' 
-#' # Plot temperature data (but: time series not continuous!)                                                         
+#' # Plot temperature data (but: time series not continuous!)
 #' plot(gsod_moshi$TEMP, type = "l")
+#' }
 #' 
-#' @importFrom stats setNames
-#' @importFrom utils read.fwf
-#' 
-#' @export gzGsodStations
-#' @aliases gzGsodStations
+#' @export
 gzGsodStations <- function(usaf, 
                            dsn = ".",
                            start_year = NULL, 
@@ -54,6 +58,8 @@ gzGsodStations <- function(usaf,
                            save_output = FALSE,
                            rm_gz = FALSE,
                            ...) {
+  
+  YEARMODA = NULL
   
   # List available *.gz files
   fls <- list.files(dsn, pattern = paste(usaf, ".gz$", sep = ".*"), 
@@ -89,7 +95,7 @@ gzGsodStations <- function(usaf,
         
         # Import column names
         nms = utils::read.fwf(
-          "~/Downloads/637900-99999-1990.op"
+          i
           , widths = gsodColWidth()
           , n = 1L
         )
@@ -128,7 +134,7 @@ gzGsodStations <- function(usaf,
   
   # Save (optional) and return merged annual data per station
   if (save_output)
-    write.table(df.all, ...)
+    utils::write.table(df.all, ...)
   
   # Optionally remove *.gz files
   if (rm_gz)

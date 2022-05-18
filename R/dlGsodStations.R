@@ -59,6 +59,8 @@ dlGsodStations <- function(usaf,
                            rm_gz = FALSE,
                            ...) {
   
+  USAF = NULL
+  
   # Set `rm_gz = FALSE` in case `unzip = FALSE`
   rm_gz <- ifelse(unzip, rm_gz, FALSE)
   
@@ -85,7 +87,7 @@ dlGsodStations <- function(usaf,
   
   # Throw error in case of false user input, i.e. `start_year > end_year`
   if (start_year > end_year)
-    stop("Skipping GSOD station ", dl_usaf$USAF, " (", dl_usaf$STATION.NAME, 
+    stop("Skipping GSOD station ", dl_usaf$USAF, " (", dl_usaf$`STATION NAME`, 
          "): Start year is higher than end year!", sep = "")
   
   cat("Processing GSOD station ", dl_usaf$USAF, " (", 
@@ -105,7 +107,7 @@ dlGsodStations <- function(usaf,
     if (file.exists(dlfile)) {
       cat("File", dlfile, "already exists. Proceeding to next file... \n")
     } else {      
-      try(download.file(dlurl, dlfile), silent = FALSE)
+      try(utils::download.file(dlurl, dlfile), silent = FALSE)
     }
     
     return(dlfile)

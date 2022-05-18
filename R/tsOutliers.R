@@ -3,7 +3,7 @@
 #' @description
 #' This function identifies statistical outliers in a \code{ts} object based on
 #' upper and lower quantile criteria. The function body is mainly taken from 
-#' \link{http://stats.stackexchange.com/questions/1142/simple-algorithm-for-online-outlier-detection-of-a-generic-time-series}.
+#' \href{https://stats.stackexchange.com/q/1142}{stats.stackexchange.com}.
 #' 
 #' @param x Numeric. A vector of observed time-series values. 
 #' @param lower_quantile Numeric, default is 0.2. The lower quantile limit. 
@@ -33,9 +33,10 @@
 #' # Return indices of outliers incl. visualization
 #' tsOutliers(x, lower_quantile = .35, upper_quantile = .7, 
 #'            plot = TRUE, index = TRUE)
-#'
-#' @export tsOutliers
-#' @aliases tsOutliers
+#' 
+#' @importFrom graphics points
+#' 
+#' @export
 tsOutliers <- function(x, 
                        lower_quantile = .2, 
                        upper_quantile = .8,
@@ -47,16 +48,16 @@ tsOutliers <- function(x,
   x <- ts(x, ...)
   
   # Residuals
-  if(frequency(x) > 1) {
-    resid <- stl(x, s.window = "periodic", robust = TRUE, 
-                 na.action = na.exclude)$time.series[, 3]
+  if (stats::frequency(x) > 1) {
+    resid <- stats::stl(x, s.window = "periodic", robust = TRUE, 
+                 na.action = stats::na.exclude)$time.series[, 3]
   } else {
     tt <- 1:length(x)
-    resid <- residuals(loess(x ~ tt, na.action = na.exclude))
+    resid <- stats::residuals(stats::loess(x ~ tt, na.action = stats::na.exclude))
   }
   
   # Calculate scores
-  resid.q <- quantile(resid, prob = c(lower_quantile, upper_quantile), na.rm = TRUE)
+  resid.q <- stats::quantile(resid, prob = c(lower_quantile, upper_quantile), na.rm = TRUE)
   iqr <- diff(resid.q)
   limits <- resid.q + 1.5 * iqr * c(-1, 1)
   score <- abs(pmin((resid - limits[1]) / iqr, 0) + 
@@ -68,8 +69,8 @@ tsOutliers <- function(x,
     
     x2 <- ts(rep(NA,length(x)))
     x2[score > 0 & !is.na(score)] <- x[score > 0 & !is.na(score)]
-    tsp(x2) <- tsp(x)
-    points(x2, pch = 19, col = "red")
+    stats::tsp(x2) <- stats::tsp(x)
+    graphics::points(x2, pch = 19, col = "red")
   }
   
   # Return output

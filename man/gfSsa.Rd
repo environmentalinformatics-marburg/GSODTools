@@ -30,13 +30,12 @@ with no data gaps at all. Therefore, \code{\link{gfLinInt}} and
 before applying \code{gfSsa}.
 }
 \examples{
-library(dplyr)
-
-gar <- filter(gsodstations, STATION.NAME == "GARISSA")
+\dontrun{
+gar <- subset(gsodstations, `STATION NAME` == "GARISSA")
 
 gsod_gar <- dlGsodStations(usaf = gar$USAF,
                            start_year = 1990, end_year = 1995,
-                           dsn = paste0(getwd(), "/data/gar/"),
+                           dsn = tempdir(),
                            unzip = TRUE)
 
 # Conversion to KiLi SP1 `ki.data` object
@@ -57,6 +56,7 @@ ki_gar_ssa <- gfSsa(data = ki_gar_linint,
 plot(methods::slot(ki_gar_ssa, "Parameter")[["TEMP"]], type = "l", col = "red")
 lines(methods::slot(ki_gar_linint, "Parameter")[["TEMP"]], col = "green")
 lines(methods::slot(ki_gar, "Parameter")[["TEMP"]])             
+}
 
 }
 \seealso{

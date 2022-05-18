@@ -2,16 +2,14 @@
 #' 
 #' @description
 #' This function converts GSOD data from native format to standard KiLi SP1 format 
-#' (Julendat, see https://code.google.com/p/julendat/) and, optionally, to an 
-#' object of class \code{ki.data}. 
+#' (Julendat, see \url{https://code.google.com/archive/p/julendat/}) and, 
+#' optionally, to an object of class \code{ki.data}.
 #' 
 #' @param data \code{data.frame}. Input data, e.g. from \code{\link{dlGsodStations}}. 
 #' @param date_col Character or numeric, default is "YEARMODA". Indicates the 
 #' date column.
 #' @param prm_col Character or numeric, default is "TEMP". Indicates the 
 #' parameter column(s).
-#' @param time_step Character, default is "day". Indicates the time step between
-#' two measurements.
 #' @param timezone Character, default is "NA".
 #' @param aggtime Character, default is "-999".
 #' @param plot_id Character, default is "NA". 
@@ -37,13 +35,12 @@
 #' \code{\link{as.ki.data}}
 #' 
 #' @examples
-#' library(dplyr)
-#' 
-#' moshi <- filter(gsodstations, STATION.NAME == "MOSHI")
+#' \dontrun{
+#' moshi <- subset(gsodstations, `STATION NAME` == "MOSHI")
 #' 
 #' gsod_moshi <- dlGsodStations(usaf = moshi$USAF, 
 #'                              start_year = 1990, end_year = 1995, 
-#'                              dsn = paste0(getwd(), "/data/moshi/"), 
+#'                              dsn = tempdir(), 
 #'                              unzip = TRUE)
 #' 
 #' # Conversion to KiLi SP1 Julendat standard format
@@ -62,13 +59,12 @@
 #'                     df2ki = TRUE)
 #' 
 #' str(ki_moshi)
+#' }
 #' 
-#' @export gsod2ki
-#' @aliases gsod2ki
+#' @export
 gsod2ki <- function(data,
                     date_col = "YEARMODA",
                     prm_col = "TEMP", 
-                    time_step = "day",
                     timezone = "NA",
                     aggtime = "-999",
                     plot_id = "NA",
@@ -87,19 +83,13 @@ gsod2ki <- function(data,
   
   # Subset GSOD data by relevant columns
   data.ts.prm <- data[, c(date_col, prm_col)]
-  data.ts.prm[, date_col] <- as.Date(as.character(data.ts.prm[, date_col]), 
-                                        format = "%Y%m%d")
   
   # Merge continuous Date object with available GSOD measurements
   data.ts <- merge(data.frame(st_nd), data.ts.prm, by = 1, all.x = TRUE)
   names(data.ts) <- names(data.ts.prm)
   
   # Merge generated data
-  data.ts <- data.frame(Datetime = if (time_step == "day") {
-                          paste(data.ts[, date_col], "12:00:00") 
-                        } else {
-                          index(data.ts)
-                        },
+  data.ts <- data.frame(Datetime = paste(data.ts[, date_col], "12:00:00"),
                         Timezone = rep(timezone, nrow(data.ts)),
                         Aggregationtime = rep(aggtime, nrow(data.ts)),
                         PlotId = rep(plot_id, nrow(data.ts)),
@@ -118,7 +108,7 @@ gsod2ki <- function(data,
   
   # Save reformatted data (optional)
   if (save_output)
-    write.csv(data.ts, ...)
+    utils::write.csv(data.ts, ...)
   
   # Convert to `ki.data` object (optional)
   if (df2ki)

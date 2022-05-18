@@ -1,60 +1,38 @@
 #' Convert data set to ki.data object
 #' 
-#' @importFrom methods new
+#' @param input_filepath Needs documentation.
+#' @param start.column [\code{integer}] Defaults to \code{9L}.
+#' @param ... Currently not used.
 #' 
-# #' @export as.ki.data
-
-setClass("ki.data",
-         representation(
-           Datetime = "POSIXct",
-           Date = "list",
-           Time = "list",
-           AggregationLevels = "list",
-           Origin = "character",
-           Season = "character",
-           Timezone = "character",
-           Aggregationtime = "character",
-           PlotId = "list",
-           EpPlotId = "character",
-           StationId = "list",
-           Processlevel = "integer",
-           Qualityflag = "character",
-           Valid = "list",
-           Parameter = "list",
-           PrmHisto = "list"
-         )
-)
-
 #' @importFrom reshape2 melt
-
+#' 
+#' @export
 as.ki.data <- function(input_filepath, 
-                       start.column = 9,  
+                       start.column = 9L,  
                        ...) {
   
+  value = ..scaled.. = NULL
   
-
-  stopifnot(require(ggplot2, quietly = TRUE))
-
   # Check if data set to convert to ki.data already exists, 
   # otherwise import via read.table 
-  if (class(input_filepath) == "character") {
-    df <- read.table(input_filepath, header = T, sep = ",", fill = T,
+  if (inherits(input_filepath, "character")) {
+    df <- utils::read.table(input_filepath, header = T, sep = ",", fill = T,
                      stringsAsFactors = F, na.strings = c("", "NA", "NaN"))
-  } else if (class(input_filepath) == "data.frame") {
+  } else if (inherits(input_filepath, "data.frame")) {
     df <- input_filepath
   } else {
     stop("Supplied argument 'input_filepath' is neither a valid filepath
           nor an already existing data frame!")
   }
-
+  
   year <- substr(df$Datetime, 1, 4)
   len <- length(year)
   origin <- paste(year[1], "01-01", sep = "-")
-
-#   if (len < 1000) df$Datetime <- as.POSIXct(strptime(df$Datetime, 
-#                                                      format = "%Y%m%d%H"), 
-#                                             origin = origin)
-
+  
+  #   if (len < 1000) df$Datetime <- as.POSIXct(strptime(df$Datetime, 
+  #                                                      format = "%Y%m%d%H"), 
+  #                                             origin = origin)
+  
   month <- substr(df$Datetime, 6, 7)
   day <- substr(df$Datetime, 9,10)
   hour <- substr(df$Datetime, 12, 13)
@@ -62,17 +40,17 @@ as.ki.data <- function(input_filepath,
   agghour <- paste(year, month, day, hour, sep = "")
   aggday <- paste(year, month, day, sep = "")
   aggmonth <- paste(year, month, sep = "")
-#   aggqh <- as.numeric(minute)
-#   aggqh <- aggqh %/% 15
-#   aggqh <- factor(aggqh, labels = c("00", "15", "30", "45"))
-#   aggqh <- paste(year, month, day, hour, aggqh, sep = "")
+  #   aggqh <- as.numeric(minute)
+  #   aggqh <- aggqh %/% 15
+  #   aggqh <- factor(aggqh, labels = c("00", "15", "30", "45"))
+  #   aggqh <- paste(year, month, day, hour, aggqh, sep = "")
   
   agg3h <- as.numeric(hour)
   agg3h <- agg3h %/% 3
   labs3hupper <- as.character(seq(12, 21, 3))
   labs3hlower <- paste("0", as.character(seq(0, 9 , 3)), sep = "")
   labs3h <- c(labs3hlower, labs3hupper)
-#   agg3h <- factor(agg3h, labels = labs3h)
+  #   agg3h <- factor(agg3h, labels = labs3h)
   agg3h <- factor(agg3h, labels = ifelse(length(unique(hour)) == 1, 
                                          unique(hour), 
                                          labs3h))
@@ -83,12 +61,12 @@ as.ki.data <- function(input_filepath,
   labs6hupper <- as.character(seq(12, 18, 6))
   labs6hlower <- paste("0", as.character(seq(0, 9, 6)), sep = "")
   labs6h <- c(labs6hlower, labs6hupper)
-#   agg6h <- factor(agg6h, labels = labs6h)
+  #   agg6h <- factor(agg6h, labels = labs6h)
   agg6h <- factor(agg6h, labels = ifelse(length(unique(hour)) == 1, 
                                          unique(hour), 
                                          labs6h))
   agg6h <- paste(year, month, day, agg6h, sep = "")
-
+  
   season <- unlist(lapply(seq(unique(month)), function(i) {
     switch(unique(month)[i],
            "12" = season <- "DJF",
@@ -114,50 +92,50 @@ as.ki.data <- function(input_filepath,
   station_short <- substr(df$StationId, 4, 7)  
   
   df2 <- data.frame(df[9:length(df)])
-  ok <- complete.cases(df)
-  nok <- which(!complete.cases(df))
+  ok <- stats::complete.cases(df)
+  nok <- which(!stats::complete.cases(df))
   validn <- sum(ok)
   nna <- NROW(df) - validn
-#  print(nna)
+  #  print(nna)
   df2 <- reshape2::melt(df2)
-
+  
   graph <- ggplot(df2, aes(x = value, y = ..scaled..))
   graph <- graph + geom_density(fill = "darkblue", alpha = 0.5) +
     facet_wrap(~ variable, scales = "free")
   
   kiData <- methods::new("ki.data",  
-                Datetime = as.POSIXct(df$Datetime, tz = "UTC"),
-                Date = list(Unique = paste(unique(year), unique(month), 
-                                           sep = ""),
-                            Year = year,
-                            Month = month,
-                            Day = day),
-                Time = list(Hour = hour,
-                            Minute = minute),
-                AggregationLevels = list(#AggQh = aggqh,
-                                         Agg1h = agghour,
-                                         Agg3h = agg3h,
-                                         Agg6h = agg6h,
-                                         AggDay = aggday,
-                                         AggMonth = aggmonth,
-                                         AggYear = year),
-                Origin = origin,
-                Season = season,
-                Timezone = unique(na.exclude(df$Timezone)),
-                Aggregationtime = unique(na.exclude(df$Aggregationtime)),
-                PlotId = list(Unique = unique(na.exclude(plot)),
-                              #Longname = plot_long,
-                              Shortname = plot),
-                EpPlotId = df$EpPlotId,
-                StationId = list(Unique = unique(na.exclude(station_short)),
-                                 Longname = station_long,
-                                 Shortname = station_short),
-                Processlevel = as.integer(unique(na.exclude(df$Processlevel))),
-                Qualityflag = as.character(df$Qualityflag),
-                Valid = list(N = validn, NAIndex = nok),
-                Parameter = as.list(df[start.column:length(df)]),
-                PrmHisto = list(graph)
-                )
+                         Datetime = as.POSIXct(df$Datetime, tz = "UTC"),
+                         Date = list(Unique = paste(unique(year), unique(month), 
+                                                    sep = ""),
+                                     Year = year,
+                                     Month = month,
+                                     Day = day),
+                         Time = list(Hour = hour,
+                                     Minute = minute),
+                         AggregationLevels = list(#AggQh = aggqh,
+                           Agg1h = agghour,
+                           Agg3h = agg3h,
+                           Agg6h = agg6h,
+                           AggDay = aggday,
+                           AggMonth = aggmonth,
+                           AggYear = year),
+                         Origin = origin,
+                         Season = season,
+                         Timezone = unique(stats::na.exclude(df$Timezone)),
+                         Aggregationtime = unique(stats::na.exclude(df$Aggregationtime)),
+                         PlotId = list(Unique = unique(stats::na.exclude(plot)),
+                                       #Longname = plot_long,
+                                       Shortname = plot),
+                         EpPlotId = df$EpPlotId,
+                         StationId = list(Unique = unique(stats::na.exclude(station_short)),
+                                          Longname = station_long,
+                                          Shortname = station_short),
+                         Processlevel = as.integer(unique(stats::na.exclude(df$Processlevel))),
+                         Qualityflag = as.character(df$Qualityflag),
+                         Valid = list(N = validn, NAIndex = nok),
+                         Parameter = as.list(df[start.column:length(df)]),
+                         PrmHisto = list(graph)
+  )
   
   return(kiData)
 }

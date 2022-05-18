@@ -1,9 +1,9 @@
 #' Julendat function to identify gap lengths in measurement series
 #' 
 #' @description
-#' This is a function taken from Julendat (see \link{https://code.google.com/p/julendat/})
-#' to identify gap lengths in (eco-)climatological measurement series of a given
-#' parameter.
+#' This is a function taken from 
+#' \href{https://code.google.com/archive/p/julendat/}{Julendat} to identify 
+#' gap lengths in (eco-)climatological measurement series of a given parameter.
 #' 
 #' @param data.dep Object of class \code{ki.data}. See \code{\link{as.ki.data}}, 
 #' \code{\link{gsod2ki}} for further information. 
@@ -22,13 +22,12 @@
 #' Florian Detsch
 #' 
 #' @examples
-#' library(dplyr)
-#' 
-#' moshi <- filter(gsodstations, STATION.NAME == "MOSHI")
+#' \dontrun{
+#' moshi <- subset(gsodstations, `STATION NAME` == "MOSHI")
 #' 
 #' gsod_moshi <- dlGsodStations(usaf = moshi$USAF,
 #'                              start_year = 1990, end_year = 1995,
-#'                              dsn = paste0(getwd(), "/data/moshi/"),
+#'                              dsn = tempdir(),
 #'                              unzip = TRUE)
 #' 
 #' # Conversion to KiLi SP1 `ki.data` object
@@ -42,9 +41,9 @@
 #'             gap.limit = 365,
 #'             units = "days", 
 #'             end.datetime = Sys.Date())
-#'             
-#' @export gfGapLength
-#' @aliases gfGapLength
+#' }
+#' 
+#' @export
 gfGapLength <- function(data.dep, 
                         pos.na,
                         gap.limit,

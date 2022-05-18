@@ -28,13 +28,12 @@ This function fills small data gaps occurring in (eco-)climatological
 measurement series by simple linear interpolation.
 }
 \examples{
-library(dplyr)
-
-moshi <- filter(gsodstations, STATION.NAME == "MOSHI")
+\dontrun{
+moshi <- subset(gsodstations, `STATION NAME` == "MOSHI")
 
 gsod_moshi <- dlGsodStations(usaf = moshi$USAF,
                              start_year = 1990, end_year = 1995,
-                             dsn = paste0(getwd(), "/data/moshi/"),
+                             dsn = tempdir(),
                              unzip = TRUE)
 
 # Conversion to KiLi SP1 `ki.data` object
@@ -49,6 +48,7 @@ ki_moshi_lf <- gfLinInt(data = ki_moshi,
 
 plot(methods::slot(ki_moshi_lf, "Parameter")$TEMP, type = "l", col = "red")
 lines(methods::slot(ki_moshi, "Parameter")$TEMP) 
+}
 
 }
 \seealso{

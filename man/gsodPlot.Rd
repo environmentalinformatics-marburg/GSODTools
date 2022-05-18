@@ -4,7 +4,14 @@
 \alias{gsodPlot}
 \title{Plot GSOD data}
 \usage{
-gsodPlot(fls_orig = NULL, fls, stations, prm = "TEMP", type = "trends", ...)
+gsodPlot(
+  fls_orig = NULL,
+  fls,
+  stations,
+  prm = "TEMP",
+  type = c("original", "trends", "both"),
+  ...
+)
 }
 \arguments{
 \item{fls_orig}{See argument \code{fls}.}
@@ -23,7 +30,10 @@ visualize. If \code{type = "trends"}, this argument will be ignored, and
 columns "TEMP", "MIN" and "MAX" must be available in \code{fls} and 
 \code{fls_orig}.}
 
-\item{...}{Additional arguments passed to \code{\link{element_text}}.}
+\item{type}{Character. Determines the plot type, one of \code{"original"} 
+(default), \code{"trend"}, or \code{"both"}.}
+
+\item{...}{Additional arguments passed to \code{\link[ggplot2]{element_text}}.}
 }
 \value{
 An object of class \code{ggplot}.
@@ -34,9 +44,6 @@ imputed, as well as linear trends of mean, minimum and maximum daily air
 temperature.
 }
 \examples{
-library(foreach)
-library(ggplot2)
-
 # Visualize trends in daily mean, minimum, and maximum air temperature
 lst = split(
   eastafrica
@@ -64,10 +71,10 @@ filled_data = lst[
 gsodPlot(
   cleansed_data
   , filled_data
-  , stations = c("Jomo Kenyatta Intl. Airport", "Kilimanjaro Intl. Airport")
+  , stations = c("NAIROBI JKIA", "KILIMANJARO INTL")
   , type = "trends"
 )
- 
+
 }
 \author{
 Florian Detsch

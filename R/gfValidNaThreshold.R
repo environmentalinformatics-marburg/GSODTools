@@ -1,6 +1,6 @@
 #' Julendat function to calculate the amount of missing values
 #' 
-# #' @export gfValidNaThreshold
+#' @noRd
 gfValidNaThreshold <- function(data.indep,
                                prm.dep = "Ta_200",
                                na.limit = 0.2, 

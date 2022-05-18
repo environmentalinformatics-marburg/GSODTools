@@ -42,9 +42,6 @@ a monthly level. The seasonal shifts are derived from a harmonic trend model
 fitted to the desired start and end range of a measurement series.
 }
 \examples{
-library(foreach)
-library(ggplot2)
-
 # visualize seasonal shifts in monthly averaged air temperature
 cleansed_data = subset(
   eastafrica

@@ -24,19 +24,22 @@
 #' 
 #' @examples
 #' # Predefined bounding box around Mt. Kilimanjaro region
-#' kili <- extent(c(37, 37.72, -3.4, -2.84))
+#' kili <- raster::extent(c(37, 37.72, -3.4, -2.84))
 #' gsod_shp_kili <- stationFromExtent(bb = kili)
 #' 
-#' mapGriddedData(mapRegion = "africa", plotData = FALSE, borderCol = "black", 
+#' rworldmap::mapGriddedData(mapRegion = "africa", plotData = FALSE, borderCol = "black", 
 #'                addLegend = FALSE)
 #' points(gsod_shp_kili, col = "red")
 #' 
-#' # User-drawn bounding box in Germany
-#' gsod_shp_dtl <- stationFromExtent(mapRegion = "Germany")
-#' points(gsod_shp_dtl, col = "red")                          
+#' if (interactive()) {
+#'   # User-drawn bounding box in Germany
+#'   gsod_shp_dtl <- stationFromExtent(mapRegion = "Germany")
+#'   points(gsod_shp_dtl, col = "red")                          
+#' }
 #' 
-#' @export stationFromExtent
-#' @aliases stationFromExtent
+#' @importFrom rworldmap mapGriddedData
+#' 
+#' @export
 stationFromExtent <- function(mapRegion = "world",
                               bb = NULL, 
                              ...) {
@@ -45,16 +48,16 @@ stationFromExtent <- function(mapRegion = "world",
   if (is.null(bb)) {
 
     # Display plain map of desired extent
-    mapGriddedData(mapRegion = mapRegion, addLegend = FALSE, plotData = FALSE, 
+    rworldmap::mapGriddedData(mapRegion = mapRegion, addLegend = FALSE, plotData = FALSE, 
                    borderCol = "black")
     
     # Draw extent on map
-    bb <- drawExtent()
+    bb <- raster::drawExtent()
   }
   
   # Crop available stations by drawn extent and return
   stations <- gsodReformat(data = gsodstations, df2sp = TRUE)
-  stations <- crop(stations, bb)
+  stations <- raster::crop(stations, bb)
   
   return(stations)
 }

@@ -2,7 +2,7 @@
 #' 
 #' @importFrom gmt geodist
 #' 
-# #' @export gfImputeMissingValue
+#' @noRd
 gfImputeMissingValue <- function(data.dep, 
                                  data.indep,
                                  na.limit = 0.2,
@@ -12,7 +12,7 @@ gfImputeMissingValue <- function(data.dep,
                                  n.plot = 10, 
                                  prm.dep = "Ta_200",
                                  prm.indep = NA,
-                                 family = gaussian,
+                                 family = stats::gaussian,
                                  ...) {
   
   # Revision of defined time window with respect to the current gap before ...

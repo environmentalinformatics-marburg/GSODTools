@@ -1,6 +1,6 @@
 #' Julendat wrapper function controlling imputation of missing values
 #' 
-# #' @export gfRun
+#' @noRd
 gfRun <- function(files.dep,
                   files.indep,
                   filepath.coords, 
@@ -21,7 +21,7 @@ gfRun <- function(files.dep,
   
   # Import plot coordinates
   if (!is.null(filepath.coords)) {
-    data.coords <- read.csv(filepath.coords, header = T)
+    data.coords <- utils::read.csv(filepath.coords, header = T)
     data.coords <- data.coords[, c("PlotID", "Lon", "Lat")]
   } else {
     data.coords <- NULL

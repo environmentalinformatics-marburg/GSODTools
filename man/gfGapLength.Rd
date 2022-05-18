@@ -33,18 +33,17 @@ Not required for GSOD data processing.}
 A \code{list} containing start, end, and length of each data gap.
 }
 \description{
-This is a function taken from Julendat (see \link{https://code.google.com/p/julendat/})
-to identify gap lengths in (eco-)climatological measurement series of a given
-parameter.
+This is a function taken from 
+\href{https://code.google.com/archive/p/julendat/}{Julendat} to identify 
+gap lengths in (eco-)climatological measurement series of a given parameter.
 }
 \examples{
-library(dplyr)
-
-moshi <- filter(gsodstations, STATION.NAME == "MOSHI")
+\dontrun{
+moshi <- subset(gsodstations, `STATION NAME` == "MOSHI")
 
 gsod_moshi <- dlGsodStations(usaf = moshi$USAF,
                              start_year = 1990, end_year = 1995,
-                             dsn = paste0(getwd(), "/data/moshi/"),
+                             dsn = tempdir(),
                              unzip = TRUE)
 
 # Conversion to KiLi SP1 `ki.data` object
@@ -58,7 +57,8 @@ gfGapLength(data.dep = ki_moshi,
             gap.limit = 365,
             units = "days", 
             end.datetime = Sys.Date())
-            
+}
+
 }
 \author{
 Florian Detsch

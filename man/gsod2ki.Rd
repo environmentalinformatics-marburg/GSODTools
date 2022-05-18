@@ -8,7 +8,6 @@ gsod2ki(
   data,
   date_col = "YEARMODA",
   prm_col = "TEMP",
-  time_step = "day",
   timezone = "NA",
   aggtime = "-999",
   plot_id = "NA",
@@ -29,9 +28,6 @@ date column.}
 
 \item{prm_col}{Character or numeric, default is "TEMP". Indicates the 
 parameter column(s).}
-
-\item{time_step}{Character, default is "day". Indicates the time step between
-two measurements.}
 
 \item{timezone}{Character, default is "NA".}
 
@@ -62,17 +58,16 @@ class \code{ki.data}.
 }
 \description{
 This function converts GSOD data from native format to standard KiLi SP1 format 
-(Julendat, see https://code.google.com/p/julendat/) and, optionally, to an 
-object of class \code{ki.data}.
+(Julendat, see \url{https://code.google.com/archive/p/julendat/}) and, 
+optionally, to an object of class \code{ki.data}.
 }
 \examples{
-library(dplyr)
-
-moshi <- filter(gsodstations, STATION.NAME == "MOSHI")
+\dontrun{
+moshi <- subset(gsodstations, `STATION NAME` == "MOSHI")
 
 gsod_moshi <- dlGsodStations(usaf = moshi$USAF, 
                              start_year = 1990, end_year = 1995, 
-                             dsn = paste0(getwd(), "/data/moshi/"), 
+                             dsn = tempdir(), 
                              unzip = TRUE)
 
 # Conversion to KiLi SP1 Julendat standard format
@@ -91,6 +86,7 @@ ki_moshi <- gsod2ki(data = gsod_moshi,
                     df2ki = TRUE)
 
 str(ki_moshi)
+}
 
 }
 \seealso{

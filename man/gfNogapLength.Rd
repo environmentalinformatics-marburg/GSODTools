@@ -19,18 +19,17 @@ coerced to \code{ki.data}. The data set under investigation.}
 A \code{list} containing start, end, and length of each continuous measurement.
 }
 \description{
-This is a function taken from Julendat (see \link{https://code.google.com/p/julendat/})
-to identify lengths of continuous measurements in (eco-)climatological 
-measurement series.
+This is a function taken from 
+\href{https://code.google.com/archive/p/julendat/}{Julendat} to identify 
+lengths of continuous measurements in (eco-)climatological measurement series.
 }
 \examples{
-library(dplyr)
-
-moshi <- filter(gsodstations, STATION.NAME == "MOSHI")
+\dontrun{
+moshi <- subset(gsodstations, `STATION NAME` == "MOSHI")
 
 gsod_moshi <- dlGsodStations(usaf = moshi$USAF,
                              start_year = 1990, end_year = 1995,
-                             dsn = paste0(getwd(), "/data/moshi/"),
+                             dsn = tempdir(),
                              unzip = TRUE)
 
 # Conversion to KiLi SP1 `ki.data` object
@@ -44,10 +43,11 @@ gaps <- gfGapLength(data.dep = ki_moshi,
                     gap.limit = 365,
                     units = "days", 
                     end.datetime = Sys.Date())
-                    
+
 # Identify lengths of continuous measurements
 nogaps <- gfNogapLength(gaps = gaps, 
-                        data.dep = ki_moshi)                     
+                        data.dep = ki_moshi)
+}
 
 }
 \seealso{

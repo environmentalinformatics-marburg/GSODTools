@@ -22,7 +22,6 @@
 #' @seealso
 #' \code{\link{harmonic}}
 #' 
-#' @importFrom stats fitted lm ts
 #' @importFrom TSA harmonic
 #' 
 #' @export

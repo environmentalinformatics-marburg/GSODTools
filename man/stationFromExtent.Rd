@@ -27,16 +27,18 @@ user-drawn map extent.
 }
 \examples{
 # Predefined bounding box around Mt. Kilimanjaro region
-kili <- extent(c(37, 37.72, -3.4, -2.84))
+kili <- raster::extent(c(37, 37.72, -3.4, -2.84))
 gsod_shp_kili <- stationFromExtent(bb = kili)
 
-mapGriddedData(mapRegion = "africa", plotData = FALSE, borderCol = "black", 
+rworldmap::mapGriddedData(mapRegion = "africa", plotData = FALSE, borderCol = "black", 
                addLegend = FALSE)
 points(gsod_shp_kili, col = "red")
 
-# User-drawn bounding box in Germany
-gsod_shp_dtl <- stationFromExtent(mapRegion = "Germany")
-points(gsod_shp_dtl, col = "red")                          
+if (interactive()) {
+  # User-drawn bounding box in Germany
+  gsod_shp_dtl <- stationFromExtent(mapRegion = "Germany")
+  points(gsod_shp_dtl, col = "red")                          
+}
 
 }
 \seealso{

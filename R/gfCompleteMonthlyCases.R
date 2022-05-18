@@ -1,6 +1,6 @@
 #' Identification of plots with valid contemporary measurements
 #' 
-# #' @export gfCompleteMonthlyCases
+#' @noRd
 gfCompleteMonthlyCases <- function(data.dep, 
                                    data.indep,
                                    data.indep.avl,
@@ -57,7 +57,7 @@ gfCompleteMonthlyCases <- function(data.dep,
   data.avl.prm.merge <- do.call("data.frame", data.avl.comp)
 
   # Select complete cases only
-  data.avl.prm.merge.cc <- data.avl.prm.merge[complete.cases(data.avl.prm.merge),]
+  data.avl.prm.merge.cc <- data.avl.prm.merge[stats::complete.cases(data.avl.prm.merge),]
 
   # Return data.frame containing complete cases of monthly data sets
   return(list(data.avl.prm.merge, data.avl.prm.merge.cc))

@@ -23,13 +23,12 @@
 #' \code{\link{rollapply}}
 #' 
 #' @examples
-#' library(dplyr)
-#' 
-#' moshi <- filter(gsodstations, STATION.NAME == "MOSHI")
+#' \dontrun{
+#' moshi <- subset(gsodstations, `STATION NAME` == "MOSHI")
 #' 
 #' gsod_moshi <- dlGsodStations(usaf = moshi$USAF,
 #'                              start_year = 1990, end_year = 1995,
-#'                              dsn = paste0(getwd(), "/data/moshi/"),
+#'                              dsn = tempdir(),
 #'                              unzip = TRUE)
 #' 
 #' # Conversion to KiLi SP1 `ki.data` object
@@ -44,7 +43,10 @@
 #' 
 #' plot(methods::slot(ki_moshi_lf, "Parameter")$TEMP, type = "l", col = "red")
 #' lines(methods::slot(ki_moshi, "Parameter")$TEMP) 
+#' }
 #'
+#' @importFrom zoo rollapply zoo
+#' 
 #' @export gfLinInt
 gfLinInt <- function(data, 
                      prm = "TEMP", 
@@ -64,14 +66,20 @@ gfLinInt <- function(data,
                                   units = "days"))
     # Sufficiently small gaps
     pos.na <- pos.na[which(pos.na[, 3] <= limit), ]
-    pos.na.small <- foreach(j = seq(nrow(pos.na)), .combine = "c") %do% {
-      seq(pos.na[j, 1], pos.na[j, 2])
-    }
+    pos.na.small <- unlist(
+      Map(
+        \(j, k) { 
+          j:k
+        }
+        , pos.na[, 1]
+        , pos.na[, 2]
+      )
+    )
     
     # Time series
-    tmp.ts <- zoo(data@Parameter[[i]], order.by = as.Date(data@Datetime))
+    tmp.ts <- zoo::zoo(data@Parameter[[i]], order.by = as.Date(data@Datetime))
     # Rolling mean (window width = 11)
-    tmp.ts.rm <- rollapply(data = tmp.ts, width = width, fill = list(NA, NULL, NA), 
+    tmp.ts.rm <- zoo::rollapply(data = tmp.ts, width = width, fill = list(NA, NULL, NA), 
                            partial = TRUE, function(...) mean(..., na.rm = TRUE))
     
     # Replace identified gaps by rolling mean

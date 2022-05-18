@@ -32,7 +32,14 @@ gsodstations[
 # > Error in st_as_sf.data.frame(gsodstations, coords = c("LON", "LAT"), crs = 4326) : 
 # >   missing values in coordinates not allowed
 
-## save to file
+## store internally in R/sysdata.rda --> follows usual export rules
+usethis::use_data(
+  gsodstations
+  , internal = TRUE
+  , overwrite = TRUE
+)
+
+## write to ./data --> bypass usual export mechanism
 usethis::use_data(
   gsodstations
   , overwrite = TRUE
