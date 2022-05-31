@@ -1,15 +1,13 @@
 #' Reformat list of available GSOD stations 
 #' 
 #' @description
-#' This function is intended to reformat selected columns, i.e. elevation and
+#' This function is intended to reformat selected columns, i.e. 
 #' coordinates, from the initial list of available GSOD stations (see 
 #' \url{ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv}). Optionally, the
 #' corresponding \code{data.frame} can then be converted to an object of class
 #' \code{SpatialPointsDataFrame} for further processing. 
 #' 
 #' @param data \code{data.frame}. Usually built-in \code{gsodstations}.
-#' @param elevation Logical, default is TRUE. Determines whether elevation is
-#' converted from decimeters to meters.
 #' @param coords Logical, default is TRUE. Determines whether coordinates are
 #' converted from thousandth of a degree longitude/latitude to whole degrees.
 #' @param rm_invalid_coords Logical, default is TRUE. Determines whether records
@@ -31,9 +29,8 @@
 #' \code{\link{gsodDf2Sp}}
 #' 
 #' @examples
-#' # Reformat elevation and coordinates, and convert to spatial object.
+#' # Reformat coordinates and convert to spatial object
 #' gsod_shp <- gsodReformat(data = gsodstations, 
-#'                          elevation = TRUE, 
 #'                          coords = TRUE, 
 #'                          rm_invalid_coords = TRUE, 
 #'                          df2sp = TRUE)
@@ -42,15 +39,10 @@
 #' 
 #' @export
 gsodReformat <- function(data, 
-                         elevation = TRUE, 
                          coords = TRUE, 
                          rm_invalid_coords = TRUE,
                          df2sp = FALSE,
                          ...) {
-
-  # Reformat elevation (optional)
-  if (elevation)
-    data$`ELEV(M)` <- data$`ELEV(M)` / 10
   
   # Reformat coordinates (optional)
   if (!coords) {

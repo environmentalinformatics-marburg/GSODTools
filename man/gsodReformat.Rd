@@ -4,20 +4,10 @@
 \alias{gsodReformat}
 \title{Reformat list of available GSOD stations}
 \usage{
-gsodReformat(
-  data,
-  elevation = TRUE,
-  coords = TRUE,
-  rm_invalid_coords = TRUE,
-  df2sp = FALSE,
-  ...
-)
+gsodReformat(data, coords = TRUE, rm_invalid_coords = TRUE, df2sp = FALSE, ...)
 }
 \arguments{
 \item{data}{\code{data.frame}. Usually built-in \code{gsodstations}.}
-
-\item{elevation}{Logical, default is TRUE. Determines whether elevation is
-converted from decimeters to meters.}
 
 \item{coords}{Logical, default is TRUE. Determines whether coordinates are
 converted from thousandth of a degree longitude/latitude to whole degrees.}
@@ -37,16 +27,15 @@ An object of class \code{data.frame}, or an object of class
 \code{SpatialPointsDataFrame} if \code{df2sp = TRUE}.
 }
 \description{
-This function is intended to reformat selected columns, i.e. elevation and
+This function is intended to reformat selected columns, i.e. 
 coordinates, from the initial list of available GSOD stations (see 
 \url{ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv}). Optionally, the
 corresponding \code{data.frame} can then be converted to an object of class
 \code{SpatialPointsDataFrame} for further processing.
 }
 \examples{
-# Reformat elevation and coordinates, and convert to spatial object.
+# Reformat coordinates and convert to spatial object
 gsod_shp <- gsodReformat(data = gsodstations, 
-                         elevation = TRUE, 
                          coords = TRUE, 
                          rm_invalid_coords = TRUE, 
                          df2sp = TRUE)
