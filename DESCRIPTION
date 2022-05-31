@@ -24,7 +24,9 @@ Imports:
     stats,
     forecast,
     graphics
+Suggests: 
+    checkmate,
+    tinytest
 LazyData: true
 RoxygenNote: 7.2.0
 Encoding: UTF-8
-Suggests: tinytest

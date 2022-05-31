@@ -23,6 +23,12 @@ gsodstations[
   , .SDcols = cols
 ]
 
+## replace elevation missing value
+gsodstations[
+  `ELEV(M)` %in% c(-999.9, -999.0)
+  , `ELEV(M)` := NA_real_
+]
+
 # sf::st_as_sf(
 #   gsodstations
 #   , coords = c("LON", "LAT")
