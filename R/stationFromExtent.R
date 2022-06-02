@@ -14,7 +14,7 @@
 #' @param ... Additional arguments. Currently not in use.
 #' 
 #' @return
-#' An object of class \code{SpatialPointsDataFrame}.
+#' A \code{sf} object.
 #' 
 #' @author
 #' Florian Detsch
@@ -24,12 +24,12 @@
 #' 
 #' @examples
 #' # Predefined bounding box around Mt. Kilimanjaro region
-#' kili <- raster::extent(c(37, 37.72, -3.4, -2.84))
+#' kili <- sf::st_bbox(c(xmin = 37, xmax = 37.72, ymin = -3.4, ymax = -2.84))
 #' gsod_shp_kili <- stationFromExtent(bb = kili)
 #' 
 #' rworldmap::mapGriddedData(mapRegion = "africa", plotData = FALSE, borderCol = "black", 
 #'                addLegend = FALSE)
-#' points(gsod_shp_kili, col = "red")
+#' points(sf::st_coordinates(gsod_shp_kili), col = "red")
 #' 
 #' if (interactive()) {
 #'   # User-drawn bounding box in Germany
@@ -57,8 +57,9 @@ stationFromExtent <- function(mapRegion = "world",
   
   # Crop available stations by drawn extent and return
   stations <- gsodReformat(data = gsodstations, df2sp = TRUE)
-  stations <- raster::crop(stations, bb)
   
-  return(stations)
+  suppressWarnings(
+    sf::st_crop(stations, bb)
+  )
 }
   

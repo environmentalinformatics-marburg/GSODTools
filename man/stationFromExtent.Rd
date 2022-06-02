@@ -19,7 +19,7 @@ created without any further user-specified input.}
 \item{...}{Additional arguments. Currently not in use.}
 }
 \value{
-An object of class \code{SpatialPointsDataFrame}.
+A \code{sf} object.
 }
 \description{
 This function allows the selection of a subset of GSOD stations based on a 
@@ -27,12 +27,12 @@ user-drawn map extent.
 }
 \examples{
 # Predefined bounding box around Mt. Kilimanjaro region
-kili <- raster::extent(c(37, 37.72, -3.4, -2.84))
+kili <- sf::st_bbox(c(xmin = 37, xmax = 37.72, ymin = -3.4, ymax = -2.84))
 gsod_shp_kili <- stationFromExtent(bb = kili)
 
 rworldmap::mapGriddedData(mapRegion = "africa", plotData = FALSE, borderCol = "black", 
                addLegend = FALSE)
-points(gsod_shp_kili, col = "red")
+points(sf::st_coordinates(gsod_shp_kili), col = "red")
 
 if (interactive()) {
   # User-drawn bounding box in Germany

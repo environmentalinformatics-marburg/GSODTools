@@ -23,8 +23,8 @@ stations is converted from \code{data.frame} to \code{SpatialPointsDataFrame} ob
 \item{...}{Additional arguments. Currently not in use.}
 }
 \value{
-An object of class \code{data.frame}, or an object of class 
-\code{SpatialPointsDataFrame} if \code{df2sp = TRUE}.
+An object of class \code{data.frame}, or a \code{sf} object if 
+\code{df2sp = TRUE}.
 }
 \description{
 This function is intended to reformat selected columns, i.e. 

@@ -33,16 +33,9 @@ gsodDf2Sp <- function(data,
   # Subset data by valid coordinates and convert to SpatialPointsDataFrame
   data.lonlat <- subset(data, !is.na(LON) & !is.na(LAT))
   
-  data.lonlat = sf::st_as_sf(
+  sf::st_as_sf(
     data.lonlat
     , coords = c("LON", "LAT")
     , crs = 4326
-  )
-  
-  return(
-    methods::as(
-      data.lonlat
-      , Class = "Spatial"
-    )
   )
 }

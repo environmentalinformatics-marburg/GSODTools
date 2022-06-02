@@ -19,8 +19,8 @@
 #' @param ... Additional arguments. Currently not in use.
 #' 
 #' @return
-#' An object of class \code{data.frame}, or an object of class 
-#' \code{SpatialPointsDataFrame} if \code{df2sp = TRUE}.
+#' An object of class \code{data.frame}, or a \code{sf} object if 
+#' \code{df2sp = TRUE}.
 #' 
 #' @author
 #' Florian Detsch
