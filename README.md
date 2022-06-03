@@ -61,7 +61,7 @@ probably look like this.
                              df2sp = TRUE)
 
     par(mar = c(0, 0, 0, 0))
-    sp::plot(gsod_shp)
+    plot(gsod_shp)
 
 ![](figure/gsodReformat-1.png)
 
@@ -83,8 +83,6 @@ numerics. For instance, let’s search for GSOD stations in a circle of
 500 km around Kibo summit, Mt. Kilimanjaro, Tanzania. The referring
 coordinates are `c(37.359031, -3.065053)`.
 
-    library(dplyr)
-
     shp_kibo <- stationFromCoords(x = 37.359031, y = -3.065053, width = 500)
     # or: stationFromCoords(x = c(37.359031, -3.065053), width = 500)
     # or: stationFromCoords(x = SpatialPoints(data.frame(x = 37.359031, 
@@ -98,7 +96,7 @@ coordinates are `c(37.359031, -3.065053)`.
       , borderCol = "black"
       , addLegend = FALSE
     )
-    points(shp_kibo, col = "red", pch = 20, cex = 2)
+    points(sf::st_coordinates(shp_kibo), col = "red", pch = 20, cex = 2)
 
 ![](figure/stationFromCoords-1.png)
 
@@ -117,9 +115,14 @@ object from an arbitrary spatial object, e.g. ‘RasterLayer’,
 is actually quite difficult to include in a README file) is
 automatically disabled.
 
-    library(raster)
-
-    bbox_kibo_south <- extent(c(36.6, 37.72, -3.5, -3.065053))
+    bbox_kibo_south <- sf::st_bbox(
+      c(
+        xmin = 36.6
+        , xmax = 37.72
+        , ymin = -3.5
+        , ymax = -3.065053
+      )
+    )
     shp_kili_south <- stationFromExtent(bb = bbox_kibo_south)
 
     rworldmap::mapGriddedData(
@@ -128,7 +131,7 @@ automatically disabled.
       , borderCol = "black"
       , addLegend = FALSE
     )
-    points(shp_kili_south, col = "red", pch = 20, cex = 2)
+    points(sf::st_coordinates(shp_kili_south), col = "red", pch = 20, cex = 2)
 
 ![](figure/stationFromExtent-1.png)
 
@@ -139,19 +142,25 @@ spelling of a station’s name. Again referring to the above example where
 we selected Arusha, Moshi, and Kilimanjaro International Airport (KIA),
 this would more or less look like this.
 
-    station_names <- c("ARUSHA", "KILIMANJARO AIRPORT", "MOSHI")
+    station_names <- c("ARUSHA", "KILIMANJARO INTL", "MOSHI")
 
-    shp_kili_south <- 
-      gsodstations |> 
-      gsodReformat() |> 
-      filter(`STATION NAME` %in% station_names) |> 
-      gsodDf2Sp()
+    (
+      shp_kili_south <- 
+        gsodstations |> 
+        gsodReformat() |> 
+        subset(`STATION NAME` %in% station_names) |> 
+        gsodDf2Sp()
+    )
 
-    shp_kili_south@data
-
-    ##     USAF  WBAN STATION.NAME CTRY STATE ICAO ELEV.M.      BEGIN        END
-    ## 1 637890 99999       ARUSHA   TZ       HTAR  138.68 1960-01-11 2022-05-02
-    ## 2 637900 99999        MOSHI   TZ       HTMS   83.10 1949-09-09 2022-04-28
+    ## Simple feature collection with 3 features and 9 fields
+    ## Geometry type: POINT
+    ## Dimension:     XY
+    ## Bounding box:  xmin: 36.633 ymin: -3.429 xmax: 37.333 ymax: -3.35
+    ## Geodetic CRS:  WGS 84
+    ##         USAF  WBAN     STATION NAME CTRY STATE ICAO ELEV(M)      BEGIN        END              geometry
+    ## 13485 637890 99999           ARUSHA   TZ       HTAR  1386.8 1960-01-11 2022-05-28 POINT (36.633 -3.368)
+    ## 13486 637900 99999            MOSHI   TZ       HTMS   831.0 1949-09-09 2022-05-23  POINT (37.333 -3.35)
+    ## 13487 637910 99999 KILIMANJARO INTL   TZ       HTKJ   893.7 1973-01-01 2022-05-28 POINT (37.074 -3.429)
 
 **Downloading data**
 
@@ -173,7 +182,7 @@ outcome of the various station selection functions.
     head(moshi)
 
     ##         USAF  WBAN STATION NAME CTRY STATE ICAO   LAT    LON ELEV(M)      BEGIN        END
-    ## 13486 637900 99999        MOSHI   TZ       HTMS -3.35 37.333     831 1949-09-09 2022-04-28
+    ## 13486 637900 99999        MOSHI   TZ       HTMS -3.35 37.333     831 1949-09-09 2022-05-23
 
 If you are not willing to download the entire dataset from a given
 station (which is the default setting), but rather a limited period of
