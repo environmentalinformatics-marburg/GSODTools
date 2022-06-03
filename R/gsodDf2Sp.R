@@ -20,7 +20,9 @@
 #' # Convert station list to spatial object
 #' gsod_shp <- gsodDf2Sp(data = gsod_df)
 #' 
-#' sp::plot(gsod_shp)
+#' if (interactive()) {
+#'   plot(gsod_shp)
+#' }
 #' 
 #' @importFrom sf st_as_sf
 #' 

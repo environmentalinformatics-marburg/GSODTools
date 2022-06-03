@@ -38,15 +38,19 @@
 #'                               width = 100)
 #' 
 #' # Alternatively
-#' kibo <- data.frame(x = 37.359031, y = -3.065053)
-#' sp::coordinates(kibo) <- ~ x + y
-#' raster::projection(kibo) <- sp::CRS("+init=epsg:4326")
+#' kibo = sf::st_as_sf(
+#'   data.frame(
+#'     x = 37.359031
+#'     , y = -3.065053
+#'   )
+#'   , crs = 4326
+#'   , coords = c("x", "y")
+#' )
 #' 
 #' gsod_shp <- stationFromCoords(x = kibo, 
 #'                               width = 100)
 #' 
 #' @importFrom dplyr arrange
-#' @importFrom sp coordinates
 #' 
 #' @export
 stationFromCoords <- function(x, 
@@ -59,9 +63,9 @@ stationFromCoords <- function(x,
   if (is.numeric(x) & length(x) > 1) {
     y <- x[2]
     x <- x[1]
-  } else if (inherits(x, "SpatialPoints")) {
-    y <- sp::coordinates(x)[, 2]
-    x <- sp::coordinates(x)[, 1]
+  } else if (inherits(x, c("SpatialPoints", "sf"))) {
+    y <- sf::st_coordinates(x)[, 2]
+    x <- sf::st_coordinates(x)[, 1]
   }
   
   # Calculate distance from point of interest to supplied stations

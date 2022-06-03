@@ -42,9 +42,14 @@ gsod_shp <- stationFromCoords(x = c(37.359031, -3.065053),
                               width = 100)
 
 # Alternatively
-kibo <- data.frame(x = 37.359031, y = -3.065053)
-sp::coordinates(kibo) <- ~ x + y
-raster::projection(kibo) <- sp::CRS("+init=epsg:4326")
+kibo = sf::st_as_sf(
+  data.frame(
+    x = 37.359031
+    , y = -3.065053
+  )
+  , crs = 4326
+  , coords = c("x", "y")
+)
 
 gsod_shp <- stationFromCoords(x = kibo, 
                               width = 100)

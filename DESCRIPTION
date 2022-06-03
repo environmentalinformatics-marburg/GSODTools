@@ -8,9 +8,7 @@ License: MIT + file LICENSE
 Depends: 
     R (>= 4.1)
 Imports: 
-    raster,
     rworldmap,
-    sp,
     gmt,
     dplyr,
     zoo,

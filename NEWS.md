@@ -8,6 +8,8 @@
 
 #### 🍬 miscellaneous
 
+  * Eliminates {sp} and {raster} dependencies --> uses {sf} instead (#10)
+
 
 # GSODTools 1.0.4 (2022-05-18)
 
