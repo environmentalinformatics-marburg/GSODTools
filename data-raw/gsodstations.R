@@ -23,6 +23,37 @@ gsodstations[
   , .SDcols = cols
 ]
 
+## replace elevation missing value
+gsodstations[
+  `ELEV(M)` %in% c(-999.9, -999.0)
+  , `ELEV(M)` := NA_real_
+]
+
+# ## discard empty strings 
+# ## (see `?data.table::fread`: ,"", is unambiguous and read as an empty string)
+# idx = sapply(
+#   gsodstations
+#   , is.character
+# )
+# 
+# cols = names(idx)[idx]
+# 
+# gsodstations[
+#   , (cols) := lapply(
+#     .SD
+#     , \(x) {
+#       x[
+#         !nzchar(x)
+#       ] = NA_character_
+#       
+#       return(
+#         x
+#       )
+#     }
+#   )
+#   , .SDcols = cols
+# ]
+
 # sf::st_as_sf(
 #   gsodstations
 #   , coords = c("LON", "LAT")

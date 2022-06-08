@@ -19,13 +19,12 @@ This function converts the list of available GSOD stations from \code{data.frame
 to \code{SpatialPointsDataFrame}.
 }
 \examples{
-# Reformat station list
-gsod_df <- gsodReformat(gsodstations, df2sp = FALSE)
-
 # Convert station list to spatial object
-gsod_shp <- gsodDf2Sp(data = gsod_df)
+gsod_shp <- gsodDf2Sp(data = gsodstations)
 
-sp::plot(gsod_shp)
+if (interactive()) {
+  plot(gsod_shp)
+}
 
 }
 \author{

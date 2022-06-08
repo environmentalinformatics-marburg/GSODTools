@@ -1,6 +1,6 @@
 Package: GSODTools
 Title: R Functions to Select, Download, and Process GSOD Data
-Version: 1.0.4
+Version: 1.0.4.9003
 Author: Florian Detsch
 Maintainer: Florian Detsch <fdetsch@web.de>
 Description: R functions to select, download, and process GSOD data.
@@ -8,9 +8,7 @@ License: MIT + file LICENSE
 Depends: 
     R (>= 4.1)
 Imports: 
-    raster,
     rworldmap,
-    sp,
     gmt,
     dplyr,
     zoo,
@@ -24,7 +22,9 @@ Imports:
     stats,
     forecast,
     graphics
+Suggests: 
+    checkmate,
+    tinytest
 LazyData: true
 RoxygenNote: 7.2.0
 Encoding: UTF-8
-Suggests: tinytest

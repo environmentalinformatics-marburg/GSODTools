@@ -21,7 +21,7 @@ be applied to the specified coordinate.}
 \item{...}{Additional arguments passed to \code{\link{round}}.}
 }
 \value{
-An object of class \code{SpatialPointsDataFrame}.
+A \code{sf} object.
 }
 \description{
 This function allows the selection of a subset of GSOD stations based on a
@@ -35,16 +35,21 @@ gsod_shp <- stationFromCoords(x = 37.359031,
 
 rworldmap::mapGriddedData(mapRegion = "africa", plotData = FALSE, borderCol = "black", 
                addLegend = FALSE)
-points(gsod_shp, col = "red", pch = 20, cex = 2)
+points(sf::st_coordinates(gsod_shp), col = "red", pch = 20, cex = 2)
  
 # Alternatively
 gsod_shp <- stationFromCoords(x = c(37.359031, -3.065053), 
                               width = 100)
 
 # Alternatively
-kibo <- data.frame(x = 37.359031, y = -3.065053)
-sp::coordinates(kibo) <- ~ x + y
-raster::projection(kibo) <- sp::CRS("+init=epsg:4326")
+kibo = sf::st_as_sf(
+  data.frame(
+    x = 37.359031
+    , y = -3.065053
+  )
+  , crs = 4326
+  , coords = c("x", "y")
+)
 
 gsod_shp <- stationFromCoords(x = kibo, 
                               width = 100)

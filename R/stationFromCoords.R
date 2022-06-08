@@ -15,7 +15,7 @@
 #' @param ... Additional arguments passed to \code{\link{round}}.
 #' 
 #' @return
-#' An object of class \code{SpatialPointsDataFrame}.
+#' A \code{sf} object.
 #' 
 #' @author
 #' Florian Detsch
@@ -31,22 +31,26 @@
 #'
 #' rworldmap::mapGriddedData(mapRegion = "africa", plotData = FALSE, borderCol = "black", 
 #'                addLegend = FALSE)
-#' points(gsod_shp, col = "red", pch = 20, cex = 2)
+#' points(sf::st_coordinates(gsod_shp), col = "red", pch = 20, cex = 2)
 #'  
 #' # Alternatively
 #' gsod_shp <- stationFromCoords(x = c(37.359031, -3.065053), 
 #'                               width = 100)
 #' 
 #' # Alternatively
-#' kibo <- data.frame(x = 37.359031, y = -3.065053)
-#' sp::coordinates(kibo) <- ~ x + y
-#' raster::projection(kibo) <- sp::CRS("+init=epsg:4326")
+#' kibo = sf::st_as_sf(
+#'   data.frame(
+#'     x = 37.359031
+#'     , y = -3.065053
+#'   )
+#'   , crs = 4326
+#'   , coords = c("x", "y")
+#' )
 #' 
 #' gsod_shp <- stationFromCoords(x = kibo, 
 #'                               width = 100)
 #' 
 #' @importFrom dplyr arrange
-#' @importFrom sp coordinates
 #' 
 #' @export
 stationFromCoords <- function(x, 
@@ -59,13 +63,13 @@ stationFromCoords <- function(x,
   if (is.numeric(x) & length(x) > 1) {
     y <- x[2]
     x <- x[1]
-  } else if (inherits(x, "SpatialPoints")) {
-    y <- sp::coordinates(x)[, 2]
-    x <- sp::coordinates(x)[, 1]
+  } else if (inherits(x, c("SpatialPoints", "sf"))) {
+    y <- sf::st_coordinates(x)[, 2]
+    x <- sf::st_coordinates(x)[, 1]
   }
   
   # Calculate distance from point of interest to supplied stations
-  stations <- gsodReformat(gsodstations, df2sp = FALSE)
+  stations <- gsodstations
   x.to.stations <- gmt::geodist(
     Nfrom = y
     , Efrom = x

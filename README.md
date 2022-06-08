@@ -40,30 +40,20 @@ look at it.
     ## 5 008268 99999    WXPOD8278   AF            32.95 65.567  1156.7 2010-05-19 2012-03-23
     ## 6 008307 99999   WXPOD 8318   AF             0.00  0.000  8318.0 2010-04-21 2010-04-21
 
-Unfortunately, the data formatting and consistency of this official
-table is rather poor. Hence, I thought it might be quite helpful to sort
-out some inconveniences above all else. The referring function is called
-*gsodReformat()* and allows to reformat elevation (decimeters to meters)
-as well as latitude and longitude (thousandth of a degree to whole
-degree). Furthermore, it offers the opportunity to remove invalid
-coordinates, i.e. values of latitude and longitude exceeding valid
-thresholds of +/-90 and +/-180 degrees, respectively. Optionally, the
-adjusted dataset can be converted to an object of class `sp` prior to
-return.
-
-Consequently, the first lines of code working with **GSODTools** should
-probably look like this.
+To transform the built-in dataset into a spatial object, either run
+`sf::st_as_sf()` manually or use the convenience function `gsodDf2Sp()`.
+Past inconveniences (elevation in decimeters, coordinates in thousandth
+of a degree, longitude and latitude outside of -180 to 180 and -90 to
+90, respectively) are no longer an issue, which is why `gsodReformat()`
+has been deprecated and will eventually be removed from the package.
 
     # Reformat data and convert to spatial object
-    gsod_shp <- gsodReformat(data = gsodstations,
-                             elevation = TRUE, 
-                             coords = TRUE,
-                             df2sp = TRUE)
+    gsod_shp <- gsodDf2Sp(data = gsodstations)
 
     par(mar = c(0, 0, 0, 0))
-    sp::plot(gsod_shp)
+    plot(gsod_shp)
 
-![](figure/gsodReformat-1.png)
+![](figure/gsodDf2Sp-1.png)
 
 **Selecting a station**
 
@@ -83,8 +73,6 @@ numerics. For instance, let’s search for GSOD stations in a circle of
 500 km around Kibo summit, Mt. Kilimanjaro, Tanzania. The referring
 coordinates are `c(37.359031, -3.065053)`.
 
-    library(dplyr)
-
     shp_kibo <- stationFromCoords(x = 37.359031, y = -3.065053, width = 500)
     # or: stationFromCoords(x = c(37.359031, -3.065053), width = 500)
     # or: stationFromCoords(x = SpatialPoints(data.frame(x = 37.359031, 
@@ -98,7 +86,7 @@ coordinates are `c(37.359031, -3.065053)`.
       , borderCol = "black"
       , addLegend = FALSE
     )
-    points(shp_kibo, col = "red", pch = 20, cex = 2)
+    points(sf::st_coordinates(shp_kibo), col = "red", pch = 20, cex = 2)
 
 ![](figure/stationFromCoords-1.png)
 
@@ -117,9 +105,14 @@ object from an arbitrary spatial object, e.g. ‘RasterLayer’,
 is actually quite difficult to include in a README file) is
 automatically disabled.
 
-    library(raster)
-
-    bbox_kibo_south <- extent(c(36.6, 37.72, -3.5, -3.065053))
+    bbox_kibo_south <- sf::st_bbox(
+      c(
+        xmin = 36.6
+        , xmax = 37.72
+        , ymin = -3.5
+        , ymax = -3.065053
+      )
+    )
     shp_kili_south <- stationFromExtent(bb = bbox_kibo_south)
 
     rworldmap::mapGriddedData(
@@ -128,7 +121,7 @@ automatically disabled.
       , borderCol = "black"
       , addLegend = FALSE
     )
-    points(shp_kili_south, col = "red", pch = 20, cex = 2)
+    points(sf::st_coordinates(shp_kili_south), col = "red", pch = 20, cex = 2)
 
 ![](figure/stationFromExtent-1.png)
 
@@ -139,19 +132,25 @@ spelling of a station’s name. Again referring to the above example where
 we selected Arusha, Moshi, and Kilimanjaro International Airport (KIA),
 this would more or less look like this.
 
-    station_names <- c("ARUSHA", "KILIMANJARO AIRPORT", "MOSHI")
+    station_names <- c("ARUSHA", "KILIMANJARO INTL", "MOSHI")
 
-    shp_kili_south <- 
-      gsodstations |> 
-      gsodReformat() |> 
-      filter(`STATION NAME` %in% station_names) |> 
-      gsodDf2Sp()
+    (
+      shp_kili_south <- 
+        gsodstations |> 
+        gsodReformat() |> 
+        subset(`STATION NAME` %in% station_names) |> 
+        gsodDf2Sp()
+    )
 
-    shp_kili_south@data
-
-    ##     USAF  WBAN STATION.NAME CTRY STATE ICAO ELEV.M.      BEGIN        END
-    ## 1 637890 99999       ARUSHA   TZ       HTAR  138.68 1960-01-11 2022-05-02
-    ## 2 637900 99999        MOSHI   TZ       HTMS   83.10 1949-09-09 2022-04-28
+    ## Simple feature collection with 3 features and 9 fields
+    ## Geometry type: POINT
+    ## Dimension:     XY
+    ## Bounding box:  xmin: 36.633 ymin: -3.429 xmax: 37.333 ymax: -3.35
+    ## Geodetic CRS:  WGS 84
+    ##         USAF  WBAN     STATION NAME CTRY STATE ICAO ELEV(M)      BEGIN        END              geometry
+    ## 13485 637890 99999           ARUSHA   TZ       HTAR  1386.8 1960-01-11 2022-05-28 POINT (36.633 -3.368)
+    ## 13486 637900 99999            MOSHI   TZ       HTMS   831.0 1949-09-09 2022-05-23  POINT (37.333 -3.35)
+    ## 13487 637910 99999 KILIMANJARO INTL   TZ       HTKJ   893.7 1973-01-01 2022-05-28 POINT (37.074 -3.429)
 
 **Downloading data**
 
@@ -173,7 +172,7 @@ outcome of the various station selection functions.
     head(moshi)
 
     ##         USAF  WBAN STATION NAME CTRY STATE ICAO   LAT    LON ELEV(M)      BEGIN        END
-    ## 13486 637900 99999        MOSHI   TZ       HTMS -3.35 37.333     831 1949-09-09 2022-04-28
+    ## 13486 637900 99999        MOSHI   TZ       HTMS -3.35 37.333     831 1949-09-09 2022-05-23
 
 If you are not willing to download the entire dataset from a given
 station (which is the default setting), but rather a limited period of

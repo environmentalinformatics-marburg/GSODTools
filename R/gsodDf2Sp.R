@@ -14,13 +14,12 @@
 #' Florian Detsch
 #' 
 #' @examples
-#' # Reformat station list
-#' gsod_df <- gsodReformat(gsodstations, df2sp = FALSE)
-#' 
 #' # Convert station list to spatial object
-#' gsod_shp <- gsodDf2Sp(data = gsod_df)
+#' gsod_shp <- gsodDf2Sp(data = gsodstations)
 #' 
-#' sp::plot(gsod_shp)
+#' if (interactive()) {
+#'   plot(gsod_shp)
+#' }
 #' 
 #' @importFrom sf st_as_sf
 #' 
@@ -33,16 +32,9 @@ gsodDf2Sp <- function(data,
   # Subset data by valid coordinates and convert to SpatialPointsDataFrame
   data.lonlat <- subset(data, !is.na(LON) & !is.na(LAT))
   
-  data.lonlat = sf::st_as_sf(
+  sf::st_as_sf(
     data.lonlat
     , coords = c("LON", "LAT")
     , crs = 4326
-  )
-  
-  return(
-    methods::as(
-      data.lonlat
-      , Class = "Spatial"
-    )
   )
 }
