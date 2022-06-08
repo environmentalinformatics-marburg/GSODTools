@@ -34,7 +34,7 @@ stationFromExtent <- function(bb,
                              ...) {
   
   # Crop available stations by drawn extent and return
-  stations <- gsodReformat(data = gsodstations, df2sp = TRUE)
+  stations <- gsodDf2Sp(data = gsodstations)
   
   suppressWarnings(
     sf::st_crop(stations, bb)

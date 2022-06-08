@@ -6,8 +6,8 @@
 #' an object of class \code{sf} for further processing. 
 #' 
 #' @param data \code{data.frame}. Usually built-in \code{gsodstations}.
-#' @param df2sp Logical, default is `FALSE`. If `TRUE`, the list of available 
-#' GSOD stations is converted to \code{sf}. 
+#' @param df2sp Logical, default is \code{FALSE}. If {TRUE}, the list of 
+#' available GSOD stations is converted to \code{sf}. 
 #' @param ... Additional arguments. Currently not in use.
 #' 
 #' @return
@@ -18,27 +18,47 @@
 #' Florian Detsch
 #' 
 #' @seealso
-#' \code{\link{gsodDf2Sp}}
+#' \code{\link{GSODTools-deprecated}}
 #' 
 #' @examples
 #' # Reformat coordinates and convert to spatial object
-#' gsod_shp <- gsodReformat(data = gsodstations, 
-#'                          coords = TRUE, 
-#'                          rm_invalid_coords = TRUE, 
-#'                          df2sp = TRUE)
+#' gsod_shp <- suppressWarnings(
+#'   gsodReformat(
+#'     data = gsodstations
+#'     , df2sp = TRUE
+#'   )
+#' )
 #' 
 #' if (interactive()) {
 #'   plot(gsod_shp)
 #' }
 #' 
+#' @name gsodReformat-deprecated
+#' @keywords internal
+NULL
+
+#' @rdname GSODTools-deprecated
+#' @section \code{gsodReformat}:
+#'   For \code{gsodReformat}, use \code{\link{gsodDf2Sp}} instead.
+#' 
 #' @export
-gsodReformat <- function(data, 
-                         df2sp = FALSE,
-                         ...) {
+gsodReformat = function(
+  data
+  , df2sp = FALSE
+  , ...
+) {
+  
+  .Deprecated(
+    "gsodDf2Sp"
+    , package = "GSODTools"
+  )
   
   # Convert data frame to spatial object (optional)
-  if (df2sp)
-    data <- gsodDf2Sp(data = data)
+  if (df2sp) {
+    data = gsodDf2Sp(
+      data = data
+    )
+  }
   
   # Return reformatted data
   return(data)

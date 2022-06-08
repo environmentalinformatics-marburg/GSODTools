@@ -10,6 +10,7 @@
 
   * Eliminates {sp} and {raster} dependencies --> uses {sf} instead (#10)
   * Disables interactive selection of area of interest in `stationFromExtent()`
+  * Removes obsolete arguments in `gsodReformat()` and deprecates function
 
 
 # GSODTools 1.0.4 (2022-05-18)

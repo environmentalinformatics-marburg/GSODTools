@@ -40,30 +40,20 @@ look at it.
     ## 5 008268 99999    WXPOD8278   AF            32.95 65.567  1156.7 2010-05-19 2012-03-23
     ## 6 008307 99999   WXPOD 8318   AF             0.00  0.000  8318.0 2010-04-21 2010-04-21
 
-Unfortunately, the data formatting and consistency of this official
-table is rather poor. Hence, I thought it might be quite helpful to sort
-out some inconveniences above all else. The referring function is called
-*gsodReformat()* and allows to reformat elevation (decimeters to meters)
-as well as latitude and longitude (thousandth of a degree to whole
-degree). Furthermore, it offers the opportunity to remove invalid
-coordinates, i.e. values of latitude and longitude exceeding valid
-thresholds of +/-90 and +/-180 degrees, respectively. Optionally, the
-adjusted dataset can be converted to an object of class `sp` prior to
-return.
-
-Consequently, the first lines of code working with **GSODTools** should
-probably look like this.
+To transform the built-in dataset into a spatial object, either run
+`sf::st_as_sf()` manually or use the convenience function `gsodDf2Sp()`.
+Past inconveniences (elevation in decimeters, coordinates in thousandth
+of a degree, longitude and latitude outside of -180 to 180 and -90 to
+90, respectively) are no longer an issue, which is why `gsodReformat()`
+has been deprecated and will eventually be removed from the package.
 
     # Reformat data and convert to spatial object
-    gsod_shp <- gsodReformat(data = gsodstations,
-                             elevation = TRUE, 
-                             coords = TRUE,
-                             df2sp = TRUE)
+    gsod_shp <- gsodDf2Sp(data = gsodstations)
 
     par(mar = c(0, 0, 0, 0))
     plot(gsod_shp)
 
-![](figure/gsodReformat-1.png)
+![](figure/gsodDf2Sp-1.png)
 
 **Selecting a station**
 

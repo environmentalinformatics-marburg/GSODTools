@@ -69,7 +69,7 @@ stationFromCoords <- function(x,
   }
   
   # Calculate distance from point of interest to supplied stations
-  stations <- gsodReformat(gsodstations, df2sp = FALSE)
+  stations <- gsodstations
   x.to.stations <- gmt::geodist(
     Nfrom = y
     , Efrom = x

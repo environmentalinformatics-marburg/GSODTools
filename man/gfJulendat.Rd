@@ -95,7 +95,7 @@ usafs = c(
 
 shp_gsod <- 
   gsodstations |> 
-  gsodReformat() |> 
+  gsodDf2Sp() |> 
   subset(`USAF` \%in\% usafs) |> 
   gsodDf2Sp()
 
