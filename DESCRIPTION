@@ -10,7 +10,6 @@ Depends:
 Imports: 
     rworldmap,
     gmt,
-    dplyr,
     zoo,
     Rssa,
     reshape2,

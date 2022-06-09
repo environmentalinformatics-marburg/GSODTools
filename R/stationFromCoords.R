@@ -50,8 +50,6 @@
 #' gsod_shp <- stationFromCoords(x = kibo, 
 #'                               width = 100)
 #' 
-#' @importFrom dplyr arrange
-#' 
 #' @export
 stationFromCoords <- function(x, 
                               y = NULL, 
@@ -69,6 +67,7 @@ stationFromCoords <- function(x,
   }
   
   # Calculate distance from point of interest to supplied stations
+  # TODO: what happens if there are 2+ points in input
   stations <- gsodstations
   x.to.stations <- gmt::geodist(
     Nfrom = y
@@ -78,8 +77,16 @@ stationFromCoords <- function(x,
   # Add calculated distances to stations
   stations$DIST <- round(x.to.stations, ...)
   
-  # Identify and return GSOD stations that lie within the given buffer width
-  stations <- stations |> subset(DIST <= width) |> dplyr::arrange(DIST) |> gsodDf2Sp()
+  # Find stations that lie within the given buffer width and convert to spatial
+  stations = stations |> 
+    subset(
+      DIST <= width
+    ) |> 
+    gsodDf2Sp()
   
-  return(stations)
+  # Sort by distance and return
+  stations[
+    order(stations$DIST)
+    ,
+  ]
 }
