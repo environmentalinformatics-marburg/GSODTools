@@ -1,3 +1,16 @@
+# GSODTools 1.0.5.9002 (2022-06-10)
+
+#### ✨ features and improvements
+
+#### 🐛 bug fixes
+
+#### 💬 documentation etc
+
+#### 🍬 miscellaneous
+
+  * Eliminates {dplyr} and {rworldmap} dependencies (#12)
+
+
 # GSODTools 1.0.5 (2022-06-08)
 
 #### 🍬 miscellaneous
