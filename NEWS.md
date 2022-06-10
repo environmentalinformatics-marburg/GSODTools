@@ -8,7 +8,7 @@
 
 #### 🍬 miscellaneous
 
-  * Eliminates {dplyr} dependency (#12)
+  * Eliminates {dplyr} and {rworldmap} dependencies (#12)
 
 
 # GSODTools 1.0.5 (2022-06-08)

@@ -23,12 +23,6 @@
 #' kili <- sf::st_bbox(c(xmin = 37, xmax = 37.72, ymin = -3.4, ymax = -2.84))
 #' gsod_shp_kili <- stationFromExtent(bb = kili)
 #' 
-#' rworldmap::mapGriddedData(mapRegion = "africa", plotData = FALSE, borderCol = "black", 
-#'                addLegend = FALSE)
-#' points(sf::st_coordinates(gsod_shp_kili), col = "red")
-#' 
-#' @importFrom rworldmap mapGriddedData
-#' 
 #' @export
 stationFromExtent <- function(bb, 
                              ...) {
