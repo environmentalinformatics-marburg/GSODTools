@@ -1,5 +1,6 @@
+# https://www.ncei.noaa.gov/data/global-summary-of-the-day/doc/isd-history.txt
 gsodstations = data.table::fread(
-  "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv"
+  "https://www.ncei.noaa.gov/pub/data/noaa/isd-history.csv"
   , colClasses = c(
     rep("character", 6L) # usaf, wban, station name, ctry, state, icao
     , rep("numeric", 3L) # lat, lon, elev(m)
