@@ -4,20 +4,19 @@
 \alias{gsodReformat-deprecated}
 \title{Reformat list of available GSOD stations}
 \arguments{
-\item{data}{\code{data.frame}. Usually built-in \code{gsodstations}.}
+\item{data}{\code{data.frame}. Usually built-in \link{gsodstations}.}
 
-\item{df2sp}{Logical, default is \code{FALSE}. If {TRUE}, the list of 
-available GSOD stations is converted to \code{sf}.}
+\item{df2sp}{\code{logical}, default is \code{FALSE}. If \code{TRUE}, the list of available
+GSOD stations is converted to \code{sf}.}
 
-\item{...}{Additional arguments. Currently not in use.}
+\item{...}{Currently not used.}
 }
 \value{
-An object of class \code{data.frame}, or a \code{sf} object if 
-\code{df2sp = TRUE}.
+An object of class \code{data.frame}, or a \code{sf} object if \code{df2sp = TRUE}.
 }
 \description{
-This function is intended to convert the initial list of available GSOD 
-stations (see \url{ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv}) to
+This function is intended to convert the initial list of available GSOD
+stations (see \url{https://www.ncei.noaa.gov/pub/data/noaa/isd-history.csv}) to
 an object of class \code{sf} for further processing.
 }
 \examples{
@@ -35,7 +34,7 @@ if (interactive()) {
 
 }
 \seealso{
-\code{\link{GSODTools-deprecated}}
+\link{GSODTools-deprecated}
 }
 \author{
 Florian Detsch
