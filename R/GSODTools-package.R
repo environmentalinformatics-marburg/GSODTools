@@ -11,5 +11,4 @@
 #' @import methods stats utils
 #'
 #' @keywords package
-#'
-NULL
+"_PACKAGE"
