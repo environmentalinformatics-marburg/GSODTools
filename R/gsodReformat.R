@@ -2,23 +2,21 @@
 #' 
 #' @description
 #' This function is intended to convert the initial list of available GSOD 
-#' stations (see \url{ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv}) to
-#' an object of class \code{sf} for further processing. 
+#' stations (see <https://www.ncei.noaa.gov/pub/data/noaa/isd-history.csv>) to
+#' an object of class `sf` for further processing. 
 #' 
-#' @param data \code{data.frame}. Usually built-in \code{gsodstations}.
-#' @param df2sp Logical, default is \code{FALSE}. If {TRUE}, the list of 
-#' available GSOD stations is converted to \code{sf}. 
-#' @param ... Additional arguments. Currently not in use.
+#' @param data `data.frame`. Usually built-in [gsodstations].
+#' @param df2sp `logical`, default is `FALSE`. If `TRUE`, the list of available 
+#'   GSOD stations is converted to `sf`. 
+#' @param ... Currently not used.
 #' 
 #' @return
-#' An object of class \code{data.frame}, or a \code{sf} object if 
-#' \code{df2sp = TRUE}.
+#' An object of class `data.frame`, or a `sf` object if `df2sp = TRUE`.
 #' 
 #' @author
 #' Florian Detsch
 #' 
-#' @seealso
-#' \code{\link{GSODTools-deprecated}}
+#' @seealso [GSODTools-deprecated]
 #' 
 #' @examples
 #' # Reformat coordinates and convert to spatial object
@@ -38,8 +36,8 @@
 NULL
 
 #' @rdname GSODTools-deprecated
-#' @section \code{gsodReformat}:
-#'   For \code{gsodReformat}, use \code{\link{gsodDf2Sp}} instead.
+#' @section `gsodReformat`:
+#'   For `gsodReformat`, use [gsodDf2Sp()] instead.
 #' 
 #' @export
 gsodReformat = function(

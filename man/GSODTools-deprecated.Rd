@@ -9,17 +9,17 @@ gsodReformat(data, df2sp = FALSE, ...)
 }
 \description{
 The functions listed below are deprecated and will be defunct in
-  the near future. When possible, alternative functions with similar
-  functionality are also mentioned. Help pages for deprecated functions are
-  available at \code{help("GSODTools-deprecated")}.
+the near future. When possible, alternative functions with similar
+functionality are also mentioned. Help pages for deprecated functions are
+available at \code{help("GSODTools-deprecated")}.
 
 \itemize{
-  \item \code{\link[GSODTools]{gsodReformat-deprecated}}
+\item \code{\link[GSODTools]{gsodReformat-deprecated}}
 }
 }
 \section{\code{gsodReformat}}{
 
-  For \code{gsodReformat}, use \code{\link{gsodDf2Sp}} instead.
+For \code{gsodReformat}, use \code{\link[=gsodDf2Sp]{gsodDf2Sp()}} instead.
 }
 
 \keyword{internal}
