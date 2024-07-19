@@ -3,7 +3,7 @@
 #' A data set containing the full Global Summary of the Day (GSOD) station list.
 #' 
 #' @seealso Integrated Surface Database Station History, May 2022. Available 
-#'   online: <https://www.ncei.noaa.gov/pub/data/noaa/isd-history.txt> (last
+#'   online: <https://www.ncei.noaa.gov/pub/data/noaa/isd-history.csv> (last
 #'   accessed 2023-12-12).
 #' 
 #' @format A `data.table` with 29640 rows and 11 columns:
@@ -12,7 +12,7 @@
 #' * `"WBAN"`: \[`character`\] NCDC WBAN number.
 #' * `"STATION NAME"`: \[`character`\] Station name.
 #' * `"CTRY"`: \[`character`\] FIPS country ID, see also 
-#'   <https://www.ncei.noaa.gov/data/global-summary-of-the-day/doc/country-list.txt>.
+#'   <https://www.ncei.noaa.gov/pub/data/noaa/country-list.txt>.
 #' * `"STATE"`: \[`character`\] State for US stations.
 #' * `"ICAO"`: \[`character`\] ICAO ID.
 #' * `"LAT, LON"`: \[`numeric`\] Latitude, longitude in thousandths of decimal 

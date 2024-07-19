@@ -12,7 +12,7 @@ first position.
 \item \code{"WBAN"}: [\code{character}] NCDC WBAN number.
 \item \code{"STATION NAME"}: [\code{character}] Station name.
 \item \code{"CTRY"}: [\code{character}] FIPS country ID, see also
-\url{https://www.ncei.noaa.gov/data/global-summary-of-the-day/doc/country-list.txt}.
+\url{https://www.ncei.noaa.gov/pub/data/noaa/country-list.txt}.
 \item \code{"STATE"}: [\code{character}] State for US stations.
 \item \code{"ICAO"}: [\code{character}] ICAO ID.
 \item \code{"LAT, LON"}: [\code{numeric}] Latitude, longitude in thousandths of decimal
@@ -30,7 +30,7 @@ A data set containing the full Global Summary of the Day (GSOD) station list.
 }
 \seealso{
 Integrated Surface Database Station History, May 2022. Available
-online: \url{https://www.ncei.noaa.gov/pub/data/noaa/isd-history.txt} (last
+online: \url{https://www.ncei.noaa.gov/pub/data/noaa/isd-history.csv} (last
 accessed 2023-12-12).
 }
 \keyword{datasets}
