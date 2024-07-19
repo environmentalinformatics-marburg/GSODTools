@@ -32,14 +32,12 @@
 #'   imputed based on singular spectrum analysis (SSA).
 #' 
 #' @format A \code{data.table} with 30684 rows and 6 columns:
-#' \itemize{
-#'   \item{"PlotId": }{[\code{factor}] Station name (\code{"kil"}: Kilimanjaro, 
-#'     \code{"jom"}: Nairobi)}
-#'   \item{"Status": }{[\code{factor}] Preprocess level (\code{"cleansed"}: 
-#'     outliers removed, \code{"filled"}: gaps filled via SSA)}
-#'   \item{"Datetime": }{[\code{POSIXct}] Time in Eastern Africa Time}
-#'   \item{"TEMP,MIN,MAX": }{[\code{numeric}] Mean, minimum, maximum air 
-#'     temperature in degC}
-#' }
+#' * `"PlotId"`: \[`factor`\] Station name (\code{"kil"}: Kilimanjaro, 
+#'   \code{"jom"}: Nairobi);
+#' * `"Status"`: \[`factor`\] Preprocess level (\code{"cleansed"}: outliers 
+#'   removed, \code{"filled"}: gaps filled via SSA);
+#' * `"Datetime"`: \[`POSIXct`\] Time in Eastern Africa Time;
+#' * `"TEMP, MIN, MAX"`: \[`numeric\] Mean, minimum, maximum air temperature in 
+#'   degC.
 #' 
 "eastafrica"
