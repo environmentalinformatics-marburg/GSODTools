@@ -7,12 +7,12 @@
 gfSsa(data, prm = "TEMP", reversed_forecast = FALSE, ...)
 }
 \arguments{
-\item{data}{Object of class `ki.data` or a filepath that can be coerced to
+\item{data}{Object of class \code{ki.data} or a filepath that can be coerced to
 \code{ki.data}. The data set under investigation.}
 
 \item{prm}{Character, default is "TEMP". Parameter(s) to fill.}
 
-\item{reversed_forecast}{Logical, default is FALSE. If TRUE, the supplied 
+\item{reversed_forecast}{Logical, default is FALSE. If TRUE, the supplied
 measurement series is reversed prior to forecasting, i.e. values are predicted
 into the past rather than into the future.}
 
@@ -22,10 +22,10 @@ into the past rather than into the future.}
 An object of class \code{ki.data}.
 }
 \description{
-This function applies singular spectrum analysis (SSA) in order to impute 
+This function applies singular spectrum analysis (SSA) in order to impute
 missing values in a data set based on time-series forecasting. Note that the
 SSA method requires sufficiently long series of continuous measurements, i.e.
-with no data gaps at all. Therefore, \code{\link{gfLinInt}} and 
+with no data gaps at all. Therefore, \code{\link{gfLinInt}} and
 \code{\link{gfJulendat}} should be used to fill smaller and medium-sized gaps
 before applying \code{gfSsa}.
 }

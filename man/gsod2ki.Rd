@@ -23,10 +23,10 @@ gsod2ki(
 \arguments{
 \item{data}{\code{data.frame}. Input data, e.g. from \code{\link{dlGsodStations}}.}
 
-\item{date_col}{Character or numeric, default is "YEARMODA". Indicates the 
+\item{date_col}{Character or numeric, default is "YEARMODA". Indicates the
 date column.}
 
-\item{prm_col}{Character or numeric, default is "TEMP". Indicates the 
+\item{prm_col}{Character or numeric, default is "TEMP". Indicates the
 parameter column(s).}
 
 \item{timezone}{Character, default is "NA".}
@@ -43,22 +43,22 @@ parameter column(s).}
 
 \item{qual_flag}{Numeric, default is "NA".}
 
-\item{save_output}{Logical, default is FALSE. If TRUE, a local copy of the 
-reformatted GSOD data will be created based on the settings provided to 
+\item{save_output}{Logical, default is FALSE. If TRUE, a local copy of the
+reformatted GSOD data will be created based on the settings provided to
 \code{...}}
 
-\item{df2ki}{Logical, default is FALSE. If TRUE, the reformatted data is 
+\item{df2ki}{Logical, default is FALSE. If TRUE, the reformatted data is
 converted to an object of class \code{ki.data}.}
 
 \item{...}{Additional arguments passed to \code{\link{write.csv}}.}
 }
 \value{
-An object of class \code{data.frame} or, if \code{df2ki = TRUE}, an object of 
+An object of class \code{data.frame} or, if \code{df2ki = TRUE}, an object of
 class \code{ki.data}.
 }
 \description{
-This function converts GSOD data from native format to standard KiLi SP1 format 
-(Julendat, see \url{https://code.google.com/archive/p/julendat/}) and, 
+This function converts GSOD data from native format to standard KiLi SP1 format
+(Julendat, see \url{https://code.google.com/archive/p/julendat/}) and,
 optionally, to an object of class \code{ki.data}.
 }
 \examples{

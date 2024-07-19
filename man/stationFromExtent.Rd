@@ -7,7 +7,7 @@
 stationFromExtent(bb, ...)
 }
 \arguments{
-\item{bb}{Object of class \code{extent}. Usually NULL and constructed from 
+\item{bb}{Object of class \code{extent}. Usually NULL and constructed from
 the user-drawn bounding box. If supplied, a subset of GSOD stations will be
 created without any further user-specified input.}
 
@@ -17,17 +17,13 @@ created without any further user-specified input.}
 A \code{sf} object.
 }
 \description{
-This function allows the selection of a subset of GSOD stations based on a 
+This function allows the selection of a subset of GSOD stations based on a
 given map extent.
 }
 \examples{
 # Predefined bounding box around Mt. Kilimanjaro region
 kili <- sf::st_bbox(c(xmin = 37, xmax = 37.72, ymin = -3.4, ymax = -2.84))
 gsod_shp_kili <- stationFromExtent(bb = kili)
-
-rworldmap::mapGriddedData(mapRegion = "africa", plotData = FALSE, borderCol = "black", 
-               addLegend = FALSE)
-points(sf::st_coordinates(gsod_shp_kili), col = "red")
 
 }
 \seealso{

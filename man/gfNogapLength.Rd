@@ -7,10 +7,10 @@
 gfNogapLength(gaps, data.dep, ...)
 }
 \arguments{
-\item{gaps}{A \code{data.frame} or \code{list}. Usually created from 
+\item{gaps}{A \code{data.frame} or \code{list}. Usually created from
 \code{\link{gfGapLength}}.}
 
-\item{data.dep}{An object of class \code{ki.data}, or a filepath that can be 
+\item{data.dep}{An object of class \code{ki.data}, or a filepath that can be
 coerced to \code{ki.data}. The data set under investigation.}
 
 \item{...}{Additional arguments. Currently not in use.}
@@ -19,8 +19,8 @@ coerced to \code{ki.data}. The data set under investigation.}
 A \code{list} containing start, end, and length of each continuous measurement.
 }
 \description{
-This is a function taken from 
-\href{https://code.google.com/archive/p/julendat/}{Julendat} to identify 
+This is a function taken from
+\href{https://code.google.com/archive/p/julendat/}{Julendat} to identify
 lengths of continuous measurements in (eco-)climatological measurement series.
 }
 \examples{

@@ -25,10 +25,10 @@ interval to fit a harmonic trend model to.}
 \item{end}{Character. A vector containing the temporal range of the end
 interval to fit a harmonic trend model to.}
 
-\item{prm}{Character, default is "TEMP". Determines which parameter to 
+\item{prm}{Character, default is "TEMP". Determines which parameter to
 visualize.}
 
-\item{stations}{Character. Name(s) of the station(s) corresponding to 
+\item{stations}{Character. Name(s) of the station(s) corresponding to
 \code{fls} that will be displayed above each facet.}
 
 \item{...}{Additional arguments passed to \code{\link{element_text}}.}
@@ -37,8 +37,8 @@ visualize.}
 An object of class \code{ggplot}.
 }
 \description{
-This function aims at visualizing seasonal shifts in GSOD data aggregated on 
-a monthly level. The seasonal shifts are derived from a harmonic trend model 
+This function aims at visualizing seasonal shifts in GSOD data aggregated on
+a monthly level. The seasonal shifts are derived from a harmonic trend model
 fitted to the desired start and end range of a measurement series.
 }
 \examples{

@@ -22,15 +22,17 @@ filled_data = lst[
   )
 ]
 
-expect_inherits(
-  gsodPlot(
-    cleansed_data
-    , filled_data
-    , stations = c("NAIROBI JKIA", "KILIMANJARO INTL")
-    , type = "trends"
+for (type in c("original", "trends", "both")) {
+  expect_inherits(
+    gsodPlot(
+      cleansed_data
+      , filled_data
+      , stations = c("NAIROBI JKIA", "KILIMANJARO INTL")
+      , type = type
+    )
+    , class = "ggplot"
   )
-  , class = "ggplot"
-)
+}
 
 ## early exit: non-matching type
 expect_error(

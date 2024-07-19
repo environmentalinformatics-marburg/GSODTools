@@ -50,6 +50,11 @@ expect_true(
   , info = "in case of coords, 'DIST' column is appended to output"
 )
 
+expect_false(
+  is.unsorted(gsod_shp$DIST)
+  , info = "appended 'DIST' column is sorted"
+)
+
 
 ## `stationFromExtent()` ====
 

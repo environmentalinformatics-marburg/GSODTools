@@ -73,6 +73,8 @@ numerics. For instance, let’s search for GSOD stations in a circle of
 500 km around Kibo summit, Mt. Kilimanjaro, Tanzania. The referring
 coordinates are `c(37.359031, -3.065053)`.
 
+    library(mapview)
+
     shp_kibo <- stationFromCoords(x = 37.359031, y = -3.065053, width = 500)
     # or: stationFromCoords(x = c(37.359031, -3.065053), width = 500)
     # or: stationFromCoords(x = SpatialPoints(data.frame(x = 37.359031, 
@@ -80,13 +82,9 @@ coordinates are `c(37.359031, -3.065053)`.
     #                                         proj4string = CRS("+init=epsg:4326")), 
     #                       width = 500)
 
-    rworldmap::mapGriddedData(
-      mapRegion = "africa"
-      , plotData = FALSE
-      , borderCol = "black"
-      , addLegend = FALSE
+    mapview(
+      shp_kibo
     )
-    points(sf::st_coordinates(shp_kibo), col = "red", pch = 20, cex = 2)
 
 ![](figure/stationFromCoords-1.png)
 
@@ -115,13 +113,9 @@ automatically disabled.
     )
     shp_kili_south <- stationFromExtent(bb = bbox_kibo_south)
 
-    rworldmap::mapGriddedData(
-      mapRegion = "africa"
-      , plotData = FALSE
-      , borderCol = "black"
-      , addLegend = FALSE
+    mapview(
+      shp_kili_south
     )
-    points(sf::st_coordinates(shp_kili_south), col = "red", pch = 20, cex = 2)
 
 ![](figure/stationFromExtent-1.png)
 

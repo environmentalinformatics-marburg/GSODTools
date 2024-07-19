@@ -16,8 +16,8 @@ gsodPlot(
 \arguments{
 \item{fls_orig}{See argument \code{fls}.}
 
-\item{fls}{Character vector containing filepath(s) to the imputed GSOD data 
-set(s), usually derived from \code{\link{gfLinInt}}, \code{\link{gfJulendat}} 
+\item{fls}{Character vector containing filepath(s) to the imputed GSOD data
+set(s), usually derived from \code{\link{gfLinInt}}, \code{\link{gfJulendat}}
 and/or \code{\link{gfSsa}}, or \code{list} containing \code{data.frame} objects
 holding the data, or a single \code{data.frame} in case only one GSOD station
 shall be visualized.}
@@ -26,11 +26,11 @@ shall be visualized.}
 and \code{fls_orig} that will be displayed above each facet.}
 
 \item{prm}{Character, default is "TEMP". Determines which parameter to
-visualize. If \code{type = "trends"}, this argument will be ignored, and 
-columns "TEMP", "MIN" and "MAX" must be available in \code{fls} and 
+visualize. If \code{type = "trends"}, this argument will be ignored, and
+columns "TEMP", "MIN" and "MAX" must be available in \code{fls} and
 \code{fls_orig}.}
 
-\item{type}{Character. Determines the plot type, one of \code{"original"} 
+\item{type}{Character. Determines the plot type, one of \code{"original"}
 (default), \code{"trend"}, or \code{"both"}.}
 
 \item{...}{Additional arguments passed to \code{\link[ggplot2]{element_text}}.}
@@ -39,7 +39,7 @@ columns "TEMP", "MIN" and "MAX" must be available in \code{fls} and
 An object of class \code{ggplot}.
 }
 \description{
-This function aims at visualizing GSOD data, both raw/adjusted for outliers and 
+This function aims at visualizing GSOD data, both raw/adjusted for outliers and
 imputed, as well as linear trends of mean, minimum and maximum daily air
 temperature.
 }

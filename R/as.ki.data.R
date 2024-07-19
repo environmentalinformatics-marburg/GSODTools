@@ -1,7 +1,7 @@
 #' Convert data set to ki.data object
 #' 
 #' @param input_filepath Needs documentation.
-#' @param start.column [\code{integer}] Defaults to \code{9L}.
+#' @param start.column \[`integer`\] Defaults to `9L`.
 #' @param ... Currently not used.
 #' 
 #' @importFrom reshape2 melt

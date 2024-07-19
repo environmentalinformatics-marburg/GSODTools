@@ -15,21 +15,21 @@ dlGsodStations(
 )
 }
 \arguments{
-\item{usaf}{Numeric. A unique USAF station code. It can either be manually 
-determined from built-in \code{gsodstations}, or retrieved from spatial 
-subsetting (see \code{\link{stationFromCoords}}, 
+\item{usaf}{Numeric. A unique USAF station code. It can either be manually
+determined from built-in \code{gsodstations}, or retrieved from spatial
+subsetting (see \code{\link{stationFromCoords}},
 \code{\link{stationFromExtent}}).}
 
-\item{start_year}{Numeric. The desired year to start data acquisition. If not 
+\item{start_year}{Numeric. The desired year to start data acquisition. If not
 supplied, download starts from the first year of measurement.}
 
-\item{end_year}{Numeric. The desired year to stop data acquisition. If not 
+\item{end_year}{Numeric. The desired year to stop data acquisition. If not
 supplied, download stops at the last year of measurement.}
 
-\item{dsn}{Character, default is the current working directory. Destination 
+\item{dsn}{Character, default is the current working directory. Destination
 folder for data download.}
 
-\item{unzip}{Logical, default is FALSE. If TRUE, *.gz files are unpacked and 
+\item{unzip}{Logical, default is FALSE. If TRUE, *.gz files are unpacked and
 merged after download.}
 
 \item{rm_gz}{Logical, default is FALSE. If TRUE, *.gz files are removed after
@@ -38,7 +38,7 @@ extraction. If \code{unzip = FALSE}, this argument is ignored.}
 \item{...}{Additional arguments passed to \code{\link{gzGsodStations}}.}
 }
 \value{
-A vector of *.gz filenames, or an object of class \code{data.frame} if 
+A vector of *.gz filenames, or an object of class \code{data.frame} if
 \code{unzip = TRUE}.
 }
 \description{

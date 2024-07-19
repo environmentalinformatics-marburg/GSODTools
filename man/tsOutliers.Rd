@@ -20,7 +20,7 @@ tsOutliers(
 
 \item{upper_quantile}{Numeric, default is 0.8. The upper quantile limit.}
 
-\item{plot}{Logical, default is FALSE. If TRUE, a time-series plot including 
+\item{plot}{Logical, default is FALSE. If TRUE, a time-series plot including
 identified outliers is generated.}
 
 \item{index}{Logical, default is FALSE. If TRUE, a vector holding the indices
@@ -35,7 +35,7 @@ indices of identified outliers.
 }
 \description{
 This function identifies statistical outliers in a \code{ts} object based on
-upper and lower quantile criteria. The function body is mainly taken from 
+upper and lower quantile criteria. The function body is mainly taken from
 \href{https://stats.stackexchange.com/q/1142}{stats.stackexchange.com}.
 }
 \examples{

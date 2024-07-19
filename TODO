@@ -5,7 +5,7 @@ General
   - further details: https://roxygen2.r-lib.org/articles/markdown.html
 * add ci/cd
 * gsod --> isd
-* {dplyr}, {data.table} (built-in data object) or base
+* {data.table} (built-in data object) or base
 * re-enable (some) `\dontrun` examples
 * handle records in `gsodstations` with lon = lat = 0.0
 * find solution for `gsodstations` duplication (internal vs. external)

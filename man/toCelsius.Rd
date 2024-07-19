@@ -15,7 +15,7 @@ toCelsius(val, ...)
 A numeric vector containing temperature values in degree Celsius.
 }
 \description{
-This function converts temperature values from native degree Fahrenheit to 
+This function converts temperature values from native degree Fahrenheit to
 degree Celsius.
 }
 \examples{

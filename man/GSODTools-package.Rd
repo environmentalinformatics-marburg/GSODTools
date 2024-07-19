@@ -2,6 +2,7 @@
 % Please edit documentation in R/GSODTools-package.R
 \docType{package}
 \name{GSODTools-package}
+\alias{GSODTools}
 \alias{GSODTools-package}
 \title{R Functions to Select, Download, and Process GSOD Data}
 \description{
