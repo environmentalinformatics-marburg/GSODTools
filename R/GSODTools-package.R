@@ -3,7 +3,6 @@
 #' R functions to select, download, and process GSOD data.
 #'
 #' @name GSODTools-package
-#' @docType package
 #' @title R Functions to Select, Download, and Process GSOD Data
 #' @author Florian Detsch \cr
 #' \cr
