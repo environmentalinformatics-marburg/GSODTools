@@ -7,7 +7,7 @@
 gfLinInt(data, prm = "TEMP", limit = 5, width = 11, ...)
 }
 \arguments{
-\item{data}{Object of class \code{ki.data}. See \code{\link{as.ki.data}}, 
+\item{data}{Object of class \code{ki.data}. See \code{\link{as.ki.data}},
 \code{\link{gsod2ki}} for further information.}
 
 \item{prm}{Character, default is "TEMP". Parameter(s) to fill.}
@@ -24,7 +24,7 @@ information.}
 An object of class \code{ki.data}.
 }
 \description{
-This function fills small data gaps occurring in (eco-)climatological 
+This function fills small data gaps occurring in (eco-)climatological
 measurement series by simple linear interpolation.
 }
 \examples{

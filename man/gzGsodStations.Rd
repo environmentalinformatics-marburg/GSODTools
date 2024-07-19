@@ -15,21 +15,21 @@ gzGsodStations(
 )
 }
 \arguments{
-\item{usaf}{Numeric. A unique USAF station code. It can either be manually 
-determined from built-in \code{gsodstations}, or retrieved from spatial 
-subsetting (see \code{\link{stationFromCoords}}, 
+\item{usaf}{Numeric. A unique USAF station code. It can either be manually
+determined from built-in \code{gsodstations}, or retrieved from spatial
+subsetting (see \code{\link{stationFromCoords}},
 \code{\link{stationFromExtent}}).}
 
-\item{dsn}{Character, default is the current working directory. Destination 
+\item{dsn}{Character, default is the current working directory. Destination
 folder for data download.}
 
-\item{start_year}{Numeric. The desired year to start data extraction and 
+\item{start_year}{Numeric. The desired year to start data extraction and
 concatenation. If not supplied, all files in \code{dsn} will be considered.}
 
 \item{end_year}{Numeric. The desired year to stop data extraction and
 concatenation. If not supplied, all files in \code{dsn} will be considered.}
 
-\item{save_output}{Logical, default is FALSE. If TRUE, a local copy of the 
+\item{save_output}{Logical, default is FALSE. If TRUE, a local copy of the
 concatenated GSOD data will be created based on the settings provided to \code{...}}
 
 \item{rm_gz}{Logical, default is FALSE. If TRUE, *.gz files are removed after

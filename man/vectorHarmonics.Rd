@@ -16,7 +16,7 @@ vectorHarmonics(
 \arguments{
 \item{x}{Numeric. A vector containing time-series values.}
 
-\item{frq}{Integer, defaults to 12 (months). The number of observations per 
+\item{frq}{Integer, defaults to 12 (months). The number of observations per
 unit of time. See \code{\link[stats]{ts}}.}
 
 \item{st}{Numeric. A vector containing start year and month.}
@@ -32,7 +32,7 @@ be created. See \code{\link[TSA]{harmonic}}.}
 A numeric vector.
 }
 \description{
-This is a wrapper function around \code{\link[TSA]{harmonic}} 
+This is a wrapper function around \code{\link[TSA]{harmonic}}
 from the \pkg{TSA} package that constructs harmonic functions for fitting a
 harmonic trend model.
 }

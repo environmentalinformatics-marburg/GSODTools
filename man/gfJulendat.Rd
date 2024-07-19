@@ -23,19 +23,19 @@ gfJulendat(
 )
 }
 \arguments{
-\item{files.dep}{Character. Path leading to the response GSOD station. 
-Note: the file needs to be formatted according to standard KiLi SP1 format, 
+\item{files.dep}{Character. Path leading to the response GSOD station.
+Note: the file needs to be formatted according to standard KiLi SP1 format,
 see \code{\link{gsod2ki}}.}
 
 \item{files.indep}{Character. Path(s) leading to the predictor GSOD station(s).}
 
-\item{filepath.coords}{Character, default is NULL. Path to file holding 
+\item{filepath.coords}{Character, default is NULL. Path to file holding
 coordinate information. Not required for GSOD data processing.}
 
 \item{quality.levels}{Character, default is NULL. Not required for GSOD data
 processing.}
 
-\item{gap.limit}{Numeric. Maximum length of a measurement gap to be imputed. 
+\item{gap.limit}{Numeric. Maximum length of a measurement gap to be imputed.
 All gaps exceeding this threshold will not be considered.}
 
 \item{end.datetime}{Object of class \code{Date}, default is \code{Sys.Date()}.
@@ -47,10 +47,10 @@ Not required for GSOD data processing.}
 data within \code{time.window}. If a certain explanatory station exceeds this
 threshold, it will not be considered for linear modeling.}
 
-\item{time.window}{Numeric, default is 365. Window width before and after a 
+\item{time.window}{Numeric, default is 365. Window width before and after a
 data gap to extract data for linear modeling.}
 
-\item{n.plot}{Numeric. Number of explanatory GSOD stations to consider for 
+\item{n.plot}{Numeric. Number of explanatory GSOD stations to consider for
 linear modeling. If not supplied, all stations specified in \code{files.indep}
 will be considered.}
 
@@ -58,10 +58,10 @@ will be considered.}
 
 \item{prm.indep}{Character, default is "NA". Not required for GSOD data processing.}
 
-\item{family}{Object of class \code{family}, default is 
+\item{family}{Object of class \code{family}, default is
 \code{\link[stats]{gaussian}}.}
 
-\item{plevel}{Character. Determines current processing level. Not required 
+\item{plevel}{Character. Determines current processing level. Not required
 for GSOD data processing.}
 
 \item{...}{Additional arguments. Currently not in use.}
@@ -70,13 +70,13 @@ for GSOD data processing.}
 An object of class \code{ki.data}.
 }
 \description{
-This is a wrapper function encompassing several sub-functions from the 
-Julendat gap-filling routine (processing level "0310", see 
-\href{https://code.google.com/archive/p/julendat/}{Julendat}). Briefly, a 
+This is a wrapper function encompassing several sub-functions from the
+Julendat gap-filling routine (processing level "0310", see
+\href{https://code.google.com/archive/p/julendat/}{Julendat}). Briefly, a
 discontinuous measurement series from a distinct GSOD station is being filled
-by the use of simultaneous measurements from adjacent GSOD stations. Taking 
-the gappy data as response variable, a linear model is fitted to explain the 
-measurements taken by the station under investigation based on surrounding 
+by the use of simultaneous measurements from adjacent GSOD stations. Taking
+the gappy data as response variable, a linear model is fitted to explain the
+measurements taken by the station under investigation based on surrounding
 stations.
 }
 \examples{

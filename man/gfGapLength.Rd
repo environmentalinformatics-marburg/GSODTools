@@ -14,12 +14,12 @@ gfGapLength(
 )
 }
 \arguments{
-\item{data.dep}{Object of class \code{ki.data}. See \code{\link{as.ki.data}}, 
+\item{data.dep}{Object of class \code{ki.data}. See \code{\link{as.ki.data}},
 \code{\link{gsod2ki}} for further information.}
 
 \item{pos.na}{Numeric. Indices of missing data points.}
 
-\item{gap.limit}{Numeric. Maximum length of a measurement gap. All gaps 
+\item{gap.limit}{Numeric. Maximum length of a measurement gap. All gaps
 exceeding this threshold will not be considered.}
 
 \item{end.datetime}{Object of class \code{Date}, default is \code{Sys.Date()}.
@@ -33,8 +33,8 @@ Not required for GSOD data processing.}
 A \code{list} containing start, end, and length of each data gap.
 }
 \description{
-This is a function taken from 
-\href{https://code.google.com/archive/p/julendat/}{Julendat} to identify 
+This is a function taken from
+\href{https://code.google.com/archive/p/julendat/}{Julendat} to identify
 gap lengths in (eco-)climatological measurement series of a given parameter.
 }
 \examples{

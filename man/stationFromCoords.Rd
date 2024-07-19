@@ -7,15 +7,15 @@
 stationFromCoords(x, y = NULL, width = 50, ...)
 }
 \arguments{
-\item{x}{Numeric. A a single number specifying the x (longitude) coordinate, 
+\item{x}{Numeric. A a single number specifying the x (longitude) coordinate,
 or a vector of two numbers specifying the x and y (latitude) coordinate, or
 an object of class \code{SpatialPoints}.}
 
-\item{y}{Numeric, default is NULL. A single number specifying the y 
-coordinate. Note: if a vector of two numbers is supplied to the previous 
+\item{y}{Numeric, default is NULL. A single number specifying the y
+coordinate. Note: if a vector of two numbers is supplied to the previous
 argument, this parameter will automatically be ignored.}
 
-\item{width}{Numeric, default is 50. The desired buffer width (km) that will 
+\item{width}{Numeric, default is 50. The desired buffer width (km) that will
 be applied to the specified coordinate.}
 
 \item{...}{Additional arguments passed to \code{\link{round}}.}

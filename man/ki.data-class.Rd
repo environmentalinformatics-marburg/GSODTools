@@ -5,5 +5,5 @@
 \title{Class ki.data}
 \description{
 An object of class \code{ki.data}, typically created through
-  \code{\link{as.ki.data}}.
+\code{\link{as.ki.data}}.
 }

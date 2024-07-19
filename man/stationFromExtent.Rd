@@ -7,7 +7,7 @@
 stationFromExtent(bb, ...)
 }
 \arguments{
-\item{bb}{Object of class \code{extent}. Usually NULL and constructed from 
+\item{bb}{Object of class \code{extent}. Usually NULL and constructed from
 the user-drawn bounding box. If supplied, a subset of GSOD stations will be
 created without any further user-specified input.}
 
@@ -17,7 +17,7 @@ created without any further user-specified input.}
 A \code{sf} object.
 }
 \description{
-This function allows the selection of a subset of GSOD stations based on a 
+This function allows the selection of a subset of GSOD stations based on a
 given map extent.
 }
 \examples{
